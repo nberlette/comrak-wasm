@@ -11,7 +11,9 @@
   crate-type = ["cdylib"]
 
 [features]
-  alloc = ["dep:lol_alloc", "serde/alloc", "wasm-bindgen/gg-alloc"]
+  default = ["alloc"]
+  alloc   = ["dep:lol_alloc", "serde/alloc", "wasm-bindgen/gg-alloc"]
+  mt      = ["alloc"]
 
 [dependencies]
   comrak             = { version = "=0.17.0", default-features = false }
