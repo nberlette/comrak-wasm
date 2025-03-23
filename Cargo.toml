@@ -22,5 +22,8 @@
   lol_alloc          = { version = "0.4", optional = true }
 
 [profile.release]
-lto = true
-opt-level = "z"
+  lto           = true
+  opt-level     = "z"
+  incremental   = true
+  codegen-units = 1
+  panic         = "abort"
