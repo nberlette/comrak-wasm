@@ -14,35 +14,35 @@ on:
     inputs:
       deno-version:
         type: string
-        description: 'Deno version or tag to use'
-        default: 'canary'
+        description: "Deno version or tag to use"
+        default: "canary"
       deno-test:
         type: boolean
-        description: 'Run deno test?'
+        description: "Run deno test?"
         default: true
       deno-doctest:
         type: boolean
-        description: 'Run deno test --doc?'
+        description: "Run deno test --doc?"
         default: false
       deno-fmt:
         type: boolean
-        description: 'Run deno fmt?'
+        description: "Run deno fmt?"
         default: true
       deno-lint:
         type: boolean
-        description: 'Run deno lint?'
+        description: "Run deno lint?"
         default: true
       deno-doc:
-        description: 'Run deno doc?'
+        description: "Run deno doc?"
         type: choice
         options:
-          - 'none'
-          - 'lint'
-          - 'html'
-          - 'json'
+          - "none"
+          - "lint"
+          - "html"
+          - "json"
       deno-publish:
         type: boolean
-        description: 'Publish to JSR?'
+        description: "Publish to JSR?"
         default: true
 jobs:
   style:
@@ -92,17 +92,23 @@ jobs:
         with:
           deno-version: ${{ github.event.inputs.deno-version || 'canary' }}
 
+      - name: Setup Rust
+        uses: dsherret/rust-toolchain-file@v1
+        with:
+          toolchain: stable
+          components: rustfmt
+
       - name: deno test
         if: |
           github.event_name != 'workflow_dispatch' ||
           github.event.inputs.deno-test == 'true'
-        run: deno test -A --no-check=remote --parallel
+        run: deno task test
 
       - name: deno test --doc
         if: |
           github.event_name != 'workflow_dispatch' ||
           github.event.inputs.deno-doctest == 'true'
-        run: deno test -A --no-check=remote --parallel --doc
+        run: deno task test --doc
 
   publish:
     name: Publish
