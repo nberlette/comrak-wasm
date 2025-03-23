@@ -1,7 +1,5 @@
-import { assertEquals } from "https://deno.land/std@0.102.0/testing/asserts.ts";
-import { init, markdownToHTML } from "./mod.ts";
-
-await init();
+import { assertEquals } from "@std/assert/equals"
+import { markdownToHTML } from "./mod.ts";
 
 Deno.test("markdown to html", () => {
   const actual = markdownToHTML("Hello, **世界**!");

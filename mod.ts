@@ -1,21 +1,5 @@
-// @deno-types="./pkg/comrak_wasm.d.ts"
-import {
-  default as initWASM,
-  markdown_to_html as markdownToHTMLWASM,
-} from "./pkg/comrak_wasm.js";
-import { source } from "./wasm.js";
-
-let inited: true | Promise<true> | undefined;
-
-export async function init(): Promise<void> {
-  if (inited !== undefined) {
-    await inited;
-  }
-  inited = initWASM(source)
-    .then(() => true);
-  await inited;
-  inited = true;
-}
+// @ts-types="./lib/comrak_wasm.d.ts"
+import { markdown_to_html } from "./lib/comrak_wasm.js";
 
 export interface ComrakOptions {
   /** Enable CommonMark extensions. */
@@ -284,42 +268,26 @@ export interface ComrakRenderOptions {
  * Render Markdown to HTML.
  */
 export function markdownToHTML(markdown: string, options: ComrakOptions = {}) {
+  const { extension = {}, parse = {}, render = {} } = options;
+
   const opts = {
-    // deno-lint-ignore camelcase
-    extension_autolink: options.extension?.autolink ?? false,
-    // deno-lint-ignore camelcase
-    extension_description_lists: options.extension?.descriptionLists ?? false,
-    // deno-lint-ignore camelcase
-    extension_footnotes: options.extension?.footnotes ?? false,
-    // deno-lint-ignore camelcase
-    extension_front_matter_delimiter: options.extension?.frontMatterDelimiter ??
-      null,
-    // deno-lint-ignore camelcase
-    extension_header_ids: options.extension?.headerIDs ?? null,
-    // deno-lint-ignore camelcase
-    extension_strikethrough: options.extension?.strikethrough ?? false,
-    // deno-lint-ignore camelcase
-    extension_superscript: options.extension?.superscript ?? false,
-    // deno-lint-ignore camelcase
-    extension_table: options.extension?.table ?? false,
-    // deno-lint-ignore camelcase
-    extension_tagfilter: options.extension?.tagfilter ?? false,
-    // deno-lint-ignore camelcase
-    extension_tasklist: options.extension?.tasklist ?? false,
-    // deno-lint-ignore camelcase
-    parse_default_into_string: options.parse?.defaultInfoString ?? null,
-    // deno-lint-ignore camelcase
-    parse_smart: options.parse?.smart ?? false,
-    // deno-lint-ignore camelcase
-    render_escape: options.render?.escape ?? false,
-    // deno-lint-ignore camelcase
-    render_github_pre_lang: options.render?.githubPreLang ?? false,
-    // deno-lint-ignore camelcase
-    render_hardbreaks: options.render?.hardbreaks ?? false,
-    // deno-lint-ignore camelcase
-    render_unsafe: options.render?.unsafe ?? false,
-    // deno-lint-ignore camelcase
-    render_width: options.render?.width ?? 0,
+    extension_autolink: extension.autolink ?? false,
+    extension_description_lists: extension.descriptionLists ?? false,
+    extension_footnotes: extension.footnotes ?? false,
+    extension_front_matter_delimiter: extension.frontMatterDelimiter ?? "---",
+    extension_header_ids: extension.headerIDs ?? "",
+    extension_strikethrough: extension.strikethrough ?? false,
+    extension_superscript: extension.superscript ?? false,
+    extension_table: extension.table ?? false,
+    extension_tagfilter: extension.tagfilter ?? false,
+    extension_tasklist: extension.tasklist ?? false,
+    parse_default_into_string: parse.defaultInfoString ?? "",
+    parse_smart: parse.smart ?? false,
+    render_escape: render.escape ?? false,
+    render_github_pre_lang: render.githubPreLang ?? false,
+    render_hardbreaks: render.hardbreaks ?? false,
+    render_unsafe: render.unsafe ?? false,
+    render_width: render.width ?? 0,
   };
-  return markdownToHTMLWASM(markdown, opts);
+  return markdown_to_html(markdown, opts);
 }
