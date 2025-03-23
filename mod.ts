@@ -16,9 +16,11 @@ export interface ComrakExtensionOptions {
    * [autolink extension](https://github.github.com/gfm/#autolinks-extension-)
    * from the GFM spec.
    *
-   * ```js
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
    * markdownToHTML("Hello www.github.com.\n", { extension: { autolink: true } });
-   * "<p>Hello <a href=\"http://www.github.com\">www.github.com</a>.</p>\n"
+   * // "<p>Hello <a href=\"http://www.github.com\">www.github.com</a>.</p>\n"
    * ```
    *
    * Defaults to `false`.
@@ -30,9 +32,11 @@ export interface ComrakExtensionOptions {
    * Each term must be defined in one paragraph, followed by a blank line, and
    * then by the details. Details begins with a colon.
    *
-   * ```js
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
    * markdownToHTML("Term\n\n: Definition", { extension: { descriptionLists: true } });
-   * "<dl><dt>Term</dt>\n<dd>\n<p>Definition</p>\n</dd>\n</dl>\n"
+   * // "<dl><dt>Term</dt>\n<dd>\n<p>Definition</p>\n</dd>\n</dl>\n"
    * ```
    *
    * Defaults to `false`.
@@ -45,9 +49,11 @@ export interface ComrakExtensionOptions {
    * The extension is modelled after
    * [Kramdown](https://kramdown.gettalong.org/syntax.html#footnotes).
    *
-   * ```js
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
    * markdownToHTML("Hi[^x].\n\n[^x]: A greeting.\n", { extension: { footnotes: true } });
-   * "<p>Hi<sup class=\"footnote-ref\"><a href=\"#fn1\" id=\"fnref1\">1</a></sup>.</p>\n<section class=\"footnotes\">\n<ol>\n<li id=\"fn1\">\n<p>A greeting. <a href=\"#fnref1\" class=\"footnote-backref\">↩</a></p>\n</li>\n</ol>\n</section>\n"
+   * // "<p>Hi<sup class=\"footnote-ref\"><a href=\"#fn1\" id=\"fnref1\">1</a></sup>.</p>\n<section class=\"footnotes\">\n<ol>\n<li id=\"fn1\">\n<p>A greeting. <a href=\"#fnref1\" class=\"footnote-backref\">↩</a></p>\n</li>\n</ol>\n</section>\n"
    * ```
    *
    * Defaults to `false`.
@@ -61,9 +67,11 @@ export interface ComrakExtensionOptions {
    * delimiter, is passed through unchanged in markdown output and omitted
    * from HTML output.
    *
-   * ```js
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
    * markdownToHTML("---\nlayout: post\n---\nText\n", { extension: { frontMatterDelimiter: "---" } });
-   * "<p>Text</p>\n"
+   * // "<p>Text</p>\n"
    * ```
    *
    * Defaults to `null`.
@@ -72,9 +80,11 @@ export interface ComrakExtensionOptions {
 
   /** Enables the header IDs Comrak extension.
    *
-   * ```js
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
    * markdownToHTML("# README\n", { extension: { headerIDs: "user-content-" } });
-   * "<h1><a href=\"#readme\" aria-hidden=\"true\" class=\"anchor\" id=\"user-content-readme\"></a>README</h1>\n"
+   * // "<h1><a href=\"#readme\" aria-hidden=\"true\" class=\"anchor\" id=\"user-content-readme\"></a>README</h1>\n"
    * ```
    *
    * Defaults to `null`.
@@ -85,9 +95,11 @@ export interface ComrakExtensionOptions {
    * [strikethrough extension](https://github.github.com/gfm/#strikethrough-extension-)
    * from the GFM spec.
    *
-   * ```js
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
    * markdownToHTML("Hello ~world~ there.\n", { extension: { strikethrough: true } });
-   * "<p>Hello <del>world</del> there.</p>\n"
+   * // "<p>Hello <del>world</del> there.</p>\n"
    * ```
    *
    * Defaults to `false`.
@@ -96,9 +108,11 @@ export interface ComrakExtensionOptions {
 
   /** Enables the superscript Comrak extension.
    *
-   * ```js
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
    * markdownToHTML("e = mc^2^.\n", { extension: { superscript: true } });
-   * "<p>e = mc<sup>2</sup>.</p>\n"
+   * // "<p>e = mc<sup>2</sup>.</p>\n"
    * ```
    *
    * Defaults to `false`.
@@ -109,10 +123,12 @@ export interface ComrakExtensionOptions {
    * [table extension](https://github.github.com/gfm/#tables-extension-)
    * from the GFM spec.
    *
-   * ```js
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
    * markdownToHTML("| a | b |\n|---|---|\n| c | d |\n", { extension: { table: true } });
-   * "<table>\n<thead>\n<tr>\n<th>a</th>\n<th>b</th>\n</tr>\n</thead>\n\
-   *  <tbody>\n<tr>\n<td>c</td>\n<td>d</td>\n</tr>\n</tbody>\n</table>\n"
+   * // "<table>\n<thead>\n<tr>\n<th>a</th>\n<th>b</th>\n</tr>\n</thead>\n" +
+   * // "<tbody>\n<tr>\n<td>c</td>\n<td>d</td>\n</tr>\n</tbody>\n</table>\n"
    * ```
    *
    * Defaults to `false`.
@@ -123,9 +139,11 @@ export interface ComrakExtensionOptions {
    * [tagfilter extension](https://github.github.com/gfm/#disallowed-raw-html-extension-)
    * from the GFM spec.
    *
-   * ```js
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
    * markdownToHTML("Hello <xmp>.\n\n<xmp>", { extension: { tagfilter: true } });
-   * "<p>Hello &lt;xmp>.</p>\n&lt;xmp>\n"
+   * // "<p>Hello &lt;xmp>.</p>\n&lt;xmp>\n"
    * ```
    *
    * Defaults to `false`.
@@ -138,10 +156,12 @@ export interface ComrakExtensionOptions {
    *
    * Note that the spec does not define the precise output, so only the bare essentials are rendered.
    *
-   * ```js
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
    * markdownToHTML("* [x] Done\n* [ ] Not done\n", { extension: { tasklist: true } });
-   * "<ul>\n<li><input type=\"checkbox\" disabled=\"\" checked=\"\" /> Done</li>\n\
-   *  <li><input type=\"checkbox\" disabled=\"\" /> Not done</li>\n</ul>\n"
+   * // "<ul>\n<li><input type=\"checkbox\" disabled=\"\" checked=\"\" /> Done</li>\n\
+   * // <li><input type=\"checkbox\" disabled=\"\" /> Not done</li>\n</ul>\n"
    * ```
    *
    * Defaults to `false`.
@@ -151,14 +171,17 @@ export interface ComrakExtensionOptions {
 
 /** Options for parser functions. */
 export interface ComrakParseOptions {
-  /** The default info string for fenced code blocks.
+  /**
+   * The default info string for fenced code blocks.
    *
-   * ```js
-   * markdownToHTML("```\nfn hello();\n```\n");
-   * "<pre><code>fn hello();\n</code></pre>\n"
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
    *
-   * markdownToHTML("```\nfn hello();\n```\n", { parse: { defaultInfoString: "rust" } });
-   * "<pre><code class=\"language-rust\">fn hello();\n</code></pre>\n"
+   * markdownToHTML("\`\`\`\nfn hello();\n\`\`\`\n");
+   * // "<pre><code>fn hello();\n</code></pre>\n"
+   *
+   * markdownToHTML("\`\`\`\nfn hello();\n\`\`\`\n", { parse: { defaultInfoString: "rust" } });
+   * // "<pre><code class=\"language-rust\">fn hello();\n</code></pre>\n"
    * ```
    *
    * Defaults to `null`.
@@ -168,12 +191,14 @@ export interface ComrakParseOptions {
   /** Punctuation (quotes, full-stops and hyphens) are converted into ‘smart’
    * punctuation.
    *
-   * ```js
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
    * markdownToHTML("'Hello,' \"world\" ...");
-   * "<p>'Hello,' &quot;world&quot; ...</p>\n"
+   * // "<p>'Hello,' &quot;world&quot; ...</p>\n"
    *
    * markdownToHTML("'Hello,' \"world\" ...", { parse: { smart: true } });
-   * "<p>‘Hello,’ “world” …</p>\n"
+   * // "<p>‘Hello,’ “world” …</p>\n"
    * ```
    *
    * Defaults to `false`.
@@ -187,12 +212,14 @@ export interface ComrakParseOptions {
 export interface ComrakRenderOptions {
   /** Escape raw HTML instead of clobbering it.
    *
-   * ```js
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
    * markdownToHTML("<i>italic text</i>");
-   * "<p><!-- raw HTML omitted -->italic text<!-- raw HTML omitted --></p>\n"
+   * // "<p><!-- raw HTML omitted -->italic text<!-- raw HTML omitted --></p>\n"
    *
    * markdownToHTML("<i>italic text</i>", { render: { escape: true } });
-   * "<p>&lt;i&gt;italic text&lt;/i&gt;</p>\n"
+   * // "<p>&lt;i&gt;italic text&lt;/i&gt;</p>\n"
    * ```
    *
    * Defaults to `false`.
@@ -202,12 +229,14 @@ export interface ComrakRenderOptions {
   /** GitHub-style `<pre lang="xyz">` is used for fenced code blocks with info
    * tags.
    *
-   * ```js
-   * markdownToHTML("``` rust\nfn hello();\n```\n");
-   * "<pre><code class=\"language-rust\">fn hello();\n</code></pre>\n"
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
    *
-   * markdownToHTML("``` rust\nfn hello();\n```\n", { render: { githubPreLang: true } });
-   * "<pre lang=\"rust\"><code>fn hello();\n</code></pre>\n"
+   * markdownToHTML("\`\`\`rust\nfn hello();\n\`\`\`\n");
+   * // "<pre><code class=\"language-rust\">fn hello();\n</code></pre>\n"
+   *
+   * markdownToHTML("\`\`\`rust\nfn hello();\n\`\`\`\n", { render: { githubPreLang: true } });
+   * // "<pre lang=\"rust\"><code>fn hello();\n</code></pre>\n"
    * ```
    *
    * Defaults to `false`.
@@ -217,12 +246,14 @@ export interface ComrakRenderOptions {
   /** [Soft line breaks](https://spec.commonmark.org/0.27/#soft-line-breaks) in
    * the input translate into hard line breaks in the output.
    *
-   * ```js
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
    * markdownToHTML("Hello.\nWorld.\n");
-   * "<p>Hello.\nWorld.</p>\n"
+   * // "<p>Hello.\nWorld.</p>\n"
    *
    * markdownToHTML("Hello.\nWorld.\n", { render: { hardbreaks: true } });
-   * "<p>Hello.<br />\nWorld.</p>\n"
+   * // "<p>Hello.<br />\nWorld.</p>\n"
    * ```
    *
    * Defaults to `false`.
@@ -231,25 +262,27 @@ export interface ComrakRenderOptions {
 
   /** Allow rendering of raw HTML and potentially dangerous links.
    *
-   * ```js
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
    * markdownToHTML("<script>\nalert('xyz');\n</script>\n\n\
    *                 Possibly <marquee>annoying</marquee>.\n\n\
    *                 [Dangerous](javascript:alert(document.cookie)).\n\n\
    *                 [Safe](http://commonmark.org).\n");
-   * "<!-- raw HTML omitted -->\n\
-   *  <p>Possibly <!-- raw HTML omitted -->annoying<!-- raw HTML omitted -->.</p>\n\
-   *  <p><a href=\"\">Dangerous</a>.</p>\n\
-   *  <p><a href=\"http://commonmark.org\">Safe</a>.</p>\n"
+   * // "<!-- raw HTML omitted -->\n\
+   * // <p>Possibly <!-- raw HTML omitted -->annoying<!-- raw HTML omitted -->.</p>\n\
+   * // <p><a href=\"\">Dangerous</a>.</p>\n\
+   * // <p><a href=\"http://commonmark.org\">Safe</a>.</p>\n"
    *
    * markdownToHTML("<script>\nalert('xyz');\n</script>\n\n\
    *                 Possibly <marquee>annoying</marquee>.\n\n\
    *                 [Dangerous](javascript:alert(document.cookie)).\n\n\
    *                 [Safe](http://commonmark.org).\n",
    *                { render: { unsafe: true } });
-   * "<script>\nalert(\'xyz\');\n</script>\n\
-   *  <p>Possibly <marquee>annoying</marquee>.</p>\n\
-   *  <p><a href=\"javascript:alert(document.cookie)\">Dangerous</a>.</p>\n\
-   *  <p><a href=\"http://commonmark.org\">Safe</a>.</p>\n"
+   * // "<script>\nalert(\'xyz\');\n</script>\n\
+   * // <p>Possibly <marquee>annoying</marquee>.</p>\n\
+   * // <p><a href=\"javascript:alert(document.cookie)\">Dangerous</a>.</p>\n\
+   * // <p><a href=\"http://commonmark.org\">Safe</a>.</p>\n"
    * ```
    *
    * Defaults to `false`.
@@ -266,8 +299,22 @@ export interface ComrakRenderOptions {
 
 /**
  * Render Markdown to HTML.
+ *
+ * @param markdown The Markdown string to be converted.
+ * @param [options] Options to customize the conversion.
+ * @returns The generated HTML string.
+ * @example
+ * ```ts
+ * import { markdownToHTML } from "@nick/comrak";
+ *
+ * markdownToHTML("Hello, **Nick**!");
+ * // "<p>Hello, <strong>Nick</strong>!</p>\n"
+ * ```
  */
-export function markdownToHTML(markdown: string, options: ComrakOptions = {}) {
+export function markdownToHTML(
+  markdown: string,
+  options: ComrakOptions = {},
+): string {
   const { extension = {}, parse = {}, render = {} } = options;
 
   const opts = {
