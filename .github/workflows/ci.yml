@@ -59,46 +59,78 @@ jobs:
 
       - name: Setup Rust
         uses: dsherret/rust-toolchain-file@v1
-        with:
-          toolchain: stable
-          components: rustfmt
 
-      - name: deno fmt
+      - id: cargo-fmt
+        name: cargo fmt --check
+        continue-on-error: true
+        run: cargo fmt --all -- --check
+
+      - id: build
+        name: Build WebAssembly Bindings
+        run: deno task build
+
+      - id: deno-fmt
+        name: deno fmt
         if: |
-          github.event_name != 'workflow_dispatch' ||
-          github.event.inputs.deno-fmt == 'true'
+          (
+            github.event_name != 'workflow_dispatch' ||
+            github.event.inputs.deno-fmt == 'true'
+          ) && steps.build.outcome == 'success'
         run: deno fmt --check
 
-      - name: deno lint
+      - id: deno-lint
+        name: deno lint
         if: |
           github.event_name != 'workflow_dispatch' ||
           github.event.inputs.deno-lint == 'true'
         run: deno lint
 
-      - name: deno doc --lint
+      - id: deno-doc-lint
+        name: deno doc --lint
         if: |
           github.event_name != 'workflow_dispatch' ||
           github.event.inputs.deno-doc == 'lint'
         run: deno doc --lint mod.ts
 
-      - name: deno test
+      - id: deno-test
+        name: deno test
         if: |
           github.event_name != 'workflow_dispatch' ||
           github.event.inputs.deno-test == 'true'
         run: deno task test
 
-      - name: deno test --doc
+      - id: deno-doctest
+        name: deno test --doc
         if: |
           github.event_name != 'workflow_dispatch' ||
           github.event.inputs.deno-doctest == 'true'
         run: deno task test --doc
 
-      - name: upload build artifact
+      - id: artifact
+        name: upload build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: comrak-${{ github.ref_name }}-${{ github.sha }}
+          name: comrak-${{ github.ref_name }}
           path: ${{ github.workspace }}/lib
           retention-days: 7
+
+      - id: cache
+        name: Cache
+        uses: actions/cache@v4
+        with:
+          key: deno-${{ github.event.inputs.deno-version || 'canary' }}_comrak-${{ github.ref_name }}_${{ github.sha }}
+          restore-keys: |
+            deno-${{ github.event.inputs.deno-version || 'canary' }}_comrak-${{ github.ref_name }}_build-${{ github.sha }}
+            deno-${{ github.event.inputs.deno-version || 'canary' }}_comrak-${{ github.ref_name }}_build-${{ github.ref_name }}
+            deno-${{ github.event.inputs.deno-version || 'canary' }}_comrak-${{ github.ref_name }}_build
+          path: |
+            /home/runner/.cache
+            /home/runner/.cargo
+            /home/runner/.deno
+            ./target
+            ./.cargo
+            ./.deno
+            ./lib
 
   publish:
     name: Publish
@@ -125,15 +157,49 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Download Artifact
-        uses: actions/download-artifact@v4
+      - id: cache
+        name: Restore Cache
+        uses: actions/cache/restore@v4
         with:
-          name: comrak-${{ github.ref_name }}-${{ github.sha }}
+          key: |
+            comrak_deno-${{ github.event.inputs.deno-version || 'canary' }}_build-${{ github.sha }}
+            comrak_deno-${{ github.event.inputs.deno-version || 'canary' }}_build-${{ github.ref_name }}
+            comrak_deno-${{ github.event.inputs.deno-version || 'canary' }}_build
+          path: |
+            /home/runner/.cache
+            /home/runner/.cargo
+            /home/runner/.deno
+            ./target
+            ./.cargo
+            ./.deno
+            ./lib
+
+      - id: artifact
+        name: Download Artifact
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: comrak-${{ github.ref_name }}
           path: ${{ github.workspace }}/lib
 
+      - name: Setup Deno
+        if: steps.artifact.outcome != 'success'
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: ${{ github.event.inputs.deno-version || 'canary' }}
+
+      - name: Setup Rust
+        if: steps.artifact.outcome != 'success'
+        uses: dsherret/rust-toolchain-file@v1
+
+      - id: build
+        name: Build WebAssembly Bindings
+        if: steps.artifact.outcome != 'success'
+        run: deno task build
+
       - name: Publish to JSR
+        if: steps.build.outcome == 'success'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          npx jsr publish --dry-run --allow-dirty && \
-          npx jsr publish --allow-dirty
+          npx jsr publish --dry-run --allow-dirty && npx jsr publish --allow-dirty
