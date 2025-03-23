@@ -1,6 +1,9 @@
 // @ts-types="./lib/comrak_wasm.d.ts"
 import { markdown_to_html } from "./lib/comrak_wasm.js";
 
+/**
+ * Options for the {@linkcode markdownToHTML} function.
+ */
 export interface ComrakOptions {
   /** Enable CommonMark extensions. */
   extension?: ComrakExtensionOptions;
