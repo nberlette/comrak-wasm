@@ -43,8 +43,8 @@ on:
         description: "Publish to JSR?"
         default: true
 jobs:
-  style:
-    name: Code Style
+  ci:
+    name: Quality Control
     runs-on: ubuntu-latest
     timeout-minutes: 15
     continue-on-error: true
@@ -56,6 +56,12 @@ jobs:
         uses: denoland/setup-deno@v2
         with:
           deno-version: ${{ github.event.inputs.deno-version || 'canary' }}
+
+      - name: Setup Rust
+        uses: dsherret/rust-toolchain-file@v1
+        with:
+          toolchain: stable
+          components: rustfmt
 
       - name: deno fmt
         if: |
@@ -75,25 +81,6 @@ jobs:
           github.event.inputs.deno-doc == 'lint'
         run: deno doc --lint mod.ts
 
-  tests:
-    name: Tests
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Deno
-        uses: denoland/setup-deno@v2
-        with:
-          deno-version: ${{ github.event.inputs.deno-version || 'canary' }}
-
-      - name: Setup Rust
-        uses: dsherret/rust-toolchain-file@v1
-        with:
-          toolchain: stable
-          components: rustfmt
-
       - name: deno test
         if: |
           github.event_name != 'workflow_dispatch' ||
@@ -111,17 +98,15 @@ jobs:
         with:
           name: comrak-${{ github.ref_name }}-${{ github.sha }}
           path: ${{ github.workspace }}/lib
+          retention-days: 7
 
   publish:
     name: Publish
-    needs: [style, tests]
+    needs: ci
     runs-on: ubuntu-latest
     timeout-minutes: 15
     if: |
-      (
-        needs.style.result == 'success' &&
-        needs.tests.result == 'success'
-      ) && (
+      needs.ci.result == 'success' && (
         (
           github.event_name == 'workflow_dispatch' &&
           github.event.inputs.deno-publish == 'true'
@@ -139,6 +124,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: comrak-${{ github.ref_name }}-${{ github.sha }}
+          path: ${{ github.workspace }}/lib
 
       - name: Publish to JSR
         env:
