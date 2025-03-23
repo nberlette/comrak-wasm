@@ -1,6 +1,6 @@
 [package]
   name = "comrak-wasm"
-  version = "0.2.1"
+  version = "0.2.2"
   authors = [
     "Luca Casonato <hello@lcas.dev>",
     "Nick Berlette <nick@berlette.com>",
