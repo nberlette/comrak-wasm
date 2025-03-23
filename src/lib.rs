@@ -1,18 +1,48 @@
+#![cfg(target_arch = "wasm32")]
+
 use comrak::{
   ComrakExtensionOptions,
   ComrakOptions,
   ComrakParseOptions,
   ComrakRenderOptions,
+  ListStyleType as ComrakListStyleType,
 };
 use js_sys::TypeError;
 use serde::Deserialize;
 use serde_wasm_bindgen::from_value;
 use wasm_bindgen::prelude::*;
 
-// Use `wee_alloc` as the global allocator.
-#[global_allocator]
 #[cfg(feature = "alloc")]
-static ALLOC: lol_alloc::WeeAlloc = lol_alloc::WeeAlloc::INIT;
+extern crate alloc;
+#[cfg(all(feature = "alloc", not(feature = "mt")))]
+use lol_alloc::AssumeSingleThreaded;
+#[cfg(feature = "alloc")]
+use lol_alloc::FreeListAllocator;
+#[cfg(all(feature = "alloc", feature = "mt"))]
+use lol_alloc::LockedAllocator;
+
+#[global_allocator]
+#[cfg(all(feature = "alloc", not(feature = "mt")))]
+// SAFETY: This app is single threaded, so AssumeSingleThreaded is allowed.
+static ALLOCATOR: AssumeSingleThreaded<FreeListAllocator> =
+  unsafe { AssumeSingleThreaded::new(FreeListAllocator::new()) };
+
+#[global_allocator]
+#[cfg(all(feature = "alloc", feature = "mt"))]
+static ALLOCATOR: LockedAllocator<FreeListAllocator> =
+  LockedAllocator::new(FreeListAllocator::new());
+
+#[derive(Deserialize, Debug, Clone, Copy, Default)]
+#[serde(remote = "ComrakListStyleType", rename_all = "lowercase")]
+pub enum ListStyleType {
+  /// The `-` character
+  #[default]
+  Dash = 45,
+  /// The `+` character
+  Plus = 43,
+  /// The `*` character
+  Star = 42,
+}
 
 #[derive(Deserialize)]
 struct FlatComrakOptions {
@@ -29,11 +59,15 @@ struct FlatComrakOptions {
   extension_tagfilter: bool,
   extension_tasklist: bool,
   #[serde(default)]
-  parse_default_into_string: Option<String>,
+  parse_default_info_string: Option<String>,
   parse_smart: bool,
+  parse_relaxed_tasklist_matching: bool,
   render_escape: bool,
+  render_full_info_string: bool,
   render_github_pre_lang: bool,
   render_hardbreaks: bool,
+  #[serde(default, with = "ListStyleType")]
+  render_list_style: ComrakListStyleType,
   render_unsafe: bool,
   render_width: usize,
 }
@@ -51,13 +85,16 @@ impl Default for FlatComrakOptions {
       extension_table: true,
       extension_tagfilter: true,
       extension_tasklist: true,
-      parse_default_into_string: None,
+      parse_relaxed_tasklist_matching: false,
+      parse_default_info_string: None,
       parse_smart: true,
       render_escape: true,
       render_github_pre_lang: true,
       render_hardbreaks: false,
       render_unsafe: false,
       render_width: 80,
+      render_list_style: Default::default(),
+      render_full_info_string: false,
     }
   }
 }
@@ -75,11 +112,14 @@ export interface Options {
   extension_table: boolean;
   extension_tagfilter: boolean;
   extension_tasklist: boolean;
-  parse_default_into_string?: string;
+  parse_default_info_string?: string;
   parse_smart: boolean;
+  parse_relaxed_tasklist_matching?: boolean;
   render_escape: boolean;
+  render_full_info_string?: boolean;
   render_github_pre_lang: boolean;
   render_hardbreaks: boolean;
+  render_list_style?: "dash" | "plus" | "star";
   render_unsafe: boolean;
   render_width: number;
 }
@@ -106,8 +146,9 @@ pub fn markdown_to_html(
       tasklist: opts.extension_tasklist,
     },
     parse: ComrakParseOptions {
-      default_info_string: opts.parse_default_into_string,
+      default_info_string: opts.parse_default_info_string,
       smart: opts.parse_smart,
+      relaxed_tasklist_matching: opts.parse_relaxed_tasklist_matching,
     },
     render: ComrakRenderOptions {
       escape: opts.render_escape,
@@ -115,6 +156,8 @@ pub fn markdown_to_html(
       hardbreaks: opts.render_hardbreaks,
       unsafe_: opts.render_unsafe,
       width: opts.render_width,
+      full_info_string: opts.render_full_info_string,
+      list_style: opts.render_list_style,
     },
   };
   let html = comrak::markdown_to_html(md, &opts);

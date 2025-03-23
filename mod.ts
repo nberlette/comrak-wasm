@@ -1,5 +1,5 @@
 // @ts-types="./lib/comrak_wasm.d.ts"
-import { markdown_to_html } from "./lib/comrak_wasm.js";
+import { markdown_to_html, type Options } from "./lib/comrak_wasm.js";
 
 /**
  * Options for the {@linkcode markdownToHTML} function.
@@ -26,7 +26,7 @@ export interface ComrakExtensionOptions {
    * // "<p>Hello <a href=\"http://www.github.com\">www.github.com</a>.</p>\n"
    * ```
    *
-   * Defaults to `false`.
+   * @default {false}
    */
   autolink?: boolean;
 
@@ -42,7 +42,7 @@ export interface ComrakExtensionOptions {
    * // "<dl><dt>Term</dt>\n<dd>\n<p>Definition</p>\n</dd>\n</dl>\n"
    * ```
    *
-   * Defaults to `false`.
+   * @default {false}
    */
 
   descriptionLists?: boolean;
@@ -59,7 +59,7 @@ export interface ComrakExtensionOptions {
    * // "<p>Hi<sup class=\"footnote-ref\"><a href=\"#fn1\" id=\"fnref1\">1</a></sup>.</p>\n<section class=\"footnotes\">\n<ol>\n<li id=\"fn1\">\n<p>A greeting. <a href=\"#fnref1\" class=\"footnote-backref\">↩</a></p>\n</li>\n</ol>\n</section>\n"
    * ```
    *
-   * Defaults to `false`.
+   * @default {false}
    */
   footnotes?: boolean;
 
@@ -77,7 +77,7 @@ export interface ComrakExtensionOptions {
    * // "<p>Text</p>\n"
    * ```
    *
-   * Defaults to `null`.
+   * @default {null}
    */
   frontMatterDelimiter?: string | null;
 
@@ -90,7 +90,7 @@ export interface ComrakExtensionOptions {
    * // "<h1><a href=\"#readme\" aria-hidden=\"true\" class=\"anchor\" id=\"user-content-readme\"></a>README</h1>\n"
    * ```
    *
-   * Defaults to `null`.
+   * @default {null}
    */
   headerIDs?: string | null;
 
@@ -105,7 +105,7 @@ export interface ComrakExtensionOptions {
    * // "<p>Hello <del>world</del> there.</p>\n"
    * ```
    *
-   * Defaults to `false`.
+   * @default {false}
    */
   strikethrough?: boolean;
 
@@ -118,7 +118,7 @@ export interface ComrakExtensionOptions {
    * // "<p>e = mc<sup>2</sup>.</p>\n"
    * ```
    *
-   * Defaults to `false`.
+   * @default {false}
    */
   superscript?: boolean;
 
@@ -134,7 +134,7 @@ export interface ComrakExtensionOptions {
    * // "<tbody>\n<tr>\n<td>c</td>\n<td>d</td>\n</tr>\n</tbody>\n</table>\n"
    * ```
    *
-   * Defaults to `false`.
+   * @default {false}
    */
   table?: boolean;
 
@@ -149,7 +149,7 @@ export interface ComrakExtensionOptions {
    * // "<p>Hello &lt;xmp>.</p>\n&lt;xmp>\n"
    * ```
    *
-   * Defaults to `false`.
+   * @default {false}
    */
   tagfilter?: boolean;
 
@@ -167,7 +167,7 @@ export interface ComrakExtensionOptions {
    * // <li><input type=\"checkbox\" disabled=\"\" /> Not done</li>\n</ul>\n"
    * ```
    *
-   * Defaults to `false`.
+   * @default {false}
    */
   tasklist?: boolean;
 }
@@ -187,7 +187,7 @@ export interface ComrakParseOptions {
    * // "<pre><code class=\"language-rust\">fn hello();\n</code></pre>\n"
    * ```
    *
-   * Defaults to `null`.
+   * @default {null}
    */
   defaultInfoString?: string | null;
 
@@ -204,9 +204,17 @@ export interface ComrakParseOptions {
    * // "<p>‘Hello,’ “world” …</p>\n"
    * ```
    *
-   * Defaults to `false`.
+   * @default {false}
    */
   smart?: boolean;
+
+  /**
+   * Whether or not a simple `x` or `X` is used for tasklist or any other
+   * symbol is allowed.
+   *
+   * @default {false}
+   */
+  relaxedTasklistMatching?: boolean;
 }
 
 /**
@@ -225,7 +233,7 @@ export interface ComrakRenderOptions {
    * // "<p>&lt;i&gt;italic text&lt;/i&gt;</p>\n"
    * ```
    *
-   * Defaults to `false`.
+   * @default {false}
    */
   escape?: boolean;
 
@@ -242,7 +250,7 @@ export interface ComrakRenderOptions {
    * // "<pre lang=\"rust\"><code>fn hello();\n</code></pre>\n"
    * ```
    *
-   * Defaults to `false`.
+   * @default {false}
    */
   githubPreLang?: boolean;
 
@@ -259,7 +267,7 @@ export interface ComrakRenderOptions {
    * // "<p>Hello.<br />\nWorld.</p>\n"
    * ```
    *
-   * Defaults to `false`.
+   * @default {false}
    */
   hardbreaks?: boolean;
 
@@ -288,16 +296,45 @@ export interface ComrakRenderOptions {
    * // <p><a href=\"http://commonmark.org\">Safe</a>.</p>\n"
    * ```
    *
-   * Defaults to `false`.
+   * @default {false}
    */
   unsafe?: boolean;
 
   /**
    * The wrap column when outputting CommonMark.
    *
-   * Defaults to `0`.
+   * @default {0}
    */
   width?: number;
+
+  /** Whether to use the full info string for fenced code blocks.
+   *
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
+   * markdownToHTML("\`\`\`rust extra info\nfn hello();\n\`\`\`\n");
+   * // "<pre><code class=\"language-rust\">fn hello();\n</code></pre>\n"
+   *
+   * markdownToHTML("\`\`\`rust extra info\nfn hello();\n\`\`\`\n", { render: { fullInfoString: true } });
+   * // "<pre><code class=\"language-rust\" data-meta="extra info">fn hello();\n</code></pre>\n"
+   * ```
+   *
+   * @default {false}
+   */
+  fullInfoString?: boolean;
+
+  /** The style for list items.
+   *
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
+   * markdownToHTML("* Item\n* Item\n", { render: { listStyle: "dot" } });
+   * // "<ul>\n<li>Item</li>\n<li>Item</li>\n</ul>\n"
+   * ```
+   *
+   * @default {"dash"}
+   */
+  listStyle?: "dash" | "plus" | "star";
 }
 
 /**
@@ -331,13 +368,16 @@ export function markdownToHTML(
     extension_table: extension.table ?? false,
     extension_tagfilter: extension.tagfilter ?? false,
     extension_tasklist: extension.tasklist ?? false,
-    parse_default_into_string: parse.defaultInfoString ?? "",
+    parse_default_info_string: parse.defaultInfoString ?? "",
     parse_smart: parse.smart ?? false,
+    parse_relaxed_tasklist_matching: parse.relaxedTasklistMatching ?? false,
     render_escape: render.escape ?? false,
     render_github_pre_lang: render.githubPreLang ?? false,
     render_hardbreaks: render.hardbreaks ?? false,
     render_unsafe: render.unsafe ?? false,
     render_width: render.width ?? 0,
-  };
+    render_full_info_string: render.fullInfoString ?? false,
+    render_list_style: render.listStyle ?? "dash",
+  } satisfies Options;
   return markdown_to_html(markdown, opts);
 }
