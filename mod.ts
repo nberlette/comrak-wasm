@@ -328,7 +328,7 @@ export interface ComrakRenderOptions {
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
    *
-   * markdownToHTML("* Item\n* Item\n", { render: { listStyle: "dot" } });
+   * markdownToHTML("* Item\n* Item\n", { render: { listStyle: "star" } });
    * // "<ul>\n<li>Item</li>\n<li>Item</li>\n</ul>\n"
    * ```
    *
