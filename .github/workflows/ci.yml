@@ -8,8 +8,6 @@ on:
   pull_request:
     branches:
       - main
-  release:
-    types: [published]
   workflow_dispatch:
     inputs:
       deno-version:
@@ -49,7 +47,6 @@ jobs:
     name: Code Style
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    concurrency: style
     continue-on-error: true
     steps:
       - name: Checkout
@@ -82,7 +79,6 @@ jobs:
     name: Tests
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    concurrency: tests
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -117,14 +113,16 @@ jobs:
     timeout-minutes: 15
     if: |
       (
-        github.event_name == 'release' &&
-        github.event.action == 'published'
-      ) || (
-        github.event_name == 'workflow_dispatch' &&
-        github.event.inputs.deno-publish == 'true'
-      ) || (
-        github.event_name == 'push' &&
-        startsWith(github.ref, 'refs/tags/')
+        needs.style.result == 'success' &&
+        needs.tests.result == 'success'
+      ) && (
+        (
+          github.event_name == 'workflow_dispatch' &&
+          github.event.inputs.deno-publish == 'true'
+        ) || (
+          github.event_name == 'push' &&
+          startsWith(github.ref, 'refs/tags/')
+        )
       )
     concurrency:
       group: publish-${{ github.ref_name }}
@@ -132,7 +130,6 @@ jobs:
     permissions:
       contents: write
       id-token: write
-      packages: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
