@@ -106,6 +106,12 @@ jobs:
           github.event.inputs.deno-doctest == 'true'
         run: deno task test --doc
 
+      - name: upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: comrak-${{ github.ref_name }}-${{ github.sha }}
+          path: ${{ github.workspace }}/lib
+
   publish:
     name: Publish
     needs: [style, tests]
