@@ -19,7 +19,9 @@
     "exclude": [
       "**/.*",
       "**/*.test.*",
-      "target"
+      "target",
+      "build.ts",
+      "test.*"
     ]
   },
   "lock": true,
