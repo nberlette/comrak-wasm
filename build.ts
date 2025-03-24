@@ -160,6 +160,9 @@ async function compress_wasm(path: string | URL) {
     },
   );
 
+  // isolate the basename for the output file
+  const brotliJs = brotliFile.replace(/.+\//g, "");
+
   const out = src.replace(
     /const bytes = base64decode\("(.+?)"\);\s*?\n/s,
     (_, b) => {
@@ -170,13 +173,15 @@ async function compress_wasm(path: string | URL) {
       // take advantage of the native module (and its performance benefits)
       // if available, without losing compatibility with other runtimes.
       return $.dedent`
+        // hacky workaround to prevent esm.sh etc from rewriting this import
+        const zlib = "node:zlib";
         /** @type {(b: Uint8Array) => Uint8Array} */
-        const decompress = await import("node:zlib").then(
-          // use node zlib if available (in node, deno, bun)
+        const decompress = await import(zlib).then(
+          // use node zlib if available, e.g. in node, deno, and bun
           (z) => (z.default ?? z)["brotliDecompressSync"].bind(z),
         ).catch(
-          // otherwise use npm:debrotli, a fast wasm brotli decompressor
-          () => import("./${brotliFile}").then((m) => m.decompress || m.default)
+          // otherwise use a bundled debrotli, a fast wasm brotli decompressor
+          () => import("./${brotliJs}").then((m) => m.decompress || m.default)
         );
 
         const bytes = decompress(
