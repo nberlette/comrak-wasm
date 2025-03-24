@@ -110,7 +110,7 @@ jobs:
         name: upload build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: comrak-${{ github.ref_name }}
+          name: comrak-${{ github.sha }}
           path: ${{ github.workspace }}/lib
           retention-days: 7
 
@@ -179,7 +179,7 @@ jobs:
         uses: actions/download-artifact@v4
         continue-on-error: true
         with:
-          name: comrak-${{ github.ref_name }}
+          name: comrak-${{ github.sha }}
           path: ${{ github.workspace }}/lib
 
       - name: Setup Deno
@@ -198,7 +198,9 @@ jobs:
         run: deno task build
 
       - name: Publish to JSR
-        if: steps.build.outcome == 'success'
+        if: |
+          steps.build.outcome == 'success' ||
+          steps.artifact.outcome == 'success'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
