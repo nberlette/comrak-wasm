@@ -162,9 +162,10 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           key: |
-            comrak_deno-${{ github.event.inputs.deno-version || 'canary' }}_build-${{ github.sha }}
-            comrak_deno-${{ github.event.inputs.deno-version || 'canary' }}_build-${{ github.ref_name }}
-            comrak_deno-${{ github.event.inputs.deno-version || 'canary' }}_build
+            deno-${{ github.event.inputs.deno-version || 'canary' }}_comrak-${{ github.ref_name }}_${{ github.sha }}
+            deno-${{ github.event.inputs.deno-version || 'canary' }}_comrak-${{ github.ref_name }}_build-${{ github.sha }}
+            deno-${{ github.event.inputs.deno-version || 'canary' }}_comrak-${{ github.ref_name }}_build-${{ github.ref_name }}
+            deno-${{ github.event.inputs.deno-version || 'canary' }}_comrak-${{ github.ref_name }}_build
           path: |
             /home/runner/.cache
             /home/runner/.cargo
