@@ -21,7 +21,8 @@
       "**/*.test.*",
       "target",
       "build.ts",
-      "test.*"
+      "test.*",
+      "!lib"
     ]
   },
   "lock": true,
