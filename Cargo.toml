@@ -16,7 +16,7 @@
   mt      = ["alloc"]
 
 [dependencies]
-  comrak             = { version = "=0.17.0", default-features = false }
+  comrak             = { version = "=0.43.0", default-features = false }
   js-sys             = "=0.3.77"
   serde              = { version = "=1.0.219", features = ["derive"] }
   wasm-bindgen       = { version = "=0.2.100", features = [] }

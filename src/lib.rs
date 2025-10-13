@@ -59,9 +59,33 @@ struct FlatComrakOptions {
   extension_tagfilter: bool,
   extension_tasklist: bool,
   #[serde(default)]
+  extension_multiline_block_quotes: bool,
+  #[serde(default)]
+  extension_alerts: bool,
+  #[serde(default)]
+  extension_math_dollars: bool,
+  #[serde(default)]
+  extension_math_code: bool,
+  #[serde(default)]
+  extension_wikilinks_title_after_pipe: bool,
+  #[serde(default)]
+  extension_wikilinks_title_before_pipe: bool,
+  #[serde(default)]
+  extension_underline: bool,
+  #[serde(default)]
+  extension_subscript: bool,
+  #[serde(default)]
+  extension_spoiler: bool,
+  #[serde(default)]
+  extension_greentext: bool,
+  #[serde(default)]
+  extension_cjk_friendly_emphasis: bool,
+  #[serde(default)]
   parse_default_info_string: Option<String>,
   parse_smart: bool,
   parse_relaxed_tasklist_matching: bool,
+  #[serde(default)]
+  parse_relaxed_autolinks: bool,
   render_escape: bool,
   render_full_info_string: bool,
   render_github_pre_lang: bool,
@@ -70,6 +94,20 @@ struct FlatComrakOptions {
   render_list_style: ComrakListStyleType,
   render_unsafe: bool,
   render_width: usize,
+  #[serde(default)]
+  render_sourcepos: bool,
+  #[serde(default)]
+  render_escaped_char_spans: bool,
+  #[serde(default)]
+  render_ignore_setext: bool,
+  #[serde(default)]
+  render_ignore_empty_links: bool,
+  #[serde(default)]
+  render_gfm_quirks: bool,
+  #[serde(default)]
+  render_prefer_fenced: bool,
+  #[serde(default)]
+  render_figure_with_caption: bool,
 }
 
 impl Default for FlatComrakOptions {
@@ -85,9 +123,21 @@ impl Default for FlatComrakOptions {
       extension_table: true,
       extension_tagfilter: true,
       extension_tasklist: true,
+      extension_multiline_block_quotes: false,
+      extension_alerts: false,
+      extension_math_dollars: false,
+      extension_math_code: false,
+      extension_wikilinks_title_after_pipe: false,
+      extension_wikilinks_title_before_pipe: false,
+      extension_underline: false,
+      extension_subscript: false,
+      extension_spoiler: false,
+      extension_greentext: false,
+      extension_cjk_friendly_emphasis: false,
       parse_relaxed_tasklist_matching: false,
       parse_default_info_string: None,
       parse_smart: true,
+      parse_relaxed_autolinks: false,
       render_escape: true,
       render_github_pre_lang: true,
       render_hardbreaks: false,
@@ -95,6 +145,13 @@ impl Default for FlatComrakOptions {
       render_width: 80,
       render_list_style: Default::default(),
       render_full_info_string: false,
+      render_sourcepos: false,
+      render_escaped_char_spans: false,
+      render_ignore_setext: false,
+      render_ignore_empty_links: false,
+      render_gfm_quirks: false,
+      render_prefer_fenced: false,
+      render_figure_with_caption: false,
     }
   }
 }
@@ -112,9 +169,21 @@ export interface Options {
   extension_table: boolean;
   extension_tagfilter: boolean;
   extension_tasklist: boolean;
+  extension_multiline_block_quotes?: boolean;
+  extension_alerts?: boolean;
+  extension_math_dollars?: boolean;
+  extension_math_code?: boolean;
+  extension_wikilinks_title_after_pipe?: boolean;
+  extension_wikilinks_title_before_pipe?: boolean;
+  extension_underline?: boolean;
+  extension_subscript?: boolean;
+  extension_spoiler?: boolean;
+  extension_greentext?: boolean;
+  extension_cjk_friendly_emphasis?: boolean;
   parse_default_info_string?: string;
   parse_smart: boolean;
   parse_relaxed_tasklist_matching?: boolean;
+  parse_relaxed_autolinks?: boolean;
   render_escape: boolean;
   render_full_info_string?: boolean;
   render_github_pre_lang: boolean;
@@ -122,6 +191,13 @@ export interface Options {
   render_list_style?: "dash" | "plus" | "star";
   render_unsafe: boolean;
   render_width: number;
+  render_sourcepos?: boolean;
+  render_escaped_char_spans?: boolean;
+  render_ignore_setext?: boolean;
+  render_ignore_empty_links?: boolean;
+  render_gfm_quirks?: boolean;
+  render_prefer_fenced?: boolean;
+  render_figure_with_caption?: boolean;
 }
 "#;
 
@@ -144,11 +220,28 @@ pub fn markdown_to_html(
       table: opts.extension_table,
       tagfilter: opts.extension_tagfilter,
       tasklist: opts.extension_tasklist,
+      multiline_block_quotes: opts.extension_multiline_block_quotes,
+      alerts: opts.extension_alerts,
+      math_dollars: opts.extension_math_dollars,
+      math_code: opts.extension_math_code,
+      wikilinks_title_after_pipe: opts.extension_wikilinks_title_after_pipe,
+      wikilinks_title_before_pipe: opts.extension_wikilinks_title_before_pipe,
+      underline: opts.extension_underline,
+      subscript: opts.extension_subscript,
+      spoiler: opts.extension_spoiler,
+      greentext: opts.extension_greentext,
+      cjk_friendly_emphasis: opts.extension_cjk_friendly_emphasis,
+      image_url_rewriter: None,
+      link_url_rewriter: None,
+      #[cfg(feature = "shortcodes")]
+      shortcodes: false,
     },
     parse: ComrakParseOptions {
       default_info_string: opts.parse_default_info_string,
       smart: opts.parse_smart,
       relaxed_tasklist_matching: opts.parse_relaxed_tasklist_matching,
+      relaxed_autolinks: opts.parse_relaxed_autolinks,
+      broken_link_callback: None,
     },
     render: ComrakRenderOptions {
       escape: opts.render_escape,
@@ -158,6 +251,13 @@ pub fn markdown_to_html(
       width: opts.render_width,
       full_info_string: opts.render_full_info_string,
       list_style: opts.render_list_style,
+      sourcepos: opts.render_sourcepos,
+      escaped_char_spans: opts.render_escaped_char_spans,
+      ignore_setext: opts.render_ignore_setext,
+      ignore_empty_links: opts.render_ignore_empty_links,
+      gfm_quirks: opts.render_gfm_quirks,
+      prefer_fenced: opts.render_prefer_fenced,
+      figure_with_caption: opts.render_figure_with_caption,
     },
   };
   let html = comrak::markdown_to_html(md, &opts);

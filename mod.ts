@@ -170,6 +170,151 @@ export interface ComrakExtensionOptions {
    * @default {false}
    */
   tasklist?: boolean;
+
+  /** Enables the multiline block quote extension.
+   *
+   * Place `>>>` before and after text to make it into a block quote.
+   *
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
+   * markdownToHTML(">>>\nparagraph\n>>>", { extension: { multilineBlockQuotes: true } });
+   * // "<blockquote>\n<p>paragraph</p>\n</blockquote>\n"
+   * ```
+   *
+   * @default {false}
+   */
+  multilineBlockQuotes?: boolean;
+
+  /** Enables GitHub style alerts.
+   *
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
+   * markdownToHTML("> [!note]\n> Something of note", { extension: { alerts: true } });
+   * // "<div class=\"markdown-alert markdown-alert-note\">\n<p class=\"markdown-alert-title\">Note</p>\n<p>Something of note</p>\n</div>\n"
+   * ```
+   *
+   * @default {false}
+   */
+  alerts?: boolean;
+
+  /** Enables math using dollar syntax.
+   *
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
+   * markdownToHTML("$1 + 2$ and $$x = y$$", { extension: { mathDollars: true } });
+   * // "<p><span data-math-style=\"inline\">1 + 2</span> and <span data-math-style=\"display\">x = y</span></p>\n"
+   * ```
+   *
+   * @default {false}
+   */
+  mathDollars?: boolean;
+
+  /** Enables math using code syntax.
+   *
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
+   * markdownToHTML("$`1 + 2`$", { extension: { mathCode: true } });
+   * // "<p><code data-math-style=\"inline\">1 + 2</code></p>\n"
+   * ```
+   *
+   * @default {false}
+   */
+  mathCode?: boolean;
+
+  /** Enables wikilinks using title after pipe syntax.
+   *
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
+   * markdownToHTML("[[url|link label]]", { extension: { wikiLinksTitleAfterPipe: true } });
+   * // "<p><a href=\"url\" data-wikilink=\"true\">link label</a></p>\n"
+   * ```
+   *
+   * @default {false}
+   */
+  wikiLinksTitleAfterPipe?: boolean;
+
+  /** Enables wikilinks using title before pipe syntax.
+   *
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
+   * markdownToHTML("[[link label|url]]", { extension: { wikiLinksTitleBeforePipe: true } });
+   * // "<p><a href=\"url\" data-wikilink=\"true\">link label</a></p>\n"
+   * ```
+   *
+   * @default {false}
+   */
+  wikiLinksTitleBeforePipe?: boolean;
+
+  /** Enables underlines using double underscores.
+   *
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
+   * markdownToHTML("__underlined text__", { extension: { underline: true } });
+   * // "<p><u>underlined text</u></p>\n"
+   * ```
+   *
+   * @default {false}
+   */
+  underline?: boolean;
+
+  /** Enables subscript text using single tildes.
+   *
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
+   * markdownToHTML("H~2~O", { extension: { subscript: true } });
+   * // "<p>H<sub>2</sub>O</p>\n"
+   * ```
+   *
+   * @default {false}
+   */
+  subscript?: boolean;
+
+  /** Enables spoilers using double vertical bars.
+   *
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
+   * markdownToHTML("Darth Vader is ||Luke's father||", { extension: { spoiler: true } });
+   * // "<p>Darth Vader is <span class=\"spoiler\">Luke's father</span></p>\n"
+   * ```
+   *
+   * @default {false}
+   */
+  spoiler?: boolean;
+
+  /** Requires at least one space after a `>` character to generate a blockquote.
+   *
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
+   * markdownToHTML(">implying implications", { extension: { greentext: true } });
+   * // "<p>&gt;implying implications</p>\n"
+   * ```
+   *
+   * @default {false}
+   */
+  greentext?: boolean;
+
+  /** Recognizes many emphasis that appear in CJK contexts.
+   *
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
+   * markdownToHTML("**この文は重要です。**但这句话并不重要。", { extension: { cjkFriendlyEmphasis: true } });
+   * // "<p><strong>この文は重要です。</strong>但这句话并不重要。</p>\n"
+   * ```
+   *
+   * @default {false}
+   */
+  cjkFriendlyEmphasis?: boolean;
 }
 
 /** Options for parser functions. */
@@ -215,6 +360,20 @@ export interface ComrakParseOptions {
    * @default {false}
    */
   relaxedTasklistMatching?: boolean;
+
+  /** Relax parsing of autolinks, allow links to be detected inside brackets
+   * and allow all url schemes.
+   *
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
+   * markdownToHTML("[https://foo.com]", { extension: { autolink: true }, parse: { relaxedAutolinks: true } });
+   * // "<p>[<a href=\"https://foo.com\">https://foo.com</a>]</p>\n"
+   * ```
+   *
+   * @default {false}
+   */
+  relaxedAutolinks?: boolean;
 }
 
 /**
@@ -335,6 +494,90 @@ export interface ComrakRenderOptions {
    * @default {"dash"}
    */
   listStyle?: "dash" | "plus" | "star";
+
+  /** Include source position attributes in HTML and XML output.
+   *
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
+   * markdownToHTML("Hello *world*!", { render: { sourcepos: true } });
+   * // "<p data-sourcepos=\"1:1-1:14\">Hello <em data-sourcepos=\"1:7-1:13\">world</em>!</p>\n"
+   * ```
+   *
+   * @default {false}
+   */
+  sourcepos?: boolean;
+
+  /** Wrap escaped characters in a `<span>` to allow any post-processing to recognize them.
+   *
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
+   * markdownToHTML("Notify user \\@example", { render: { escapedCharSpans: true } });
+   * // "<p>Notify user <span data-escaped-char>@</span>example</p>\n"
+   * ```
+   *
+   * @default {false}
+   */
+  escapedCharSpans?: boolean;
+
+  /** Ignore setext headings in input.
+   *
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
+   * markdownToHTML("setext heading\n---", { render: { ignoreSetext: true } });
+   * // "<p>setext heading</p>\n<hr />\n"
+   * ```
+   *
+   * @default {false}
+   */
+  ignoreSetext?: boolean;
+
+  /** Ignore empty links in input.
+   *
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
+   * markdownToHTML("[]()", { render: { ignoreEmptyLinks: true } });
+   * // "<p>[]()</p>\n"
+   * ```
+   *
+   * @default {false}
+   */
+  ignoreEmptyLinks?: boolean;
+
+  /** Enables GFM quirks in HTML output which break CommonMark compatibility.
+   *
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
+   * markdownToHTML("****abcd****", { render: { gfmQuirks: true } });
+   * // "<p><strong>abcd</strong></p>\n"
+   * ```
+   *
+   * @default {false}
+   */
+  gfmQuirks?: boolean;
+
+  /** Prefer fenced code blocks when outputting CommonMark.
+   *
+   * @default {false}
+   */
+  preferFenced?: boolean;
+
+  /** Render the image as a figure element with the title as its caption.
+   *
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
+   * markdownToHTML("![image](https://example.com/image.png \"this is an image\")", { render: { figureWithCaption: true } });
+   * // "<p><figure><img src=\"https://example.com/image.png\" alt=\"image\" title=\"this is an image\" /><figcaption>this is an image</figcaption></figure></p>\n"
+   * ```
+   *
+   * @default {false}
+   */
+  figureWithCaption?: boolean;
 }
 
 /**
@@ -368,9 +611,21 @@ export function markdownToHTML(
     extension_table: extension.table ?? false,
     extension_tagfilter: extension.tagfilter ?? false,
     extension_tasklist: extension.tasklist ?? false,
+    extension_multiline_block_quotes: extension.multilineBlockQuotes ?? false,
+    extension_alerts: extension.alerts ?? false,
+    extension_math_dollars: extension.mathDollars ?? false,
+    extension_math_code: extension.mathCode ?? false,
+    extension_wikilinks_title_after_pipe: extension.wikiLinksTitleAfterPipe ?? false,
+    extension_wikilinks_title_before_pipe: extension.wikiLinksTitleBeforePipe ?? false,
+    extension_underline: extension.underline ?? false,
+    extension_subscript: extension.subscript ?? false,
+    extension_spoiler: extension.spoiler ?? false,
+    extension_greentext: extension.greentext ?? false,
+    extension_cjk_friendly_emphasis: extension.cjkFriendlyEmphasis ?? false,
     parse_default_info_string: parse.defaultInfoString ?? "",
     parse_smart: parse.smart ?? false,
     parse_relaxed_tasklist_matching: parse.relaxedTasklistMatching ?? false,
+    parse_relaxed_autolinks: parse.relaxedAutolinks ?? false,
     render_escape: render.escape ?? false,
     render_github_pre_lang: render.githubPreLang ?? false,
     render_hardbreaks: render.hardbreaks ?? false,
@@ -378,6 +633,13 @@ export function markdownToHTML(
     render_width: render.width ?? 0,
     render_full_info_string: render.fullInfoString ?? false,
     render_list_style: render.listStyle ?? "dash",
+    render_sourcepos: render.sourcepos ?? false,
+    render_escaped_char_spans: render.escapedCharSpans ?? false,
+    render_ignore_setext: render.ignoreSetext ?? false,
+    render_ignore_empty_links: render.ignoreEmptyLinks ?? false,
+    render_gfm_quirks: render.gfmQuirks ?? false,
+    render_prefer_fenced: render.preferFenced ?? false,
+    render_figure_with_caption: render.figureWithCaption ?? false,
   } satisfies Options;
   return markdown_to_html(markdown, opts);
 }
