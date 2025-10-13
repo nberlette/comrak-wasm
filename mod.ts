@@ -578,6 +578,31 @@ export interface ComrakRenderOptions {
    * @default {false}
    */
   figureWithCaption?: boolean;
+
+  /** Add classes to the output of the tasklist extension.
+   *
+   * ```ts
+   * import { markdownToHTML } from "@nick/comrak";
+   *
+   * markdownToHTML("- [ ] Foo", { extension: { tasklist: true }, render: { tasklistClasses: true } });
+   * // "<ul class=\"contains-task-list\">\n<li class=\"task-list-item\"><input type=\"checkbox\" class=\"task-list-item-checkbox\" disabled=\"\" /> Foo</li>\n</ul>\n"
+   * ```
+   *
+   * @default {false}
+   */
+  tasklistClasses?: boolean;
+
+  /** Render ordered list with a minimum marker width.
+   *
+   * @default {0}
+   */
+  olWidth?: number;
+
+  /** Minimise escapes used in CommonMark output.
+   *
+   * @default {false}
+   */
+  experimentalMinimizeCommonmark?: boolean;
 }
 
 /**
@@ -640,6 +665,9 @@ export function markdownToHTML(
     render_gfm_quirks: render.gfmQuirks ?? false,
     render_prefer_fenced: render.preferFenced ?? false,
     render_figure_with_caption: render.figureWithCaption ?? false,
+    render_tasklist_classes: render.tasklistClasses ?? false,
+    render_ol_width: render.olWidth ?? 0,
+    render_experimental_minimize_commonmark: render.experimentalMinimizeCommonmark ?? false,
   } satisfies Options;
   return markdown_to_html(markdown, opts);
 }

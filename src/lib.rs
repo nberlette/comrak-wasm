@@ -108,6 +108,12 @@ struct FlatComrakOptions {
   render_prefer_fenced: bool,
   #[serde(default)]
   render_figure_with_caption: bool,
+  #[serde(default)]
+  render_tasklist_classes: bool,
+  #[serde(default)]
+  render_ol_width: usize,
+  #[serde(default)]
+  render_experimental_minimize_commonmark: bool,
 }
 
 impl Default for FlatComrakOptions {
@@ -152,6 +158,9 @@ impl Default for FlatComrakOptions {
       render_gfm_quirks: false,
       render_prefer_fenced: false,
       render_figure_with_caption: false,
+      render_tasklist_classes: false,
+      render_ol_width: 0,
+      render_experimental_minimize_commonmark: false,
     }
   }
 }
@@ -198,6 +207,9 @@ export interface Options {
   render_gfm_quirks?: boolean;
   render_prefer_fenced?: boolean;
   render_figure_with_caption?: boolean;
+  render_tasklist_classes?: boolean;
+  render_ol_width?: number;
+  render_experimental_minimize_commonmark?: boolean;
 }
 "#;
 
@@ -258,6 +270,9 @@ pub fn markdown_to_html(
       gfm_quirks: opts.render_gfm_quirks,
       prefer_fenced: opts.render_prefer_fenced,
       figure_with_caption: opts.render_figure_with_caption,
+      tasklist_classes: opts.render_tasklist_classes,
+      ol_width: opts.render_ol_width,
+      experimental_minimize_commonmark: opts.render_experimental_minimize_commonmark,
     },
   };
   let html = comrak::markdown_to_html(md, &opts);
