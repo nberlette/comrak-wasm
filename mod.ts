@@ -21,9 +21,10 @@ export interface ComrakExtensionOptions {
    *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML("Hello www.github.com.\n", { extension: { autolink: true } });
-   * // "<p>Hello <a href=\"http://www.github.com\">www.github.com</a>.</p>\n"
+   * const html = markdownToHTML("Hello www.github.com.\n", { extension: { autolink: true } });
+   * assert.equal(html, "<p>Hello <a href=\"http://www.github.com\">www.github.com</a>.</p>\n");
    * ```
    *
    * @default {false}
@@ -37,9 +38,10 @@ export interface ComrakExtensionOptions {
    *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML("Term\n\n: Definition", { extension: { descriptionLists: true } });
-   * // "<dl><dt>Term</dt>\n<dd>\n<p>Definition</p>\n</dd>\n</dl>\n"
+   * const html = markdownToHTML("Term\n\n: Definition", { extension: { descriptionLists: true } });
+   * assert.equal(html, "<dl><dt>Term</dt>\n<dd>\n<p>Definition</p>\n</dd>\n</dl>\n");
    * ```
    *
    * @default {false}
@@ -54,9 +56,10 @@ export interface ComrakExtensionOptions {
    *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML("Hi[^x].\n\n[^x]: A greeting.\n", { extension: { footnotes: true } });
-   * // "<p>Hi<sup class=\"footnote-ref\"><a href=\"#fn1\" id=\"fnref1\">1</a></sup>.</p>\n<section class=\"footnotes\">\n<ol>\n<li id=\"fn1\">\n<p>A greeting. <a href=\"#fnref1\" class=\"footnote-backref\">↩</a></p>\n</li>\n</ol>\n</section>\n"
+   * const html = markdownToHTML("Hi[^x].\n\n[^x]: A greeting.\n", { extension: { footnotes: true } });
+   * assert.equal(html, "<p>Hi<sup class=\"footnote-ref\"><a href=\"#fn1\" id=\"fnref1\">1</a></sup>.</p>\n<section class=\"footnotes\">\n<ol>\n<li id=\"fn1\">\n<p>A greeting. <a href=\"#fnref1\" class=\"footnote-backref\">↩</a></p>\n</li>\n</ol>\n</section>\n");
    * ```
    *
    * @default {false}
@@ -72,9 +75,10 @@ export interface ComrakExtensionOptions {
    *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML("---\nlayout: post\n---\nText\n", { extension: { frontMatterDelimiter: "---" } });
-   * // "<p>Text</p>\n"
+   * const html = markdownToHTML("---\nlayout: post\n---\nText\n", { extension: { frontMatterDelimiter: "---" } });
+   * assert.equal(html, "<p>Text</p>\n");
    * ```
    *
    * @default {null}
@@ -85,9 +89,10 @@ export interface ComrakExtensionOptions {
    *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML("# README\n", { extension: { headerIDs: "user-content-" } });
-   * // "<h1><a href=\"#readme\" aria-hidden=\"true\" class=\"anchor\" id=\"user-content-readme\"></a>README</h1>\n"
+   * const html = markdownToHTML("# README\n", { extension: { headerIDs: "user-content-" } });
+   * assert.equal(html, "<h1><a href=\"#readme\" aria-hidden=\"true\" class=\"anchor\" id=\"user-content-readme\"></a>README</h1>\n");
    * ```
    *
    * @default {null}
@@ -100,9 +105,10 @@ export interface ComrakExtensionOptions {
    *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML("Hello ~world~ there.\n", { extension: { strikethrough: true } });
-   * // "<p>Hello <del>world</del> there.</p>\n"
+   * const html = markdownToHTML("Hello ~world~ there.\n", { extension: { strikethrough: true } });
+   * assert.equal(html, "<p>Hello <del>world</del> there.</p>\n");
    * ```
    *
    * @default {false}
@@ -113,9 +119,10 @@ export interface ComrakExtensionOptions {
    *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML("e = mc^2^.\n", { extension: { superscript: true } });
-   * // "<p>e = mc<sup>2</sup>.</p>\n"
+   * const html = markdownToHTML("e = mc^2^.\n", { extension: { superscript: true } });
+   * assert.equal(html, "<p>e = mc<sup>2</sup>.</p>\n");
    * ```
    *
    * @default {false}
@@ -128,10 +135,10 @@ export interface ComrakExtensionOptions {
    *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML("| a | b |\n|---|---|\n| c | d |\n", { extension: { table: true } });
-   * // "<table>\n<thead>\n<tr>\n<th>a</th>\n<th>b</th>\n</tr>\n</thead>\n" +
-   * // "<tbody>\n<tr>\n<td>c</td>\n<td>d</td>\n</tr>\n</tbody>\n</table>\n"
+   * const html = markdownToHTML("| a | b |\n|---|---|\n| c | d |\n", { extension: { table: true } });
+   * assert.equal(html, "<table>\n<thead>\n<tr>\n<th>a</th>\n<th>b</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>c</td>\n<td>d</td>\n</tr>\n</tbody>\n</table>\n");
    * ```
    *
    * @default {false}
@@ -144,9 +151,10 @@ export interface ComrakExtensionOptions {
    *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML("Hello <xmp>.\n\n<xmp>", { extension: { tagfilter: true } });
-   * // "<p>Hello &lt;xmp>.</p>\n&lt;xmp>\n"
+   * const html = markdownToHTML("Hello <xmp>.\n\n<xmp>", { extension: { tagfilter: true } });
+   * assert.equal(html, "<p>Hello &lt;xmp>.</p>\n&lt;xmp>\n");
    * ```
    *
    * @default {false}
@@ -161,10 +169,10 @@ export interface ComrakExtensionOptions {
    *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML("* [x] Done\n* [ ] Not done\n", { extension: { tasklist: true } });
-   * // "<ul>\n<li><input type=\"checkbox\" disabled=\"\" checked=\"\" /> Done</li>\n\
-   * // <li><input type=\"checkbox\" disabled=\"\" /> Not done</li>\n</ul>\n"
+   * const html = markdownToHTML("* [x] Done\n* [ ] Not done\n", { extension: { tasklist: true } });
+   * assert.equal(html, "<ul>\n<li><input type=\"checkbox\" disabled=\"\" checked=\"\" /> Done</li>\n<li><input type=\"checkbox\" disabled=\"\" /> Not done</li>\n</ul>\n");
    * ```
    *
    * @default {false}
@@ -254,9 +262,10 @@ export interface ComrakExtensionOptions {
    *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML("__underlined text__", { extension: { underline: true } });
-   * // "<p><u>underlined text</u></p>\n"
+   * const html = markdownToHTML("__underlined text__", { extension: { underline: true } });
+   * assert.equal(html, "<p><u>underlined text</u></p>\n");
    * ```
    *
    * @default {false}
@@ -267,9 +276,10 @@ export interface ComrakExtensionOptions {
    *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML("H~2~O", { extension: { subscript: true } });
-   * // "<p>H<sub>2</sub>O</p>\n"
+   * const html = markdownToHTML("H~2~O", { extension: { subscript: true } });
+   * assert.equal(html, "<p>H<sub>2</sub>O</p>\n");
    * ```
    *
    * @default {false}
@@ -280,9 +290,10 @@ export interface ComrakExtensionOptions {
    *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML("Darth Vader is ||Luke's father||", { extension: { spoiler: true } });
-   * // "<p>Darth Vader is <span class=\"spoiler\">Luke's father</span></p>\n"
+   * const html = markdownToHTML("Darth Vader is ||Luke's father||", { extension: { spoiler: true } });
+   * assert.equal(html, "<p>Darth Vader is <span class=\"spoiler\">Luke's father</span></p>\n");
    * ```
    *
    * @default {false}
@@ -293,9 +304,10 @@ export interface ComrakExtensionOptions {
    *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML(">implying implications", { extension: { greentext: true } });
-   * // "<p>&gt;implying implications</p>\n"
+   * const html = markdownToHTML(">implying implications", { extension: { greentext: true } });
+   * assert.equal(html, "<p>&gt;implying implications</p>\n");
    * ```
    *
    * @default {false}
@@ -306,9 +318,10 @@ export interface ComrakExtensionOptions {
    *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML("**この文は重要です。**但这句话并不重要。", { extension: { cjkFriendlyEmphasis: true } });
-   * // "<p><strong>この文は重要です。</strong>但这句话并不重要。</p>\n"
+   * const html = markdownToHTML("**この文は重要です。**但这句话并不重要。", { extension: { cjkFriendlyEmphasis: true } });
+   * assert.equal(html, "<p><strong>この文は重要です。</strong>但这句话并不重要。</p>\n");
    * ```
    *
    * @default {false}
@@ -323,12 +336,13 @@ export interface ComrakParseOptions {
    *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML("\`\`\`\nfn hello();\n\`\`\`\n");
-   * // "<pre><code>fn hello();\n</code></pre>\n"
+   * let html = markdownToHTML("\`\`\`\nfn hello();\n\`\`\`\n");
+   * assert.equal(html, "<pre><code>fn hello();\n</code></pre>\n");
    *
-   * markdownToHTML("\`\`\`\nfn hello();\n\`\`\`\n", { parse: { defaultInfoString: "rust" } });
-   * // "<pre><code class=\"language-rust\">fn hello();\n</code></pre>\n"
+   * html = markdownToHTML("\`\`\`\nfn hello();\n\`\`\`\n", { parse: { defaultInfoString: "rust" } });
+   * assert.equal(html, "<pre><code class=\"language-rust\">fn hello();\n</code></pre>\n");
    * ```
    *
    * @default {null}
@@ -338,14 +352,17 @@ export interface ComrakParseOptions {
   /** Punctuation (quotes, full-stops and hyphens) are converted into ‘smart’
    * punctuation.
    *
+   *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML("'Hello,' \"world\" ...");
-   * // "<p>'Hello,' &quot;world&quot; ...</p>\n"
+   * let html = markdownToHTML("'Hello,' \"world\" ...");
+   * assert.equal(html, "<p>'Hello,' \&quot;world\&quot; ...</p>\n");
    *
-   * markdownToHTML("'Hello,' \"world\" ...", { parse: { smart: true } });
-   * // "<p>‘Hello,’ “world” …</p>\n"
+   * html = markdownToHTML("'Hello,' \"world\" ...", { parse: { smart: true } });
+   * assert.equal(html, "<p>'Hello,' "world" …</p>\n");
+   * ```
    * ```
    *
    * @default {false}
@@ -365,9 +382,10 @@ export interface ComrakParseOptions {
    *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML("[https://foo.com]", { extension: { autolink: true }, parse: { relaxedAutolinks: true } });
-   * // "<p>[<a href=\"https://foo.com\">https://foo.com</a>]</p>\n"
+   * const html = markdownToHTML("[https://foo.com]", { extension: { autolink: true }, parse: { relaxedAutolinks: true } });
+   * assert.equal(html, "<p>[<a href=\"https://foo.com\">https://foo.com</a>]</p>\n");
    * ```
    *
    * @default {false}
@@ -383,12 +401,13 @@ export interface ComrakRenderOptions {
    *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML("<i>italic text</i>");
-   * // "<p><!-- raw HTML omitted -->italic text<!-- raw HTML omitted --></p>\n"
+   * let html = markdownToHTML("<i>italic text</i>");
+   * assert.equal(html, "<p><!-- raw HTML omitted -->italic text<!-- raw HTML omitted --></p>\n");
    *
-   * markdownToHTML("<i>italic text</i>", { render: { escape: true } });
-   * // "<p>&lt;i&gt;italic text&lt;/i&gt;</p>\n"
+   * html = markdownToHTML("<i>italic text</i>", { render: { escape: true } });
+   * assert.equal(html, "<p>&lt;i&gt;italic text&lt;/i&gt;</p>\n");
    * ```
    *
    * @default {false}
@@ -400,12 +419,13 @@ export interface ComrakRenderOptions {
    *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML("\`\`\`rust\nfn hello();\n\`\`\`\n");
-   * // "<pre><code class=\"language-rust\">fn hello();\n</code></pre>\n"
+   * let html = markdownToHTML("\`\`\`rust\nfn hello();\n\`\`\`\n");
+   * assert.equal(html, "<pre><code class=\"language-rust\">fn hello();\n</code></pre>\n");
    *
-   * markdownToHTML("\`\`\`rust\nfn hello();\n\`\`\`\n", { render: { githubPreLang: true } });
-   * // "<pre lang=\"rust\"><code>fn hello();\n</code></pre>\n"
+   * html = markdownToHTML("\`\`\`rust\nfn hello();\n\`\`\`\n", { render: { githubPreLang: true } });
+   * assert.equal(html, "<pre lang=\"rust\"><code>fn hello();\n</code></pre>\n");
    * ```
    *
    * @default {false}
@@ -417,12 +437,13 @@ export interface ComrakRenderOptions {
    *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML("Hello.\nWorld.\n");
-   * // "<p>Hello.\nWorld.</p>\n"
+   * let html = markdownToHTML("Hello.\nWorld.\n");
+   * assert.equal(html, "<p>Hello.\nWorld.</p>\n");
    *
-   * markdownToHTML("Hello.\nWorld.\n", { render: { hardbreaks: true } });
-   * // "<p>Hello.<br />\nWorld.</p>\n"
+   * html = markdownToHTML("Hello.\nWorld.\n", { render: { hardbreaks: true } });
+   * assert.equal(html, "<p>Hello.<br />\nWorld.</p>\n");
    * ```
    *
    * @default {false}
@@ -469,12 +490,13 @@ export interface ComrakRenderOptions {
    *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML("\`\`\`rust extra info\nfn hello();\n\`\`\`\n");
-   * // "<pre><code class=\"language-rust\">fn hello();\n</code></pre>\n"
+   * let html = markdownToHTML("\`\`\`rust extra info\nfn hello();\n\`\`\`\n");
+   * assert.equal(html, "<pre><code class=\"language-rust\">fn hello();\n</code></pre>\n");
    *
-   * markdownToHTML("\`\`\`rust extra info\nfn hello();\n\`\`\`\n", { render: { fullInfoString: true } });
-   * // "<pre><code class=\"language-rust\" data-meta="extra info">fn hello();\n</code></pre>\n"
+   * html = markdownToHTML("\`\`\`rust extra info\nfn hello();\n\`\`\`\n", { render: { fullInfoString: true } });
+   * assert.equal(html, "<pre><code class=\"language-rust\" data-meta="extra info">fn hello();\n</code></pre>\n");
    * ```
    *
    * @default {false}
@@ -485,9 +507,10 @@ export interface ComrakRenderOptions {
    *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML("* Item\n* Item\n", { render: { listStyle: "star" } });
-   * // "<ul>\n<li>Item</li>\n<li>Item</li>\n</ul>\n"
+   * const html = markdownToHTML("* Item\n* Item\n", { render: { listStyle: "star" } });
+   * assert.equal(html, "<ul>\n<li>Item</li>\n<li>Item</li>\n</ul>\n");
    * ```
    *
    * @default {"dash"}
@@ -498,9 +521,10 @@ export interface ComrakRenderOptions {
    *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML("Hello *world*!", { render: { sourcepos: true } });
-   * // "<p data-sourcepos=\"1:1-1:14\">Hello <em data-sourcepos=\"1:7-1:13\">world</em>!</p>\n"
+   * const html = markdownToHTML("Hello *world*!", { render: { sourcepos: true } });
+   * assert.equal(html, "<p data-sourcepos=\"1:1-1:14\">Hello <em data-sourcepos=\"1:7-1:13\">world</em>!</p>\n");
    * ```
    *
    * @default {false}
@@ -511,9 +535,10 @@ export interface ComrakRenderOptions {
    *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML("Notify user \\@example", { render: { escapedCharSpans: true } });
-   * // "<p>Notify user <span data-escaped-char>@</span>example</p>\n"
+   * const html = markdownToHTML("Notify user \\@example", { render: { escapedCharSpans: true } });
+   * assert.equal(html, "<p>Notify user <span data-escaped-char>@</span>example</p>\n");
    * ```
    *
    * @default {false}
@@ -524,9 +549,10 @@ export interface ComrakRenderOptions {
    *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML("setext heading\n---", { render: { ignoreSetext: true } });
-   * // "<p>setext heading</p>\n<hr />\n"
+   * const html = markdownToHTML("setext heading\n---", { render: { ignoreSetext: true } });
+   * assert.equal(html, "<p>setext heading</p>\n<hr />\n");
    * ```
    *
    * @default {false}
@@ -537,9 +563,10 @@ export interface ComrakRenderOptions {
    *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML("[]()", { render: { ignoreEmptyLinks: true } });
-   * // "<p>[]()</p>\n"
+   * const html = markdownToHTML("[]()", { render: { ignoreEmptyLinks: true } });
+   * assert.equal(html, "<p>[]()</p>\n");
    * ```
    *
    * @default {false}
@@ -550,9 +577,10 @@ export interface ComrakRenderOptions {
    *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML("****abcd****", { render: { gfmQuirks: true } });
-   * // "<p><strong>abcd</strong></p>\n"
+   * const html = markdownToHTML("****abcd****", { render: { gfmQuirks: true } });
+   * assert.equal(html, "<p><strong>abcd</strong></p>\n");
    * ```
    *
    * @default {false}
@@ -569,9 +597,10 @@ export interface ComrakRenderOptions {
    *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML("![image](https://example.com/image.png \"this is an image\")", { render: { figureWithCaption: true } });
-   * // "<p><figure><img src=\"https://example.com/image.png\" alt=\"image\" title=\"this is an image\" /><figcaption>this is an image</figcaption></figure></p>\n"
+   * const html = markdownToHTML("![image](https://example.com/image.png \"this is an image\")", { render: { figureWithCaption: true } });
+   * assert.equal(html, "<p><figure><img src=\"https://example.com/image.png\" alt=\"image\" title=\"this is an image\" /><figcaption>this is an image</figcaption></figure></p>\n");
    * ```
    *
    * @default {false}
@@ -582,9 +611,10 @@ export interface ComrakRenderOptions {
    *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML("- [ ] Foo", { extension: { tasklist: true }, render: { tasklistClasses: true } });
-   * // "<ul class=\"contains-task-list\">\n<li class=\"task-list-item\"><input type=\"checkbox\" class=\"task-list-item-checkbox\" disabled=\"\" /> Foo</li>\n</ul>\n"
+   * const html = markdownToHTML("- [ ] Foo", { extension: { tasklist: true }, render: { tasklistClasses: true } });
+   * assert.equal(html, "<ul class=\"contains-task-list\">\n<li class=\"task-list-item\"><input type=\"checkbox\" class=\"task-list-item-checkbox\" disabled=\"\" /> Foo</li>\n</ul>\n");
    * ```
    *
    * @default {false}
