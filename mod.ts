@@ -172,6 +172,8 @@ export interface ComrakExtensionOptions {
   tasklist?: boolean;
 
   /** Enables the multiline block quote extension.
+  /** 
+   * Enables the multiline block quote extension.
    *
    * Place `>>>` before and after text to make it into a block quote.
    *
