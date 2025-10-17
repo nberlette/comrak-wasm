@@ -2,6 +2,11 @@
   "name": "@nick/comrak",
   "version": "0.4.4",
   "license": "MIT",
+  "author": {
+    "name": "Nicholas Berlette",
+    "email": "nick@berlette.com",
+    "url": "https://github.com/nberlette/comrak-wasm"
+  },
   "exports": "./mod.ts",
   "tasks": {
     "build": "deno run -A build.ts",
