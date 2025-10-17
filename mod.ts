@@ -1,5 +1,5 @@
 // @ts-types="./lib/comrak_wasm.d.ts"
-import { markdown_to_html, type Options } from "./lib/comrak_wasm.js";
+import { markdown_to_html } from "./lib/comrak_wasm.js";
 
 /**
  * Options for the {@linkcode markdownToHTML} function.
@@ -177,9 +177,10 @@ export interface ComrakExtensionOptions {
    *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML(">>>\nparagraph\n>>>", { extension: { multilineBlockQuotes: true } });
-   * // "<blockquote>\n<p>paragraph</p>\n</blockquote>\n"
+   * const html = markdownToHTML(">>>\nparagraph\n>>>", { extension: { multilineBlockQuotes: true } });
+   * assert.equal(html, "<blockquote>\n<p>paragraph</p>\n</blockquote>\n");
    * ```
    *
    * @default {false}
@@ -190,9 +191,10 @@ export interface ComrakExtensionOptions {
    *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML("> [!note]\n> Something of note", { extension: { alerts: true } });
-   * // "<div class=\"markdown-alert markdown-alert-note\">\n<p class=\"markdown-alert-title\">Note</p>\n<p>Something of note</p>\n</div>\n"
+   * const html = markdownToHTML("> [!note]\n> Something of note", { extension: { alerts: true } });
+   * assert.equal(html, "<div class=\"markdown-alert markdown-alert-note\">\n<p class=\"markdown-alert-title\">Note</p>\n<p>Something of note</p>\n</div>\n");
    * ```
    *
    * @default {false}
@@ -203,9 +205,10 @@ export interface ComrakExtensionOptions {
    *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML("$1 + 2$ and $$x = y$$", { extension: { mathDollars: true } });
-   * // "<p><span data-math-style=\"inline\">1 + 2</span> and <span data-math-style=\"display\">x = y</span></p>\n"
+   * const html = markdownToHTML("$1 + 2$ and $$x = y$$", { extension: { mathDollars: true } });
+   * assert.equal(html, "<p><span data-math-style=\"inline\">1 + 2</span> and <span data-math-style=\"display\">x = y</span></p>\n");
    * ```
    *
    * @default {false}
@@ -216,40 +219,34 @@ export interface ComrakExtensionOptions {
    *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML("$`1 + 2`$", { extension: { mathCode: true } });
-   * // "<p><code data-math-style=\"inline\">1 + 2</code></p>\n"
+   * const html = markdownToHTML("$`1 + 2`$", { extension: { mathCode: true } });
+   * assert.equal(html, "<p><code data-math-style=\"inline\">1 + 2</code></p>\n");
    * ```
    *
    * @default {false}
    */
   mathCode?: boolean;
 
-  /** Enables wikilinks using title after pipe syntax.
+  /** Enables wikilinks extension.
    *
    * ```ts
    * import { markdownToHTML } from "@nick/comrak";
+   * import assert from "node:assert";
    *
-   * markdownToHTML("[[url|link label]]", { extension: { wikiLinksTitleAfterPipe: true } });
-   * // "<p><a href=\"url\" data-wikilink=\"true\">link label</a></p>\n"
+   * // Title after pipe: [[url|title]]
+   * const html1 = markdownToHTML("[[url|link label]]", { extension: { wikilinksTitle: "after" } });
+   * assert.equal(html1, "<p><a href=\"url\" data-wikilink=\"true\">link label</a></p>\n");
+   *
+   * // Title before pipe: [[title|url]]
+   * const html2 = markdownToHTML("[[link label|url]]", { extension: { wikilinksTitle: "before" } });
+   * assert.equal(html2, "<p><a href=\"url\" data-wikilink=\"true\">link label</a></p>\n");
    * ```
    *
-   * @default {false}
+   * @default {undefined}
    */
-  wikiLinksTitleAfterPipe?: boolean;
-
-  /** Enables wikilinks using title before pipe syntax.
-   *
-   * ```ts
-   * import { markdownToHTML } from "@nick/comrak";
-   *
-   * markdownToHTML("[[link label|url]]", { extension: { wikiLinksTitleBeforePipe: true } });
-   * // "<p><a href=\"url\" data-wikilink=\"true\">link label</a></p>\n"
-   * ```
-   *
-   * @default {false}
-   */
-  wikiLinksTitleBeforePipe?: boolean;
+  wikilinksTitle?: "before" | "after";
 
   /** Enables underlines using double underscores.
    *
@@ -623,51 +620,5 @@ export function markdownToHTML(
   markdown: string,
   options: ComrakOptions = {},
 ): string {
-  const { extension = {}, parse = {}, render = {} } = options;
-
-  const opts = {
-    extension_autolink: extension.autolink ?? false,
-    extension_description_lists: extension.descriptionLists ?? false,
-    extension_footnotes: extension.footnotes ?? false,
-    extension_front_matter_delimiter: extension.frontMatterDelimiter ?? "---",
-    extension_header_ids: extension.headerIDs ?? "",
-    extension_strikethrough: extension.strikethrough ?? false,
-    extension_superscript: extension.superscript ?? false,
-    extension_table: extension.table ?? false,
-    extension_tagfilter: extension.tagfilter ?? false,
-    extension_tasklist: extension.tasklist ?? false,
-    extension_multiline_block_quotes: extension.multilineBlockQuotes ?? false,
-    extension_alerts: extension.alerts ?? false,
-    extension_math_dollars: extension.mathDollars ?? false,
-    extension_math_code: extension.mathCode ?? false,
-    extension_wikilinks_title_after_pipe: extension.wikiLinksTitleAfterPipe ?? false,
-    extension_wikilinks_title_before_pipe: extension.wikiLinksTitleBeforePipe ?? false,
-    extension_underline: extension.underline ?? false,
-    extension_subscript: extension.subscript ?? false,
-    extension_spoiler: extension.spoiler ?? false,
-    extension_greentext: extension.greentext ?? false,
-    extension_cjk_friendly_emphasis: extension.cjkFriendlyEmphasis ?? false,
-    parse_default_info_string: parse.defaultInfoString ?? "",
-    parse_smart: parse.smart ?? false,
-    parse_relaxed_tasklist_matching: parse.relaxedTasklistMatching ?? false,
-    parse_relaxed_autolinks: parse.relaxedAutolinks ?? false,
-    render_escape: render.escape ?? false,
-    render_github_pre_lang: render.githubPreLang ?? false,
-    render_hardbreaks: render.hardbreaks ?? false,
-    render_unsafe: render.unsafe ?? false,
-    render_width: render.width ?? 0,
-    render_full_info_string: render.fullInfoString ?? false,
-    render_list_style: render.listStyle ?? "dash",
-    render_sourcepos: render.sourcepos ?? false,
-    render_escaped_char_spans: render.escapedCharSpans ?? false,
-    render_ignore_setext: render.ignoreSetext ?? false,
-    render_ignore_empty_links: render.ignoreEmptyLinks ?? false,
-    render_gfm_quirks: render.gfmQuirks ?? false,
-    render_prefer_fenced: render.preferFenced ?? false,
-    render_figure_with_caption: render.figureWithCaption ?? false,
-    render_tasklist_classes: render.tasklistClasses ?? false,
-    render_ol_width: render.olWidth ?? 0,
-    render_experimental_minimize_commonmark: render.experimentalMinimizeCommonmark ?? false,
-  } satisfies Options;
-  return markdown_to_html(markdown, opts);
+  return markdown_to_html(markdown, options);
 }
