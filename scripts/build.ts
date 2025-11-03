@@ -1,3 +1,5 @@
+#!/usr/bin/env -S deno run -Aq
+
 // File adapted from https://deno.land/x/brotli@v0.1.4/scripts/build.ts
 // Copyright 2020-present the denosaurs team. All rights reserved. MIT license.
 // Copyright 2025 Nicholas Berlette. All rights reserved. MIT license.
