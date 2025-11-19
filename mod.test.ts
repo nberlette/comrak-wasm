@@ -1,6 +1,9 @@
-
 // deno-lint-ignore no-import-prefix
-import { assert, assertEquals, assertStringIncludes } from "jsr:@std/assert@1.0.15";
+import {
+  assert,
+  assertEquals,
+  assertStringIncludes,
+} from "jsr:@std/assert@1.0.15";
 import { describe, it } from "node:test";
 
 import { markdownToHTML } from "./mod.ts";
@@ -241,10 +244,10 @@ describe("markdownToHTML", () => {
 
     it("should handle unsafe rendering option", () => {
       const markdown = "" +
-      "<script>\nalert('xyz');\n</script>\n\n" +
-      "Possibly <marquee>annoying</marquee>.\n\n" +
-      "[Dangerous](javascript:alert(document.cookie)).\n\n" +
-      "[Safe](http://commonmark.org).";
+        "<script>\nalert('xyz');\n</script>\n\n" +
+        "Possibly <marquee>annoying</marquee>.\n\n" +
+        "[Dangerous](javascript:alert(document.cookie)).\n\n" +
+        "[Safe](http://commonmark.org).";
 
       const safeOutput = markdownToHTML(markdown);
       const unsafeOutput = markdownToHTML(markdown, {
