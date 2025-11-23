@@ -13,15 +13,20 @@ const targets = [
     package: () => import("https://deno.land/x/comrak@0.1.1/mod.ts"),
   },
   {
+    name: "npm:comrak",
+    version: "0.4.2",
+    package: () => import("https://esm.sh/comrak@0.4.2"),
+  },
+  {
     name: "jsr:@nick/comrak",
+    version: "0.4.4",
+    package: () => import("https://esm.sh/jsr/@nick/comrak@0.4.4"),
+  },
+  {
+    name: "jsr:@nick/comrak [local]",
     version: pkg.version,
     package: () => import("./mod.ts"),
     baseline: true,
-  },
-  {
-    name: "npm:comrak",
-    version: "0.4.2",
-    package: () => import("npm:comrak@0.4.2"),
   },
 ] as const satisfies readonly ComrakTarget[];
 
