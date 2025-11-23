@@ -1,5 +1,6 @@
 import { describe, it, type TestContext } from "node:test";
 
+import { legacy } from "./scripts/parse_comrak_version.ts";
 import { markdownToHTML } from "./mod.ts";
 
 describe("markdownToHTML", () => {
@@ -34,7 +35,11 @@ describe("markdownToHTML", () => {
       const html = markdownToHTML(markdown);
       t.assert.strictEqual(
         html,
-        `<h1><a href="#hello-world" aria-hidden="true" class="anchor" id="hello-world"></a>Hello, <strong>world</strong>!</h1>\n`,
+        `<h1>${
+          legacy
+            ? '<a href="#hello-world" aria-hidden="true" class="anchor" id="hello-world"></a>'
+            : ""
+        }Hello, <strong>world</strong>!</h1>\n`,
       );
     });
 
@@ -66,7 +71,9 @@ describe("markdownToHTML", () => {
       });
       t.assert.strictEqual(
         html,
-        `<dl>\n<dt>Term</dt>\n<dd>\n<p>Definition</p>\n</dd>\n</dl>\n`,
+        `<dl>${
+          legacy ? "" : "\n"
+        }<dt>Term</dt>\n<dd>\n<p>Definition</p>\n</dd>\n</dl>\n`,
       );
     });
 
@@ -135,7 +142,12 @@ describe("markdownToHTML", () => {
       });
       t.assert.strictEqual(
         html,
-        `<ul>\n<li><input type="checkbox" checked="" disabled="" /> Done</li>\n<li><input type="checkbox" disabled="" /> Not done</li>\n</ul>\n`,
+        `<ul>\n` +
+          `<li><input type="checkbox" ${
+            legacy ? 'disabled="" checked=""' : 'checked="" disabled=""'
+          } /> Done</li>\n` +
+          `<li><input type="checkbox" disabled="" /> Not done</li>\n` +
+          `</ul>\n`,
       );
     });
   });
@@ -176,7 +188,16 @@ describe("markdownToHTML", () => {
       });
       t.assert.strictEqual(
         html,
-        `<ul>\n<li><input type="checkbox" checked="" disabled="" /> Done</li>\n<li><input type="checkbox" disabled="" /> Not done</li>\n<li><input type="checkbox" checked="" disabled="" /> Also done</li>\n<li><input type="checkbox" disabled="" /> Also not done</li>\n</ul>\n`,
+        `<ul>\n` +
+          `<li><input type="checkbox" ${
+            legacy ? 'disabled="" checked=""' : 'checked="" disabled=""'
+          } /> Done</li>\n` +
+          `<li><input type="checkbox" disabled="" /> Not done</li>\n` +
+          `<li><input type="checkbox" ${
+            legacy ? 'disabled="" checked=""' : 'checked="" disabled=""'
+          } /> Also done</li>\n` +
+          `<li><input type="checkbox" disabled="" /> Also not done</li>\n` +
+          `</ul>\n`,
       );
 
       const htmlStrict = markdownToHTML(markdown, {
@@ -185,7 +206,14 @@ describe("markdownToHTML", () => {
       });
       t.assert.strictEqual(
         htmlStrict,
-        `<ul>\n<li><input type="checkbox" checked="" disabled="" /> Done</li>\n<li><input type="checkbox" disabled="" /> Not done</li>\n<li>[-] Also done</li>\n<li><input type="checkbox" disabled="" /> Also not done</li>\n</ul>\n`,
+        `<ul>\n` +
+          `<li><input type="checkbox" ${
+            legacy ? 'disabled="" checked=""' : 'checked="" disabled=""'
+          } /> Done</li>\n` +
+          `<li><input type="checkbox" disabled="" /> Not done</li>\n` +
+          `<li>[-] Also done</li>\n` +
+          `<li><input type="checkbox" disabled="" /> Also not done</li>\n` +
+          `</ul>\n`,
       );
     });
   });
