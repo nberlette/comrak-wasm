@@ -150,3 +150,4 @@ dist
 
 # wasmbuild output
 /lib
+.coverage

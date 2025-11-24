@@ -1,17 +1,37 @@
+#!/usr/bin/env -S deno run -Aq
+
 // File adapted from https://deno.land/x/brotli@v0.1.4/scripts/build.ts
 // Copyright 2020-present the denosaurs team. All rights reserved. MIT license.
 // Copyright 2025 Nicholas Berlette. All rights reserved. MIT license.
 
-import * as zlib from "node:zlib";
-import { $ } from "jsr:@david/dax@0.42.0";
+import zlib from "node:zlib";
+import path from "node:path";
+
+// deno-lint-ignore no-import-prefix
+import { $ } from "jsr:@david/dax@0.43.2";
+import { legacy } from "./parse_comrak_version.ts";
 
 const name = "comrak_wasm";
 
-const outDir = "lib";
-const brotliFile = `${outDir}/brotli.js`;
+const OUT_DIR = Deno.env.get("OUT_DIR") || "lib";
+const BROTLI_FILE = Deno.env.get("BROTLI_FILE") || "debrotli.bundle.js";
+const BROTLI_PATH = path.join(OUT_DIR, BROTLI_FILE);
 
-function compress(data: Uint8Array, quality = 11): Uint8Array {
-  const { buffer } = zlib.brotliCompressSync(data, {
+/** Maximum size threshold for automatic brotli compression. */
+const MAX_WASM_SIZE = 750 * 1024; // 750KB
+
+/**
+ * Controls the quality level of automatic brotli compression.
+ * If set to `0`, compression is forcibly disabled.
+ */
+const WASM_COMPRESS = +(Deno.env.get("WASM_COMPRESS") || "11");
+
+const WASMBUILD_VERSION = Deno.env.get("WASMBUILD_VERSION") || "0.19.1";
+
+function compress(data: string, quality = WASM_COMPRESS): string {
+  const buf = Uint8Array.fromBase64(data.replace(/\\|\s+/g, ""));
+
+  const { buffer } = zlib.brotliCompressSync(buf, {
     params: {
       // we don't use text mode since we're not compressing text
       [zlib.constants.BROTLI_PARAM_MODE]: zlib.constants.BROTLI_MODE_GENERIC,
@@ -19,22 +39,13 @@ function compress(data: Uint8Array, quality = 11): Uint8Array {
       [zlib.constants.BROTLI_PARAM_LGWIN]: 22,
     },
   });
-  // return a native Uint8Array, not a node Buffer
-  return new Uint8Array(buffer);
+  return new Uint8Array(buffer).toBase64().replace(/.{77}/g, "$&\\\n");
+  // return btoa(new Uint8Array(buffer).reduce((a, b) => a + String.fromCharCode(b), "")).replace(/.{77}/g, "$&\\\n");
 }
 
 async function requires(...executables: string[]) {
-  const where = Deno.build.os === "windows" ? "where" : "which";
-
   for (const executable of executables) {
-    const process = new Deno.Command(where, {
-      args: [executable],
-      stderr: "null",
-      stdin: "null",
-      stdout: "null",
-    }).spawn();
-
-    if (!(await process.status).success) {
+    if (!await $.commandExists(executable)) {
       err(`Could not find required build tool ${executable}`);
     }
   }
@@ -48,6 +59,12 @@ async function run(msg: string, cmd: string, ...args: string[]) {
     stderr: "inherit",
     stdin: "null",
     stdout: "inherit",
+    env: {
+      ...Deno.env.toObject(),
+      WASM_OPT_LEVEL: Deno.env.get("WASM_OPT_LEVEL") ?? "z",
+      WASM_OPT_BULK_MEMORY: Deno.env.get("WASM_OPT_BULK_MEMORY") ?? "1",
+      WASM_OPT_EXTRA_ARGS: Deno.env.get("WASM_OPT_EXTRA_ARGS") ?? "",
+    },
   }).spawn();
 
   if (!(await process.status).success) {
@@ -83,15 +100,15 @@ async function get_decompressor() {
     "https://esm.sh/debrotli/es2022/lib/brotli.bundle.mjs?minify&bundle",
   ).then((r) => r.text());
 
-  log(`writing brotli decompressor to "${brotliFile}"`);
+  log(`writing brotli decompressor to "${BROTLI_PATH}"`);
   await Deno.writeTextFile(
-    brotliFile,
+    BROTLI_PATH,
     $.dedent`
-    // deno-lint-ignore-file
-    // deno-fmt-ignore-file
-    // @ts-nocheck -- generated
-    ${brotli}
-  `,
+      // deno-lint-ignore-file
+      // deno-fmt-ignore-file
+      // @ts-nocheck -- generated
+      ${brotli}
+    `,
   );
 }
 
@@ -103,46 +120,59 @@ async function build(...args: string[]) {
   }
 
   await run(
-    "building using @deno/wasmbuild@0.19.1",
+    `building using @deno/wasmbuild@${WASMBUILD_VERSION}`,
     "deno",
     "run",
     "-Aq",
-    "jsr:@deno/wasmbuild@0.19.1",
+    "--env-file=.env",
+    `jsr:@deno/wasmbuild@${WASMBUILD_VERSION}`,
     "--inline",
     "--out",
-    outDir,
+    OUT_DIR,
   );
 
   const generated = await Array.fromAsync(
-    Deno.readDir(outDir),
-    ({ name }) => `${outDir}/${name}`,
+    Deno.readDir(OUT_DIR),
+    ({ name }) => `${OUT_DIR}/${name}`,
   );
 
   const [maybePath] = args;
   const path = maybePath ||
     generated.find((p) => p.endsWith(".js") && !p.endsWith(".internal.js"));
 
-  if (!path || !(await Deno.stat(path))) {
+  const stat = path ? await Deno.stat(path).catch(() => null) : null;
+
+  if (!path || !stat) {
     err(
-      `could not find file "${path}" in "${outDir}".\n\n` +
+      `could not find file "${path}" in "${OUT_DIR}".\n\n` +
         `Generated files available:\n\n - ${generated.join("\n - ")}\n`,
     );
   }
 
-  await compress_wasm(path);
-  await get_decompressor();
+  await rewrite_exports(path);
+
+  let shouldCompress = legacy || stat.size > MAX_WASM_SIZE;
+  if (WASM_COMPRESS === 0) shouldCompress = false;
+  if (Deno.env.get("WASM_COMPRESS_FORCE") === "1") shouldCompress = true;
+
+  if (shouldCompress) {
+    await compress_wasm(path);
+    await get_decompressor();
+  } else {
+    log(
+      `\n✔︎ wrote \x1b[1;4;92m${path}\x1b[0;2m (${
+        pretty_bytes(stat.size)
+      } B, uncompressed)\x1b[0m\n`,
+    );
+  }
 }
 
-/**
- * Decodes, compresses, and re-encodes the inline wasm module in the js file.
- * This reduces the size of the module by up to 80% (e.g. ~1.2M to ~250K).
- */
-async function compress_wasm(path: string | URL) {
-  let src = await Deno.readTextFile(path);
+async function rewrite_exports(path: string | URL) {
+  const src = await Deno.readTextFile(path);
 
   // remove internal exports from the public API
   // (theres no reason to expose all of the `__wbg_*` stuff to the user)
-  src = src.replace(
+  const out = src.replace(
     /^\s*export\s+\*\s+from\s+(["'])(\S+?\.internal\.m?js)\1;?\s*$/gm,
     (_, q, p) => {
       const internal = Deno.readTextFileSync(
@@ -160,41 +190,38 @@ async function compress_wasm(path: string | URL) {
     },
   );
 
-  // isolate the basename for the output file
-  const brotliJs = brotliFile.replace(/.+\//g, "");
+  await Deno.writeTextFile(path, out);
+
+  log(`\n✔︎ rewrote exports in \x1b[1;4;92m${path}\x1b[0m\n`);
+}
+
+/**
+ * Decodes, compresses, and re-encodes the inline wasm module in the js file.
+ * This reduces the size of the module by up to 80% (e.g. ~1.2M to ~250K).
+ */
+async function compress_wasm(path: string | URL) {
+  const src = await Deno.readTextFile(path);
 
   const out = src.replace(
     /const bytes = base64decode\("(.+?)"\);\s*?\n/s,
     (_, b) => {
-      // `import { decompress } from "npm:brocha@^0.1.1";\n\n` +
-      // we use `import()` to conditionally load the native module,
-      // if its available, otherwise we fallback to a pure JS implementation
-      // of the brotli decompression algorithm. this is to ensure that we
-      // take advantage of the native module (and its performance benefits)
-      // if available, without losing compatibility with other runtimes.
+      // avoid top-level await for broader compatibility
+      // const prelude = $.dedent`
+      //   /** @type {(b: Uint8Array) => Uint8Array} */
+      //   const decompress = await import("node:zlib" + "").then(
+      //     // use node zlib if available, e.g. in node, deno, and bun
+      //     (z) => (z.default ?? z)["brotliDecompressSync"].bind(z),
+      //     // otherwise use a bundled debrotli, a fast wasm brotli decompressor
+      //     () => import("./${BROTLI_FILE}").then((m) => m.decompress || m.default)
+      //   );
+      // `;
+      const prelude = $.dedent`
+        import { decompress } from "./${BROTLI_FILE}";
+      `;
       return $.dedent`
-        // hacky workaround to prevent esm.sh etc from rewriting this import
-        const zlib = "node:zlib";
-        /** @type {(b: Uint8Array) => Uint8Array} */
-        const decompress = await import(zlib).then(
-          // use node zlib if available, e.g. in node, deno, and bun
-          (z) => (z.default ?? z)["brotliDecompressSync"].bind(z),
-        ).catch(
-          // otherwise use a bundled debrotli, a fast wasm brotli decompressor
-          () => import("./${brotliJs}").then((m) => m.decompress || m.default)
-        );
-
+        ${prelude}
         const bytes = decompress(
-          base64decode("${"\\\n"}${
-        btoa(
-          compress(
-            Uint8Array.from(
-              atob(b.replaceAll(/\\|\s+/g, "")),
-              (c) => c.charCodeAt(0),
-            ),
-          ).reduce((a, b) => a + String.fromCharCode(b), ""),
-        ).replace(/.{77}/g, "$&\\\n")
-      }${"\\\n"}")
+          base64decode("${"\\\n"}${compress(b)}${"\\\n"}")
         );
       `;
     },
@@ -203,11 +230,11 @@ async function compress_wasm(path: string | URL) {
   await Deno.writeTextFile(path, out);
 
   const srcLen = src.length, outLen = out.length;
-  const reduction = (srcLen - outLen) / srcLen * 100;
+  const reduction = ((srcLen - outLen) / srcLen * 100).toFixed(2);
   log(
     `\n✔︎ compressed wasm from \x1b[91m${pretty_bytes(srcLen)}\x1b[39m to ` +
       `\x1b[1;4;92m${pretty_bytes(outLen)}\x1b[0m, a reduction of ` +
-      `\x1b[1;93m${reduction}%%\x1b[0m\n`,
+      `\x1b[1;93m${reduction}%\x1b[0m\n`,
   );
 }
 
