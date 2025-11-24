@@ -1,3 +1,4 @@
 [toolchain]
-  channel    = "stable"
+  channel    = "nightly"
   components = ["rustfmt", "clippy", "cargo"]
+  targets    = ["wasm32-unknown-unknown"]
