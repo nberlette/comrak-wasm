@@ -97,6 +97,8 @@
       "**/*.bench.*",
       "target",
       "scripts",
+      "build.ts",
+      "test.*",
       "!lib"
     ]
   },
