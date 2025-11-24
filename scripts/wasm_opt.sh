@@ -68,8 +68,9 @@ for arg in "$@"; do
     # in case deno/wasmbuild adds support for custom flags in the future,
     # we respect the following flags, unless they've been explicitly set
     # by the user via the environment variables above.
-    (--[a-z]-bulk-memory-opt) [[ -z "$WASM_OPT_BULK_MEMORY" ]] && args+=("$arg") ;;
-    (--[a-z-]debug) [[ -z "$WASM_OPT_DEBUG" ]] && args+=("$arg") ;;
+    (--[a-z]-bulk-memory-opt)
+      [[ -z "$WASM_OPT_BULK_MEMORY" ]] && args+=("$arg") ;;
+    (--*debug) [[ -z "$WASM_OPT_DEBUG" ]] && args+=("$arg") ;;
     # pass through all other args
     (*) args+=("$arg") ;;
   esac
@@ -85,10 +86,16 @@ if [[ -n "$WASM_OPT_EXTRA_ARGS" ]]; then
   read -r -a extra_args <<< "$WASM_OPT_EXTRA_ARGS"
 
   # find the position to insert the extra args
-  idx=${#args[@]}
-  if (( idx >= 2 )); then
-    idx=$((idx - 2))
-  fi
+	# we want to insert before the input and output files, which are usually the
+	# last two args, unless `-o` is used, in which case the output file is given
+	# immediately after `-o` and the input file is the last arg. in that case, we
+	# want to insert the args before the `-o` flag.
+	for ((i = 0; i < ${#args[@]}; i++)); do
+		if [[ "${args[i]}" == "-o" ]] || (( i >= ${#args[@]} - 2 )); then
+			idx=$i
+			break
+		fi
+	done
 
   # insert the extra args at the calculated position
   args=("${args[@]:0:idx}" "${extra_args[@]}" "${args[@]:idx}")
@@ -112,9 +119,12 @@ done
 args=("${cleaned_args[@]}")
 
 # 5b. if we removed too many args, re-add the last two original args
-while (( ${#args[@]} < idx + 2 )); do
-  args+=("${args[idx + ${#args[@]} - idx]}")
-done
+# Save the last two original arguments before deduplication
+orig_last_arg1="${args[idx]}"
+orig_last_arg2="${args[idx+1]}"
+if (( ${#args[@]} < idx + 2 )); then
+  args+=("$orig_last_arg1" "$orig_last_arg2")
+fi
 
 # 5c. final sanity check
 if (( ${#args[@]} < 2 )); then
@@ -123,8 +133,6 @@ if (( ${#args[@]} < 2 )); then
 fi
 
 # 6. execute the real wasm-opt binary with the constructed args
-echo $'\e[2;34m> '"${WASM_OPT_BINARY}" "${args[@]}"$'\e[0m\n' >&2
-exec "${WASM_OPT_BINARY}" "${args[@]}"
+echo $'\e[2;34m> '"${WASM_OPT_BINARY}" $'\e[22m'"${args[@]}"$'\e[0m\n' >&2
 
-# 7. cleanup
-unset args extra_args idx seen cleaned_args
+exec "${WASM_OPT_BINARY}" "${args[@]}"

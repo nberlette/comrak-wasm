@@ -81,11 +81,14 @@ function find_wasm_opt_binary() {
     names=("$@")
   fi
 
-  local -a names_expr=("-name" "${names[0]}")
+  local -a names_expr=()
+  for idx in "${!names[@]}"; do
+    if (( idx > 0 )); then
+      names_expr+=("-o")
+    fi
+    names_expr+=("-name" "${names[idx]}")
+  done
   if (( ${#names[@]} > 1 )); then
-    for name in "${names[@]}"; do
-      names_expr+=("-o" "-name" "$name")
-    done
     # wrap in parens to group as a single find expr
     names_expr=("(" "${names_expr[@]}" ")")
   fi
@@ -125,8 +128,8 @@ if [[ -f "${WASM_OPT_ORIGINAL}" ]]; then
   # to overwrite the existing wrapper, or skip the patching process (if in a
   # non-interactive terminal and not instructed to force overwrite).
   echo -e $'\e[33mwarning!\e[0m the \e[95mwasm-opt\e[0m binary already appears to be patched.' >&2
-  echo -e $'   \e[2;3;4moriginal:\e[0m '"${WASM_OPT_BINARY}"$' \e[2m('"$(stat --printf=%s "${WASM_OPT_BINARY}")"$' B)\e[0m' >&2
-  echo -e $'   \e[2;3;4mwrapper:\e[0m  '"${WASM_OPT_WRAPPER}"$' \e[2m('"$(stat --printf=%s "${WASM_OPT_WRAPPER}")"$' B)\e[0m' >&2
+  echo -e $'   \e[2;3;4moriginal:\e[0m '"${WASM_OPT_BINARY}"$' \e[2m('"$(wc -c < "${WASM_OPT_BINARY}" | xargs)"$' B)\e[0m' >&2,
+  echo -e $'   \e[2;3;4mwrapper:\e[0m  '"${WASM_OPT_WRAPPER}"$' \e[2m('"$(wc -c < "${WASM_OPT_WRAPPER}" | xargs)"$' B)\e[0m' >&2
   echo ""
   # if we're in an interactive terminal, prompt the user to overwrite
   if [[ "${FORCE_OVERWRITE:-}" == "1" ]]; then
@@ -175,6 +178,14 @@ if [[ -f "${WASM_OPT_ORIGINAL}" ]]; then
   fi
 fi
 
+function hyperlink() {
+	local -r url="$1"
+	local -r text="${2:-"$1"}"
+	local -r id="${3:-"${url//[^a-zA-Z0-9]/}"}"
+	# OSC 8 ; params ; URI ST <text> OSC 8 ;; ST
+	printf '\e]8;id=%s;%s\a%s\e]8;;\a' "$id" "$url" "$text"
+}
+
 
 if ! [[ -f "${WASM_OPT_ORIGINAL}" ]] || [[ "${WASM_OPT_BINARY}" != "${WASM_OPT_ORIGINAL}" ]]; then
   command mv "${WASM_OPT_BINARY}" "${WASM_OPT_ORIGINAL}" 2>&1
@@ -189,10 +200,10 @@ then
   echo $'  \e[93mWASM_OPT_BULK_MEMORY\e[0;2m · \e[0mEnables bulk memory operations (default: \e[1;92m1\e[0m)' >&2
   echo $'  \e[93mWASM_OPT_DEBUG\e[0;2m ······· \e[0mEnables debug information (default: \e[1;92m0\e[0m)' >&2
   echo $'  \e[93mWASM_OPT_EXTRA_ARGS\e[0;2m ·· \e[0mAdditional arguments to pass to the \e[35mwasm-opt\e[0m binary' >&2
-  echo $'\n\e[1;33mIMPORTANT:\e[0m these \e[1;3mmust\e[0m be available to \e[92m@deno/wasmbuild\e[0m when the \e[35mwasm-opt\e[0m subprocess is\n'\
-       $'spawned, or they will have no effect. It\'s recommended to use a \e]8;id=dotenv;https://dotenv.org\e\\\e[93m.env\e[0m\e]8;;\e\\ file along with\n'\
-       $'Deno\'s \e[96m--env-file\e[0m flag to ensure they are inherited correctly:\n\n'\
-       $'  \e[32mdeno run --allow-env --env-file=.env jsr:@deno/wasmbuild@0.19.2\e[0m\n' >&2
+  echo $'\n\e[1;33mIMPORTANT:\e[0m these \e[1;3mmust\e[0m be available to '"$(hyperlink "https://jsr.io/@deno/wasmbuild/doc" $'\e[92m@deno/wasmbuild\e[0m')"\
+			 $'at runtime\nor they will be ignored. It\'s recommended to use a '"$(hyperlink "https://dotenv.org" $'\e[33m.env\e[m' "dotenv")"\
+			 $'file with\nthe \e[96m--env-file\e[0m flag to ensure they are inherited correctly, like so:\n\n'\
+       $'  \e[32mdeno run -A --env-file=.env jsr:@deno/wasmbuild@0.19.2\e[0m\n' >&2
   exit 0
 else
   echo $'\e[31merror\e[0m: failed to rename and wrap the \e[95mwasm-opt\e[0m binary.' >&2
