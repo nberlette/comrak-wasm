@@ -663,7 +663,25 @@ export interface ExtensionOptions {
    */
   subtext?: boolean;
 
-
+  /**
+   * Enables highlighting (mark) using `==`.
+   *
+   * ```md
+   * Hey, ==this is important==!
+   * ```
+   * @example
+   * ```ts
+   * import { markdownToHTML, Options } from "@nick/comrak";
+   * import assert from "node:assert";
+   *
+   * const options = Options.default();
+   * options.extension.highlight = true;
+   *
+   * const html = markdownToHTML("Hey, ==this is important==!", options);
+   * assert.equal(html, "<p>Hey, <mark>this is important</mark>!</p>\n");
+   * ```
+   */
+  highlight?: boolean;
 }
 
 /**
@@ -1176,6 +1194,7 @@ export const defaultOptions: DefaultOptions = {
     imageURLRewriter: null,
     cjkFriendlyEmphasis: false,
     subtext: false,
+    highlight: false,
   },
   parse: {
     defaultInfoString: null,
