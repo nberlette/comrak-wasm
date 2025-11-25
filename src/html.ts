@@ -55,7 +55,7 @@ export function markdownToHTML(markdown: string, options?: Options): string {
  *
  * const options = {
  *   extension: {
- *     alert: true,
+ *     alerts: true,
  *     footnotes: true,
  *   },
  * } satisfies Options;

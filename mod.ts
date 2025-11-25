@@ -77,8 +77,13 @@
  * @example
  * ```ts
  * import * as comrak from "@nick/comrak";
- * import assert from "node:assert";
  * import * as shiki from "npm:shiki";
+ * import assert from "node:assert";
+ *
+ * const sh = await shiki.createHighlighter({
+ *   themes: ["nord"],
+ *   langs: ["typescript", "javascript", "rust", "bash"],
+ * });
  *
  * // using custom options and extensions
  * const options = {
@@ -99,18 +104,33 @@
  *   plugins: {
  *     render: {
  *       codefenceSyntaxHighlighter: {
- *         highlight(code, lang) {
- *
- *         },
+ *         highlight: (code, lang) =>
+ *           sh.codeToHtml(code, {
+ *             lang: lang ?? "ts",
+ *             theme: "nord",
+ *           }).match(/^(.+?)<\/code>/s)?.[1] ?? `<pre><code>${code}`,
+ *         // prevent comrak from adding opening pre/code tags
+ *         pre: () => "",
+ *         code: () => "",
  *       },
  *     },
  *   },
  * } satisfies comrak.Options;
+ *
+ * const md = `# Hello, world!\n\n## Install\n\n\`\`\`sh\ndeno add jsr:@nick/comrak\n\`\`\`\n\n` +
+ *   `- [ ] Task 1\n- [x] Task 2\n\nVisit http://example.com.\n\nSee the footnote.[^1]\n\n` +
+ *   `[^1]: This is the footnote.`;
+ *
+ * const html = comrak.markdownToHTML(md, options);
+ *
+ * assert.ok(html.includes('class="task-list-item"'));
+ * assert.ok(html.includes('href="https://example.com"'));
+ * assert.ok(html.includes('This is the footnote.'));
+ * assert.ok(html.includes('class="shiki nord"'));
+ * assert.ok(html.includes('style="color:#88C0D0"'));
  * ```
  * @module comrak
  */
-const _docs = 1;
-
 import type {
   ExtensionOptions,
   Options,

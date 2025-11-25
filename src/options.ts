@@ -220,7 +220,7 @@ export interface ExtensionOptions {
    * const html = markdownToHTML("Hi[^x].\n\n[^x]: A greeting.\n", {
    *   extension: { footnotes: true },
    * });
-   * assert.equal(html, "<p>Hi<sup class=\"footnote-ref\"><a href=\"#fn1\" id=\"fnref1\">1</a></sup>.</p>\n<section class=\"footnotes\">\n<ol>\n<li id=\"fn1\">\n<p>A greeting. <a href=\"#fnref1\" class=\"footnote-backref\">↩</a></p>\n</li>\n</ol>\n</section>\n");
+   * assert.equal(html, '<p>Hi<sup class="footnote-ref"><a href="#fn-x" id="fnref-x" data-footnote-ref>1</a></sup>.</p>\n<section class="footnotes" data-footnotes>\n<ol>\n<li id="fn-x">\n<p>A greeting. <a href="#fnref-x" class="footnote-backref" data-footnote-backref data-footnote-backref-idx="1" aria-label="Back to reference 1">↩</a></p>\n</li>\n</ol>\n</section>\n');
    * ```
    * @default {false}
    */
@@ -237,26 +237,16 @@ export interface ExtensionOptions {
    *
    * @example
    * ```ts
-   * import { markdownToHTML, type Options } from "@nick/comrak";
+   * import { markdownToHTML, Options } from "@nick/comrak";
    * import assert from "node:assert";
    *
-   * const options: Options = {
-   *   extension: {
-   *     footnotes: false,
-   *     inlineFootnotes: false,
-   *   }
-   * };
-   *
-   * const md = "Hi^[An inline note].\n";
-   *
-   * // Without inline footnotes
-   * const htmlOff = markdownToHTML(md, options);
-   * assert.equal(htmlOff, ""
-   *
+   * const options = Options.default();
    * options.extension.footnotes = true;
    * options.extension.inlineFootnotes = true;
-   * assert_eq!(markdown_to_html("Hi^[An inline note].\n", &options),
-   *            "<p>Hi<sup class=\"footnote-ref\"><a href=\"#fn-__inline_1\" id=\"fnref-__inline_1\" data-footnote-ref>1</a></sup>.</p>\n<section class=\"footnotes\" data-footnotes>\n<ol>\n<li id=\"fn-__inline_1\">\n<p>An inline note <a href=\"#fnref-__inline_1\" class=\"footnote-backref\" data-footnote-backref data-footnote-backref-idx=\"1\" aria-label=\"Back to reference 1\">↩</a></p>\n</li>\n</ol>\n</section>\n");
+   *
+   * const md = "Hi^[An inline note].\n";
+   * const html = markdownToHTML(md, options);
+   * assert.equal(html, "<p>Hi<sup class=\"footnote-ref\"><a href=\"#fn-__inline_1\" id=\"fnref-__inline_1\" data-footnote-ref>1</a></sup>.</p>\n<section class=\"footnotes\" data-footnotes>\n<ol>\n<li id=\"fn-__inline_1\">\n<p>An inline note <a href=\"#fnref-__inline_1\" class=\"footnote-backref\" data-footnote-backref data-footnote-backref-idx=\"1\" aria-label=\"Back to reference 1\">↩</a></p>\n</li>\n</ol>\n</section>\n");
    * ```
    */
   inlineFootnotes?: boolean;
@@ -331,6 +321,7 @@ export interface ExtensionOptions {
    *
    * const html = markdownToHTML("Hello <xmp>.\n\n<xmp>", {
    *   extension: { tagfilter: true },
+   *   render: { unsafe: true },
    * });
    * assert.equal(html, "<p>Hello &lt;xmp>.</p>\n&lt;xmp>\n");
    * ```
@@ -352,7 +343,7 @@ export interface ExtensionOptions {
    * import assert from "node:assert";
    *
    * const html = markdownToHTML("* [x] Done\n* [ ] Not done\n", { extension: { tasklist: true } });
-   * assert.equal(html, "<ul>\n<li><input type=\"checkbox\" disabled=\"\" checked=\"\" /> Done</li>\n<li><input type=\"checkbox\" disabled=\"\" /> Not done</li>\n</ul>\n");
+   * assert.equal(html, "<ul>\n<li><input type=\"checkbox\" checked=\"\" disabled=\"\" /> Done</li>\n<li><input type=\"checkbox\" disabled=\"\" /> Not done</li>\n</ul>\n");
    * ```
    * @default {false}
    */
@@ -597,7 +588,7 @@ export interface ExtensionOptions {
    *   `https://cdn.example.com/images/${encodeURIComponent(url)}`;
    *
    * const html = markdownToHTML("![alt text](image.png)", options);
-   * assert.equal(html, '<p><img src="https://cdn.example.com/images/image.png" alt="alt text"></p>\n');
+   * assert.equal(html, '<p><img src="https://cdn.example.com/images/image.png" alt="alt text" /></p>\n');
    * ```
    * @default {null}
    */
@@ -937,29 +928,19 @@ export interface RenderOptions {
    *
    * @example
    * ```ts
-   * import { markdownToHTML } from "@nick/comrak";
+   * import { markdownToHTML, Options } from "@nick/comrak";
    * import assert from "node:assert";
    *
-   * const safeHTML = markdownToHTML("<script>\nalert('xyz');\n</script>\n\n\
-   *                 Possibly <marquee>annoying</marquee>.\n\n\
-   *                 [Dangerous](javascript:alert(document.cookie)).\n\n\
-   *                 [Safe](http://commonmark.org).\n");
-   * assert.equal(safeHTML, "<!-- raw HTML omitted -->\n\
-   *   <p>Possibly <!-- raw HTML omitted -->annoying<!-- raw HTML omitted -->.</p>\n\
-   *   <p><a href=\"\">Dangerous</a>.</p>\n\
-   *   <p><a href=\"http://commonmark.org\">Safe</a>.</p>\n");
+   * const options = Options.default();
    *
-   * const unsafeHTML = markdownToHTML(
-   *   "<script>\nalert('xyz');\n</script>\n\n\
-   *   Possibly <marquee>annoying</marquee>.\n\n\
-   *   [Dangerous](javascript:alert(document.cookie)).\n\n\
-   *   [Safe](http://commonmark.org).\n",
-   *   { render: { unsafe: true } },
-   * );
-   * assert.equal(unsafeHTML, "<script>\nalert(\'xyz\');\n</script>\n\
-   *   <p>Possibly <marquee>annoying</marquee>.</p>\n\
-   *   <p><a href=\"javascript:alert(document.cookie)\">Dangerous</a>.</p>\n\
-   *   <p><a href=\"http://commonmark.org\">Safe</a>.</p>\n");
+   * const dangerousMarkdown = "<script>\nalert('xyz');\n</script>\n\nPossibly <marquee>annoying</marquee>.\n\n[Dangerous](javascript:alert(document.cookie)).\n\n[Safe](http://commonmark.org).\n";
+   *
+   * const safeHTML = markdownToHTML(dangerousMarkdown, options);
+   * assert.equal(safeHTML, "<!-- raw HTML omitted -->\n<p>Possibly <!-- raw HTML omitted -->annoying<!-- raw HTML omitted -->.</p>\n<p><a href=\"\">Dangerous</a>.</p>\n<p><a href=\"http://commonmark.org\">Safe</a>.</p>\n");
+   *
+   * options.render.unsafe = true;
+   * const unsafeHTML = markdownToHTML(dangerousMarkdown, options);
+   * assert.equal(unsafeHTML, "<script>\nalert(\'xyz\');\n</script>\n<p>Possibly <marquee>annoying</marquee>.</p>\n<p><a href=\"javascript:alert(document.cookie)\">Dangerous</a>.</p>\n<p><a href=\"http://commonmark.org\">Safe</a>.</p>\n");
    * ```
    * @default {false}
    */

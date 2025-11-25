@@ -14,22 +14,9 @@ import type { Sourcepos } from "./nodes.ts";
  * This object is not created by users directly, but rather is provided by the
  * Comrak library when invoking the `enter` and `exit` methods of a custom
  * {@linkcode HeadingAdapter} implementation.
- * @example
- * ```ts
- * import { markdownToHTML, HeadingAdapter, type HeadingMeta } from "comrak";
  *
- * const html = markdownToHTML("# Hello, world!", {
- *   plugins: {
- *     heading: new HeadingAdapter(
- *       // enter callback
- *       (h: HeadingMeta) => `<h${h.level} id="${slugify(h.content)}">`,
- *       // exit callback
- *       (h: HeadingMeta) => `</h${h.level}>`,
- *     ),
- *   },
- * });
- * ```
- * @category Types
+ * @category Adapters
+ * @tags plugins, headings
  */
 export interface HeadingMeta {
   /** The level of the heading (1-6). */
@@ -71,36 +58,34 @@ export interface HeadingMeta {
  *
  * @example
  * ```ts
- * import { markdownToHTML, HeadingAdapter } from "@nick/comrak";
+ * import { markdownToHTML, Options } from "@nick/comrak";
+ * import assert from "node:assert";
+ *
+ * const options = Options.default();
+ * options.plugins.render.headingAdapter = {
+ *   enter: ({ level, content }, sourcepos) => {
+ *     // rudimentary slugification example. don't actually use this!
+ *     const id = content.replace(/[^a-z0-9-]+/gi, '-').toLowerCase();
+ *     let attrs = ` id="${id}"`;
+ *     if (sourcepos) {
+ *       const { start, end } = sourcepos;
+ *       const { line: l1, column: c1 } = start;
+ *       const { line: l2, column: c2 } = end;
+ *       attrs += ` data-sourcepos="${l1}:${c1}-${l2}:${c2}"`;
+ *     }
+ *     return `<h${level}${attrs}>`
+ *   },
+ *   exit: ({ level }) => `</h${level}>`,
+ * };
  *
  * const md = '# Hello!\n\n## Subheading\n\nBye!\n';
  *
- * const html = markdownToHTML(md, {
- *   plugins: {
- *     render: {
- *       headingAdapter: new HeadingAdapter(
- *         ({ level, content }, sourcepos) => {
- *           // rudimentary slugification example. don't actually use this!
- *           const id = content.replace(/[^a-z0-9-]+/gi, '-').toLowerCase();
- *           let attrs = ` id="${id}"`;
- *           if (sourcepos) {
- *             const { start, end } = sourcepos;
- *             const { line: l1, column: c1 } = start;
- *             const { line: l2, column: c2 } = end;
- *             attrs += ` data-sourcepos="${l1}:${c1}-${l2}:${c2}"`;
- *           }
- *           return `<h${level}${attrs}>`
- *         },
- *         ({ level }) => `</h${level}>`,
- *       ),
- *     },
- *   },
- * });
- * console.log(html);
- * // Output:
- * // <h1 id="hello" data-sourcepos="1:1-1:7">Hello!</h1>
- * // <h2 id="subheading" data-sourcepos="3:1-3:12">Subheading</h2>
- * // <p>Bye!</p>
+ * const html = markdownToHTML(md, options);
+ * assert.strictEqual(html,
+ *   '<h1 id="hello" data-sourcepos="1:1-1:8">Hello!</h1>\n' +
+ *   '<h2 id="subheading" data-sourcepos="3:1-3:12">Subheading</h2>\n' +
+ *   '<p data-sourcepos="5:1-5:5">Bye!</p>\n'
+ * );
  * ```
  * @category Adapters
  * @tags plugins, headings
