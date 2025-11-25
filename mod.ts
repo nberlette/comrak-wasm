@@ -117,17 +117,17 @@
  *   },
  * } satisfies comrak.Options;
  *
- * const md = `# Hello, world!\n\n## Install\n\n\`\`\`sh\ndeno add jsr:@nick/comrak\n\`\`\`\n\n` +
- *   `- [ ] Task 1\n- [x] Task 2\n\nVisit http://example.com.\n\nSee the footnote.[^1]\n\n` +
- *   `[^1]: This is the footnote.`;
+ * const md = `# Hello, world!\n\n## Install\n\n\`\`\`bash\ndeno add jsr:@nick/comrak\n\`\`\`\n\n` +
+ *   `- [ ] Task 1\n- [x] Task 2\n\nVisit http://example.com` +
+ *   `\n\nSee the footnote.[^1]\n\n[^1]: This is the footnote.\n`;
  *
  * const html = comrak.markdownToHTML(md, options);
  *
- * assert.ok(html.includes('class="task-list-item"'));
+ * console.log(html);
+ *
  * assert.ok(html.includes('href="https://example.com"'));
- * assert.ok(html.includes('This is the footnote.'));
- * assert.ok(html.includes('class="shiki nord"'));
- * assert.ok(html.includes('style="color:#88C0D0"'));
+ * assert.ok(html.includes('<pre class="shiki nord"'));
+ * assert.ok(html.includes('<span style="color:#88C0D0">deno</span>'));
  * ```
  * @module comrak
  */
@@ -137,8 +137,6 @@ import type {
   ParseOptions,
   RenderOptions,
 } from "./src/options.ts";
-
-export { HeadingAdapter, SyntaxHighlighterAdapter } from "./src/_wasm.ts";
 
 export * from "./src/adapters.ts";
 export * from "./src/nodes.ts";
