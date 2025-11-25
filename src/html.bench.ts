@@ -1,6 +1,6 @@
 // deno-lint-ignore-file no-import-prefix
-import type { Options } from "@nick/comrak";
-import pkg from "./deno.json" with { type: "json" };
+import type { Options } from "../mod.ts";
+import pkg from "../deno.json" with { type: "json" };
 
 // the old version from deno.land uses an asynchronous instantiation
 // function, so we must await it before running benchmarks.
@@ -25,7 +25,7 @@ const targets = [
   {
     name: "jsr:@nick/comrak [local]",
     version: pkg.version,
-    package: () => import("./mod.ts"),
+    package: () => import("../mod.ts"),
     baseline: true,
   },
 ] as const satisfies readonly ComrakTarget[];
