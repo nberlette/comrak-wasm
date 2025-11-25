@@ -703,6 +703,30 @@ export interface ParseOptions {
   relaxedTasklistMatching?: boolean;
 
   /**
+   * Whether tasklist items can be parsed in table cells. At present, the
+   * tasklist item must be the only content in the cell. Both tables and
+   * tasklists much be enabled for this to work.
+   *
+   * @example
+   * ```ts
+   * import { markdownToHTML, Options } from "@nick/comrak";
+   * import assert from "node:assert";
+   *
+   * const options = Options.default();
+   * options.extension.table = true;
+   * options.extension.tasklist = true;
+   * assert.equal(markdownToHTML("| val |\n| - |\n| [ ] |\n", options),
+   *            "<table>\n<thead>\n<tr>\n<th>val</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>[ ]</td>\n</tr>\n</tbody>\n</table>\n");
+   *
+   * options.parse.tasklistInTable = true;
+   * assert.equal(markdownToHTML("| val |\n| - |\n| [ ] |\n", options),
+   *            "<table>\n<thead>\n<tr>\n<th>val</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>\n<input type=\"checkbox\" disabled=\"\" /> </td>\n</tr>\n</tbody>\n</table>\n");
+   * ```
+   * @default {false}
+   */
+  tasklistInTable?: boolean;
+
+  /**
    * Relax parsing of autolinks, allow links to be detected inside brackets
    * and allow all url schemes.
    *
@@ -1134,6 +1158,7 @@ export const defaultOptions: DefaultOptions = {
     defaultInfoString: null,
     smart: false,
     relaxedTasklistMatching: false,
+    tasklistInTable: false,
     relaxedAutolinks: false,
     ignoreSetext: false,
     brokenLinkCallback: null,
