@@ -1,0 +1,42 @@
+[package]
+  name                  = "comrak-wasm"
+  version.workspace     = true
+  authors.workspace     = true
+  edition.workspace     = true
+  license.workspace     = true
+  description.workspace = true
+  repository.workspace  = true
+  homepage.workspace    = true
+  readme.workspace      = true
+  keywords.workspace    = true
+  categories.workspace  = true
+  publish.workspace     = true
+
+[lib]
+  crate-type = ["cdylib", "rlib"]
+  path       = "src/lib.rs"
+
+[features]
+  default = ["alloc", "shortcodes", "arbitrary"]
+  arbitrary = ["comrak/arbitrary"]
+  alloc = ["dep:lol_alloc", "serde/alloc"]
+  bon = ["comrak/bon"]
+  threading = ["alloc"]
+  shortcodes = ["comrak/shortcodes"]
+  syntect = []
+  std = [
+    "wasm-bindgen/std",
+    "wasm-bindgen/enable-interning",
+    "serde/std",
+    "js-sys/std",
+  ]
+
+[dependencies]
+  comrak.workspace             = true
+  js-sys.workspace             = true
+  serde.workspace              = true
+  serde_json.workspace         = true
+  wasm-bindgen.workspace       = true
+  serde-wasm-bindgen.workspace = true
+  lol_alloc                    = { workspace = true, optional = true }
+  bumpalo                      = { workspace = true, optional = true }
