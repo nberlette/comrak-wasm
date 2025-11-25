@@ -1,32 +1,75 @@
 {
-  "version": "4",
+  "version": "5",
   "specifiers": {
+    "jsr:@can/si@0.1.0-rc.1": "0.1.0-rc.1",
+    "jsr:@david/console-static-text@0.3": "0.3.0",
     "jsr:@david/dax@0.42.0": "0.42.0",
+    "jsr:@david/dax@0.43.2": "0.43.2",
     "jsr:@david/path@0.2": "0.2.0",
     "jsr:@david/which@~0.4.1": "0.4.1",
+    "jsr:@iter/weak-map@0.1.0": "0.1.0",
+    "jsr:@nick/atob@0.2.0": "0.2.0",
+    "jsr:@nick/braces@0.2.2": "0.2.2",
+    "jsr:@nick/lz4@0.3.4": "0.3.4",
+    "jsr:@nick/url@0.1.2": "0.1.2",
+    "jsr:@nick/utf8@0.3.3": "0.3.3",
     "jsr:@std/assert@0.221": "0.221.0",
-    "jsr:@std/assert@^1.0.11": "1.0.11",
+    "jsr:@std/assert@1.0.15": "1.0.15",
     "jsr:@std/bytes@0.221": "0.221.0",
+    "jsr:@std/bytes@^1.0.5": "1.0.6",
+    "jsr:@std/cli@1.0.23": "1.0.23",
     "jsr:@std/fmt@1": "1.0.6",
+    "jsr:@std/fmt@^1.0.6": "1.0.6",
     "jsr:@std/fs@1": "1.0.14",
-    "jsr:@std/internal@^1.0.5": "1.0.5",
+    "jsr:@std/internal@^1.0.12": "1.0.12",
     "jsr:@std/io@0.221": "0.221.0",
+    "jsr:@std/io@0.225": "0.225.2",
+    "jsr:@std/io@0.225.2": "0.225.2",
     "jsr:@std/path@1": "1.0.8",
     "jsr:@std/path@^1.0.8": "1.0.8",
+    "jsr:@std/semver@1.0.7": "1.0.7",
     "jsr:@std/streams@0.221": "0.221.0",
-    "npm:@types/node@*": "22.12.0"
+    "npm:@shikijs/langs@*": "3.15.0",
+    "npm:@shikijs/themes@*": "3.15.0",
+    "npm:@types/node@*": "22.12.0",
+    "npm:comrak@0.4.2": "0.4.2",
+    "npm:css@3.0.0": "3.0.0",
+    "npm:shiki@*": "3.15.0",
+    "npm:shiki@3.15.0": "3.15.0",
+    "npm:vite@*": "7.1.9_@types+node@22.12.0_picomatch@4.0.3"
   },
   "jsr": {
+    "@can/si@0.1.0-rc.1": {
+      "integrity": "2df31ab7c718d9fb0a8498a71aab78af44eecf7f3bba2ba97e6fde13ff6953eb",
+      "dependencies": [
+        "jsr:@std/fmt@^1.0.6"
+      ]
+    },
+    "@david/console-static-text@0.3.0": {
+      "integrity": "2dfb46ecee525755f7989f94ece30bba85bd8ffe3e8666abc1bf926e1ee0698d"
+    },
     "@david/dax@0.42.0": {
       "integrity": "0c547c9a20577a6072b90def194c159c9ddab82280285ebfd8268a4ebefbd80b",
       "dependencies": [
         "jsr:@david/path",
         "jsr:@david/which",
-        "jsr:@std/fmt",
+        "jsr:@std/fmt@1",
         "jsr:@std/fs",
-        "jsr:@std/io",
+        "jsr:@std/io@0.221",
         "jsr:@std/path@1",
         "jsr:@std/streams"
+      ]
+    },
+    "@david/dax@0.43.2": {
+      "integrity": "8c7df175465d994c0e3568e3eb91102768c2f1c86d2a513d7fc4cab13f9cb328",
+      "dependencies": [
+        "jsr:@david/console-static-text",
+        "jsr:@david/path",
+        "jsr:@david/which",
+        "jsr:@std/fmt@1",
+        "jsr:@std/fs",
+        "jsr:@std/io@0.225",
+        "jsr:@std/path@1"
       ]
     },
     "@david/path@0.2.0": {
@@ -39,17 +82,44 @@
     "@david/which@0.4.1": {
       "integrity": "896a682b111f92ab866cc70c5b4afab2f5899d2f9bde31ed00203b9c250f225e"
     },
+    "@iter/weak-map@0.1.0": {
+      "integrity": "55f255e62e22339bed1c13506de2588e1fd88440f5f9c1b93acff36a5fdb27ca"
+    },
+    "@nick/atob@0.2.0": {
+      "integrity": "6ebc946f2a20d4deb3c3bcc39d0dc0c3eac304c170aafdde62abc2604479b6bb"
+    },
+    "@nick/braces@0.2.2": {
+      "integrity": "14cfa9264c3c25a4d9d4b7569da63d635903940569d6a3e0ffc5c4ffe9ff287d"
+    },
+    "@nick/lz4@0.3.4": {
+      "integrity": "a4fb1810ad1c6c7069579587287a507768c45781fa7de8305bc8292e7cadada4"
+    },
+    "@nick/url@0.1.2": {
+      "integrity": "03e8cc433f4a28ca1e195abe758f582892e6e2951476bb64a0023bee5e75a9a5"
+    },
+    "@nick/utf8@0.3.3": {
+      "integrity": "6b671a20776bd31022746f09519217566ababbee5b5c4f9524ab5d213a85a2a0"
+    },
     "@std/assert@0.221.0": {
       "integrity": "a5f1aa6e7909dbea271754fd4ab3f4e687aeff4873b4cef9a320af813adb489a"
     },
-    "@std/assert@1.0.11": {
-      "integrity": "2461ef3c368fe88bc60e186e7744a93112f16fd110022e113a0849e94d1c83c1",
+    "@std/assert@1.0.15": {
+      "integrity": "d64018e951dbdfab9777335ecdb000c0b4e3df036984083be219ce5941e4703b",
       "dependencies": [
         "jsr:@std/internal"
       ]
     },
     "@std/bytes@0.221.0": {
       "integrity": "64a047011cf833890a4a2ab7293ac55a1b4f5a050624ebc6a0159c357de91966"
+    },
+    "@std/bytes@1.0.6": {
+      "integrity": "f6ac6adbd8ccd99314045f5703e23af0a68d7f7e58364b47d2c7f408aeb5820a"
+    },
+    "@std/cli@1.0.23": {
+      "integrity": "bf95b7a9425ba2af1ae5a6359daf58c508f2decf711a76ed2993cd352498ccca",
+      "dependencies": [
+        "jsr:@std/internal"
+      ]
     },
     "@std/fmt@1.0.6": {
       "integrity": "a2c56a69a2369876ddb3ad6a500bb6501b5bad47bb3ea16bfb0c18974d2661fc"
@@ -60,35 +130,698 @@
         "jsr:@std/path@^1.0.8"
       ]
     },
-    "@std/internal@1.0.5": {
-      "integrity": "54a546004f769c1ac9e025abd15a76b6671ddc9687e2313b67376125650dc7ba"
+    "@std/internal@1.0.12": {
+      "integrity": "972a634fd5bc34b242024402972cd5143eac68d8dffaca5eaa4dba30ce17b027"
     },
     "@std/io@0.221.0": {
       "integrity": "faf7f8700d46ab527fa05cc6167f4b97701a06c413024431c6b4d207caa010da",
       "dependencies": [
         "jsr:@std/assert@0.221",
-        "jsr:@std/bytes"
+        "jsr:@std/bytes@0.221"
+      ]
+    },
+    "@std/io@0.225.2": {
+      "integrity": "3c740cd4ee4c082e6cfc86458f47e2ab7cb353dc6234d5e9b1f91a2de5f4d6c7",
+      "dependencies": [
+        "jsr:@std/bytes@^1.0.5"
       ]
     },
     "@std/path@1.0.8": {
       "integrity": "548fa456bb6a04d3c1a1e7477986b6cffbce95102d0bb447c67c4ee70e0364be"
     },
+    "@std/semver@1.0.7": {
+      "integrity": "7d5f65391762dc4358abde80fc3354086ddb40101f140295e60f290c138887d0"
+    },
     "@std/streams@0.221.0": {
       "integrity": "47f2f74634b47449277c0ee79fe878da4424b66bd8975c032e3afdca88986e61",
       "dependencies": [
-        "jsr:@std/io"
+        "jsr:@std/io@0.221"
       ]
     }
   },
   "npm": {
+    "@esbuild/aix-ppc64@0.25.10": {
+      "integrity": "sha512-0NFWnA+7l41irNuaSVlLfgNT12caWJVLzp5eAVhZ0z1qpxbockccEt3s+149rE64VUI3Ml2zt8Nv5JVc4QXTsw==",
+      "os": ["aix"],
+      "cpu": ["ppc64"]
+    },
+    "@esbuild/android-arm64@0.25.10": {
+      "integrity": "sha512-LSQa7eDahypv/VO6WKohZGPSJDq5OVOo3UoFR1E4t4Gj1W7zEQMUhI+lo81H+DtB+kP+tDgBp+M4oNCwp6kffg==",
+      "os": ["android"],
+      "cpu": ["arm64"]
+    },
+    "@esbuild/android-arm@0.25.10": {
+      "integrity": "sha512-dQAxF1dW1C3zpeCDc5KqIYuZ1tgAdRXNoZP7vkBIRtKZPYe2xVr/d3SkirklCHudW1B45tGiUlz2pUWDfbDD4w==",
+      "os": ["android"],
+      "cpu": ["arm"]
+    },
+    "@esbuild/android-x64@0.25.10": {
+      "integrity": "sha512-MiC9CWdPrfhibcXwr39p9ha1x0lZJ9KaVfvzA0Wxwz9ETX4v5CHfF09bx935nHlhi+MxhA63dKRRQLiVgSUtEg==",
+      "os": ["android"],
+      "cpu": ["x64"]
+    },
+    "@esbuild/darwin-arm64@0.25.10": {
+      "integrity": "sha512-JC74bdXcQEpW9KkV326WpZZjLguSZ3DfS8wrrvPMHgQOIEIG/sPXEN/V8IssoJhbefLRcRqw6RQH2NnpdprtMA==",
+      "os": ["darwin"],
+      "cpu": ["arm64"]
+    },
+    "@esbuild/darwin-x64@0.25.10": {
+      "integrity": "sha512-tguWg1olF6DGqzws97pKZ8G2L7Ig1vjDmGTwcTuYHbuU6TTjJe5FXbgs5C1BBzHbJ2bo1m3WkQDbWO2PvamRcg==",
+      "os": ["darwin"],
+      "cpu": ["x64"]
+    },
+    "@esbuild/freebsd-arm64@0.25.10": {
+      "integrity": "sha512-3ZioSQSg1HT2N05YxeJWYR+Libe3bREVSdWhEEgExWaDtyFbbXWb49QgPvFH8u03vUPX10JhJPcz7s9t9+boWg==",
+      "os": ["freebsd"],
+      "cpu": ["arm64"]
+    },
+    "@esbuild/freebsd-x64@0.25.10": {
+      "integrity": "sha512-LLgJfHJk014Aa4anGDbh8bmI5Lk+QidDmGzuC2D+vP7mv/GeSN+H39zOf7pN5N8p059FcOfs2bVlrRr4SK9WxA==",
+      "os": ["freebsd"],
+      "cpu": ["x64"]
+    },
+    "@esbuild/linux-arm64@0.25.10": {
+      "integrity": "sha512-5luJWN6YKBsawd5f9i4+c+geYiVEw20FVW5x0v1kEMWNq8UctFjDiMATBxLvmmHA4bf7F6hTRaJgtghFr9iziQ==",
+      "os": ["linux"],
+      "cpu": ["arm64"]
+    },
+    "@esbuild/linux-arm@0.25.10": {
+      "integrity": "sha512-oR31GtBTFYCqEBALI9r6WxoU/ZofZl962pouZRTEYECvNF/dtXKku8YXcJkhgK/beU+zedXfIzHijSRapJY3vg==",
+      "os": ["linux"],
+      "cpu": ["arm"]
+    },
+    "@esbuild/linux-ia32@0.25.10": {
+      "integrity": "sha512-NrSCx2Kim3EnnWgS4Txn0QGt0Xipoumb6z6sUtl5bOEZIVKhzfyp/Lyw4C1DIYvzeW/5mWYPBFJU3a/8Yr75DQ==",
+      "os": ["linux"],
+      "cpu": ["ia32"]
+    },
+    "@esbuild/linux-loong64@0.25.10": {
+      "integrity": "sha512-xoSphrd4AZda8+rUDDfD9J6FUMjrkTz8itpTITM4/xgerAZZcFW7Dv+sun7333IfKxGG8gAq+3NbfEMJfiY+Eg==",
+      "os": ["linux"],
+      "cpu": ["loong64"]
+    },
+    "@esbuild/linux-mips64el@0.25.10": {
+      "integrity": "sha512-ab6eiuCwoMmYDyTnyptoKkVS3k8fy/1Uvq7Dj5czXI6DF2GqD2ToInBI0SHOp5/X1BdZ26RKc5+qjQNGRBelRA==",
+      "os": ["linux"],
+      "cpu": ["mips64el"]
+    },
+    "@esbuild/linux-ppc64@0.25.10": {
+      "integrity": "sha512-NLinzzOgZQsGpsTkEbdJTCanwA5/wozN9dSgEl12haXJBzMTpssebuXR42bthOF3z7zXFWH1AmvWunUCkBE4EA==",
+      "os": ["linux"],
+      "cpu": ["ppc64"]
+    },
+    "@esbuild/linux-riscv64@0.25.10": {
+      "integrity": "sha512-FE557XdZDrtX8NMIeA8LBJX3dC2M8VGXwfrQWU7LB5SLOajfJIxmSdyL/gU1m64Zs9CBKvm4UAuBp5aJ8OgnrA==",
+      "os": ["linux"],
+      "cpu": ["riscv64"]
+    },
+    "@esbuild/linux-s390x@0.25.10": {
+      "integrity": "sha512-3BBSbgzuB9ajLoVZk0mGu+EHlBwkusRmeNYdqmznmMc9zGASFjSsxgkNsqmXugpPk00gJ0JNKh/97nxmjctdew==",
+      "os": ["linux"],
+      "cpu": ["s390x"]
+    },
+    "@esbuild/linux-x64@0.25.10": {
+      "integrity": "sha512-QSX81KhFoZGwenVyPoberggdW1nrQZSvfVDAIUXr3WqLRZGZqWk/P4T8p2SP+de2Sr5HPcvjhcJzEiulKgnxtA==",
+      "os": ["linux"],
+      "cpu": ["x64"]
+    },
+    "@esbuild/netbsd-arm64@0.25.10": {
+      "integrity": "sha512-AKQM3gfYfSW8XRk8DdMCzaLUFB15dTrZfnX8WXQoOUpUBQ+NaAFCP1kPS/ykbbGYz7rxn0WS48/81l9hFl3u4A==",
+      "os": ["netbsd"],
+      "cpu": ["arm64"]
+    },
+    "@esbuild/netbsd-x64@0.25.10": {
+      "integrity": "sha512-7RTytDPGU6fek/hWuN9qQpeGPBZFfB4zZgcz2VK2Z5VpdUxEI8JKYsg3JfO0n/Z1E/6l05n0unDCNc4HnhQGig==",
+      "os": ["netbsd"],
+      "cpu": ["x64"]
+    },
+    "@esbuild/openbsd-arm64@0.25.10": {
+      "integrity": "sha512-5Se0VM9Wtq797YFn+dLimf2Zx6McttsH2olUBsDml+lm0GOCRVebRWUvDtkY4BWYv/3NgzS8b/UM3jQNh5hYyw==",
+      "os": ["openbsd"],
+      "cpu": ["arm64"]
+    },
+    "@esbuild/openbsd-x64@0.25.10": {
+      "integrity": "sha512-XkA4frq1TLj4bEMB+2HnI0+4RnjbuGZfet2gs/LNs5Hc7D89ZQBHQ0gL2ND6Lzu1+QVkjp3x1gIcPKzRNP8bXw==",
+      "os": ["openbsd"],
+      "cpu": ["x64"]
+    },
+    "@esbuild/openharmony-arm64@0.25.10": {
+      "integrity": "sha512-AVTSBhTX8Y/Fz6OmIVBip9tJzZEUcY8WLh7I59+upa5/GPhh2/aM6bvOMQySspnCCHvFi79kMtdJS1w0DXAeag==",
+      "os": ["openharmony"],
+      "cpu": ["arm64"]
+    },
+    "@esbuild/sunos-x64@0.25.10": {
+      "integrity": "sha512-fswk3XT0Uf2pGJmOpDB7yknqhVkJQkAQOcW/ccVOtfx05LkbWOaRAtn5SaqXypeKQra1QaEa841PgrSL9ubSPQ==",
+      "os": ["sunos"],
+      "cpu": ["x64"]
+    },
+    "@esbuild/win32-arm64@0.25.10": {
+      "integrity": "sha512-ah+9b59KDTSfpaCg6VdJoOQvKjI33nTaQr4UluQwW7aEwZQsbMCfTmfEO4VyewOxx4RaDT/xCy9ra2GPWmO7Kw==",
+      "os": ["win32"],
+      "cpu": ["arm64"]
+    },
+    "@esbuild/win32-ia32@0.25.10": {
+      "integrity": "sha512-QHPDbKkrGO8/cz9LKVnJU22HOi4pxZnZhhA2HYHez5Pz4JeffhDjf85E57Oyco163GnzNCVkZK0b/n4Y0UHcSw==",
+      "os": ["win32"],
+      "cpu": ["ia32"]
+    },
+    "@esbuild/win32-x64@0.25.10": {
+      "integrity": "sha512-9KpxSVFCu0iK1owoez6aC/s/EdUQLDN3adTxGCqxMVhrPDj6bt5dbrHDXUuq+Bs2vATFBBrQS5vdQ/Ed2P+nbw==",
+      "os": ["win32"],
+      "cpu": ["x64"]
+    },
+    "@rollup/rollup-android-arm-eabi@4.52.4": {
+      "integrity": "sha512-BTm2qKNnWIQ5auf4deoetINJm2JzvihvGb9R6K/ETwKLql/Bb3Eg2H1FBp1gUb4YGbydMA3jcmQTR73q7J+GAA==",
+      "os": ["android"],
+      "cpu": ["arm"]
+    },
+    "@rollup/rollup-android-arm64@4.52.4": {
+      "integrity": "sha512-P9LDQiC5vpgGFgz7GSM6dKPCiqR3XYN1WwJKA4/BUVDjHpYsf3iBEmVz62uyq20NGYbiGPR5cNHI7T1HqxNs2w==",
+      "os": ["android"],
+      "cpu": ["arm64"]
+    },
+    "@rollup/rollup-darwin-arm64@4.52.4": {
+      "integrity": "sha512-QRWSW+bVccAvZF6cbNZBJwAehmvG9NwfWHwMy4GbWi/BQIA/laTIktebT2ipVjNncqE6GLPxOok5hsECgAxGZg==",
+      "os": ["darwin"],
+      "cpu": ["arm64"]
+    },
+    "@rollup/rollup-darwin-x64@4.52.4": {
+      "integrity": "sha512-hZgP05pResAkRJxL1b+7yxCnXPGsXU0fG9Yfd6dUaoGk+FhdPKCJ5L1Sumyxn8kvw8Qi5PvQ8ulenUbRjzeCTw==",
+      "os": ["darwin"],
+      "cpu": ["x64"]
+    },
+    "@rollup/rollup-freebsd-arm64@4.52.4": {
+      "integrity": "sha512-xmc30VshuBNUd58Xk4TKAEcRZHaXlV+tCxIXELiE9sQuK3kG8ZFgSPi57UBJt8/ogfhAF5Oz4ZSUBN77weM+mQ==",
+      "os": ["freebsd"],
+      "cpu": ["arm64"]
+    },
+    "@rollup/rollup-freebsd-x64@4.52.4": {
+      "integrity": "sha512-WdSLpZFjOEqNZGmHflxyifolwAiZmDQzuOzIq9L27ButpCVpD7KzTRtEG1I0wMPFyiyUdOO+4t8GvrnBLQSwpw==",
+      "os": ["freebsd"],
+      "cpu": ["x64"]
+    },
+    "@rollup/rollup-linux-arm-gnueabihf@4.52.4": {
+      "integrity": "sha512-xRiOu9Of1FZ4SxVbB0iEDXc4ddIcjCv2aj03dmW8UrZIW7aIQ9jVJdLBIhxBI+MaTnGAKyvMwPwQnoOEvP7FgQ==",
+      "os": ["linux"],
+      "cpu": ["arm"]
+    },
+    "@rollup/rollup-linux-arm-musleabihf@4.52.4": {
+      "integrity": "sha512-FbhM2p9TJAmEIEhIgzR4soUcsW49e9veAQCziwbR+XWB2zqJ12b4i/+hel9yLiD8pLncDH4fKIPIbt5238341Q==",
+      "os": ["linux"],
+      "cpu": ["arm"]
+    },
+    "@rollup/rollup-linux-arm64-gnu@4.52.4": {
+      "integrity": "sha512-4n4gVwhPHR9q/g8lKCyz0yuaD0MvDf7dV4f9tHt0C73Mp8h38UCtSCSE6R9iBlTbXlmA8CjpsZoujhszefqueg==",
+      "os": ["linux"],
+      "cpu": ["arm64"]
+    },
+    "@rollup/rollup-linux-arm64-musl@4.52.4": {
+      "integrity": "sha512-u0n17nGA0nvi/11gcZKsjkLj1QIpAuPFQbR48Subo7SmZJnGxDpspyw2kbpuoQnyK+9pwf3pAoEXerJs/8Mi9g==",
+      "os": ["linux"],
+      "cpu": ["arm64"]
+    },
+    "@rollup/rollup-linux-loong64-gnu@4.52.4": {
+      "integrity": "sha512-0G2c2lpYtbTuXo8KEJkDkClE/+/2AFPdPAbmaHoE870foRFs4pBrDehilMcrSScrN/fB/1HTaWO4bqw+ewBzMQ==",
+      "os": ["linux"],
+      "cpu": ["loong64"]
+    },
+    "@rollup/rollup-linux-ppc64-gnu@4.52.4": {
+      "integrity": "sha512-teSACug1GyZHmPDv14VNbvZFX779UqWTsd7KtTM9JIZRDI5NUwYSIS30kzI8m06gOPB//jtpqlhmraQ68b5X2g==",
+      "os": ["linux"],
+      "cpu": ["ppc64"]
+    },
+    "@rollup/rollup-linux-riscv64-gnu@4.52.4": {
+      "integrity": "sha512-/MOEW3aHjjs1p4Pw1Xk4+3egRevx8Ji9N6HUIA1Ifh8Q+cg9dremvFCUbOX2Zebz80BwJIgCBUemjqhU5XI5Eg==",
+      "os": ["linux"],
+      "cpu": ["riscv64"]
+    },
+    "@rollup/rollup-linux-riscv64-musl@4.52.4": {
+      "integrity": "sha512-1HHmsRyh845QDpEWzOFtMCph5Ts+9+yllCrREuBR/vg2RogAQGGBRC8lDPrPOMnrdOJ+mt1WLMOC2Kao/UwcvA==",
+      "os": ["linux"],
+      "cpu": ["riscv64"]
+    },
+    "@rollup/rollup-linux-s390x-gnu@4.52.4": {
+      "integrity": "sha512-seoeZp4L/6D1MUyjWkOMRU6/iLmCU2EjbMTyAG4oIOs1/I82Y5lTeaxW0KBfkUdHAWN7j25bpkt0rjnOgAcQcA==",
+      "os": ["linux"],
+      "cpu": ["s390x"]
+    },
+    "@rollup/rollup-linux-x64-gnu@4.52.4": {
+      "integrity": "sha512-Wi6AXf0k0L7E2gteNsNHUs7UMwCIhsCTs6+tqQ5GPwVRWMaflqGec4Sd8n6+FNFDw9vGcReqk2KzBDhCa1DLYg==",
+      "os": ["linux"],
+      "cpu": ["x64"]
+    },
+    "@rollup/rollup-linux-x64-musl@4.52.4": {
+      "integrity": "sha512-dtBZYjDmCQ9hW+WgEkaffvRRCKm767wWhxsFW3Lw86VXz/uJRuD438/XvbZT//B96Vs8oTA8Q4A0AfHbrxP9zw==",
+      "os": ["linux"],
+      "cpu": ["x64"]
+    },
+    "@rollup/rollup-openharmony-arm64@4.52.4": {
+      "integrity": "sha512-1ox+GqgRWqaB1RnyZXL8PD6E5f7YyRUJYnCqKpNzxzP0TkaUh112NDrR9Tt+C8rJ4x5G9Mk8PQR3o7Ku2RKqKA==",
+      "os": ["openharmony"],
+      "cpu": ["arm64"]
+    },
+    "@rollup/rollup-win32-arm64-msvc@4.52.4": {
+      "integrity": "sha512-8GKr640PdFNXwzIE0IrkMWUNUomILLkfeHjXBi/nUvFlpZP+FA8BKGKpacjW6OUUHaNI6sUURxR2U2g78FOHWQ==",
+      "os": ["win32"],
+      "cpu": ["arm64"]
+    },
+    "@rollup/rollup-win32-ia32-msvc@4.52.4": {
+      "integrity": "sha512-AIy/jdJ7WtJ/F6EcfOb2GjR9UweO0n43jNObQMb6oGxkYTfLcnN7vYYpG+CN3lLxrQkzWnMOoNSHTW54pgbVxw==",
+      "os": ["win32"],
+      "cpu": ["ia32"]
+    },
+    "@rollup/rollup-win32-x64-gnu@4.52.4": {
+      "integrity": "sha512-UF9KfsH9yEam0UjTwAgdK0anlQ7c8/pWPU2yVjyWcF1I1thABt6WXE47cI71pGiZ8wGvxohBoLnxM04L/wj8mQ==",
+      "os": ["win32"],
+      "cpu": ["x64"]
+    },
+    "@rollup/rollup-win32-x64-msvc@4.52.4": {
+      "integrity": "sha512-bf9PtUa0u8IXDVxzRToFQKsNCRz9qLYfR/MpECxl4mRoWYjAeFjgxj1XdZr2M/GNVpT05p+LgQOHopYDlUu6/w==",
+      "os": ["win32"],
+      "cpu": ["x64"]
+    },
+    "@shikijs/core@3.15.0": {
+      "integrity": "sha512-8TOG6yG557q+fMsSVa8nkEDOZNTSxjbbR8l6lF2gyr6Np+jrPlslqDxQkN6rMXCECQ3isNPZAGszAfYoJOPGlg==",
+      "dependencies": [
+        "@shikijs/types",
+        "@shikijs/vscode-textmate",
+        "@types/hast",
+        "hast-util-to-html"
+      ]
+    },
+    "@shikijs/engine-javascript@3.15.0": {
+      "integrity": "sha512-ZedbOFpopibdLmvTz2sJPJgns8Xvyabe2QbmqMTz07kt1pTzfEvKZc5IqPVO/XFiEbbNyaOpjPBkkr1vlwS+qg==",
+      "dependencies": [
+        "@shikijs/types",
+        "@shikijs/vscode-textmate",
+        "oniguruma-to-es"
+      ]
+    },
+    "@shikijs/engine-oniguruma@3.15.0": {
+      "integrity": "sha512-HnqFsV11skAHvOArMZdLBZZApRSYS4LSztk2K3016Y9VCyZISnlYUYsL2hzlS7tPqKHvNqmI5JSUJZprXloMvA==",
+      "dependencies": [
+        "@shikijs/types",
+        "@shikijs/vscode-textmate"
+      ]
+    },
+    "@shikijs/langs@3.15.0": {
+      "integrity": "sha512-WpRvEFvkVvO65uKYW4Rzxs+IG0gToyM8SARQMtGGsH4GDMNZrr60qdggXrFOsdfOVssG/QQGEl3FnJ3EZ+8w8A==",
+      "dependencies": [
+        "@shikijs/types"
+      ]
+    },
+    "@shikijs/themes@3.15.0": {
+      "integrity": "sha512-8ow2zWb1IDvCKjYb0KiLNrK4offFdkfNVPXb1OZykpLCzRU6j+efkY+Y7VQjNlNFXonSw+4AOdGYtmqykDbRiQ==",
+      "dependencies": [
+        "@shikijs/types"
+      ]
+    },
+    "@shikijs/types@3.15.0": {
+      "integrity": "sha512-BnP+y/EQnhihgHy4oIAN+6FFtmfTekwOLsQbRw9hOKwqgNy8Bdsjq8B05oAt/ZgvIWWFrshV71ytOrlPfYjIJw==",
+      "dependencies": [
+        "@shikijs/vscode-textmate",
+        "@types/hast"
+      ]
+    },
+    "@shikijs/vscode-textmate@10.0.2": {
+      "integrity": "sha512-83yeghZ2xxin3Nj8z1NMd/NCuca+gsYXswywDy5bHvwlWL8tpTQmzGeUuHd9FC3E/SBEMvzJRwWEOz5gGes9Qg=="
+    },
+    "@types/estree@1.0.8": {
+      "integrity": "sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w=="
+    },
+    "@types/hast@3.0.4": {
+      "integrity": "sha512-WPs+bbQw5aCj+x6laNGWLH3wviHtoCv/P3+otBhbOhJgG8qtpdAMlTCxLtsTWA7LH1Oh/bFCHsBn0TPS5m30EQ==",
+      "dependencies": [
+        "@types/unist"
+      ]
+    },
+    "@types/mdast@4.0.4": {
+      "integrity": "sha512-kGaNbPh1k7AFzgpud/gMdvIm5xuECykRR+JnWKQno9TAXVa6WIVCGTPvYGekIDL4uwCZQSYbUxNBSb1aUo79oA==",
+      "dependencies": [
+        "@types/unist"
+      ]
+    },
     "@types/node@22.12.0": {
       "integrity": "sha512-Fll2FZ1riMjNmlmJOdAyY5pUbkftXslB5DgEzlIuNaiWhXd00FhWxVC/r4yV/4wBb9JfImTu+jiSvXTkJ7F/gA==",
       "dependencies": [
         "undici-types"
       ]
     },
+    "@types/unist@3.0.3": {
+      "integrity": "sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q=="
+    },
+    "@ungap/structured-clone@1.3.0": {
+      "integrity": "sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g=="
+    },
+    "atob@2.1.2": {
+      "integrity": "sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==",
+      "bin": true
+    },
+    "ccount@2.0.1": {
+      "integrity": "sha512-eyrF0jiFpY+3drT6383f1qhkbGsLSifNAjA61IUjZjmLCWjItY6LB9ft9YhoDgwfmclB2zhu51Lc7+95b8NRAg=="
+    },
+    "character-entities-html4@2.1.0": {
+      "integrity": "sha512-1v7fgQRj6hnSwFpq1Eu0ynr/CDEw0rXo2B61qXrLNdHZmPKgb7fqS1a2JwF0rISo9q77jDI8VMEHoApn8qDoZA=="
+    },
+    "character-entities-legacy@3.0.0": {
+      "integrity": "sha512-RpPp0asT/6ufRm//AJVwpViZbGM/MkjQFxJccQRHmISF/22NBtsHqAWmL+/pmkPWoIUJdWyeVleTl1wydHATVQ=="
+    },
+    "comma-separated-tokens@2.0.3": {
+      "integrity": "sha512-Fu4hJdvzeylCfQPp9SGWidpzrMs7tTrlu6Vb8XGaRGck8QSNZJJp538Wrb60Lax4fPwR64ViY468OIUTbRlGZg=="
+    },
+    "comrak@0.4.2": {
+      "integrity": "sha512-+nC6n7AEWN8lbpRiVN0su6UnYoAZVxsGurja5H6BzIU292sRu9ktKMwGW4e3Vete9o/8uDRwJ6ZToySy9Xt+Hg=="
+    },
+    "css@3.0.0": {
+      "integrity": "sha512-DG9pFfwOrzc+hawpmqX/dHYHJG+Bsdb0klhyi1sDneOgGOXy9wQIC8hzyVp1e4NRYDBdxcylvywPkkXCHAzTyQ==",
+      "dependencies": [
+        "inherits",
+        "source-map",
+        "source-map-resolve"
+      ]
+    },
+    "decode-uri-component@0.2.2": {
+      "integrity": "sha512-FqUYQ+8o158GyGTrMFJms9qh3CqTKvAqgqsTnkLI8sKu0028orqBhxNMFkFen0zGyg6epACD32pjVk58ngIErQ=="
+    },
+    "dequal@2.0.3": {
+      "integrity": "sha512-0je+qPKHEMohvfRTCEo3CrPG6cAzAYgmzKyxRiYSSDkS6eGJdyVJm7WaYA5ECaAD9wLB2T4EEeymA5aFVcYXCA=="
+    },
+    "devlop@1.1.0": {
+      "integrity": "sha512-RWmIqhcFf1lRYBvNmr7qTNuyCt/7/ns2jbpp1+PalgE/rDQcBT0fioSMUpJ93irlUhC5hrg4cYqe6U+0ImW0rA==",
+      "dependencies": [
+        "dequal"
+      ]
+    },
+    "esbuild@0.25.10": {
+      "integrity": "sha512-9RiGKvCwaqxO2owP61uQ4BgNborAQskMR6QusfWzQqv7AZOg5oGehdY2pRJMTKuwxd1IDBP4rSbI5lHzU7SMsQ==",
+      "optionalDependencies": [
+        "@esbuild/aix-ppc64",
+        "@esbuild/android-arm",
+        "@esbuild/android-arm64",
+        "@esbuild/android-x64",
+        "@esbuild/darwin-arm64",
+        "@esbuild/darwin-x64",
+        "@esbuild/freebsd-arm64",
+        "@esbuild/freebsd-x64",
+        "@esbuild/linux-arm",
+        "@esbuild/linux-arm64",
+        "@esbuild/linux-ia32",
+        "@esbuild/linux-loong64",
+        "@esbuild/linux-mips64el",
+        "@esbuild/linux-ppc64",
+        "@esbuild/linux-riscv64",
+        "@esbuild/linux-s390x",
+        "@esbuild/linux-x64",
+        "@esbuild/netbsd-arm64",
+        "@esbuild/netbsd-x64",
+        "@esbuild/openbsd-arm64",
+        "@esbuild/openbsd-x64",
+        "@esbuild/openharmony-arm64",
+        "@esbuild/sunos-x64",
+        "@esbuild/win32-arm64",
+        "@esbuild/win32-ia32",
+        "@esbuild/win32-x64"
+      ],
+      "scripts": true,
+      "bin": true
+    },
+    "fdir@6.5.0_picomatch@4.0.3": {
+      "integrity": "sha512-tIbYtZbucOs0BRGqPJkshJUYdL+SDH7dVM8gjy+ERp3WAUjLEFJE+02kanyHtwjWOnwrKYBiwAmM0p4kLJAnXg==",
+      "dependencies": [
+        "picomatch"
+      ],
+      "optionalPeers": [
+        "picomatch"
+      ]
+    },
+    "fsevents@2.3.3": {
+      "integrity": "sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==",
+      "os": ["darwin"],
+      "scripts": true
+    },
+    "hast-util-to-html@9.0.5": {
+      "integrity": "sha512-OguPdidb+fbHQSU4Q4ZiLKnzWo8Wwsf5bZfbvu7//a9oTYoqD/fWpe96NuHkoS9h0ccGOTe0C4NGXdtS0iObOw==",
+      "dependencies": [
+        "@types/hast",
+        "@types/unist",
+        "ccount",
+        "comma-separated-tokens",
+        "hast-util-whitespace",
+        "html-void-elements",
+        "mdast-util-to-hast",
+        "property-information",
+        "space-separated-tokens",
+        "stringify-entities",
+        "zwitch"
+      ]
+    },
+    "hast-util-whitespace@3.0.0": {
+      "integrity": "sha512-88JUN06ipLwsnv+dVn+OIYOvAuvBMy/Qoi6O7mQHxdPXpjy+Cd6xRkWwux7DKO+4sYILtLBRIKgsdpS2gQc7qw==",
+      "dependencies": [
+        "@types/hast"
+      ]
+    },
+    "html-void-elements@3.0.0": {
+      "integrity": "sha512-bEqo66MRXsUGxWHV5IP0PUiAWwoEjba4VCzg0LjFJBpchPaTfyfCKTG6bc5F8ucKec3q5y6qOdGyYTSBEvhCrg=="
+    },
+    "inherits@2.0.4": {
+      "integrity": "sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ=="
+    },
+    "mdast-util-to-hast@13.2.1": {
+      "integrity": "sha512-cctsq2wp5vTsLIcaymblUriiTcZd0CwWtCbLvrOzYCDZoWyMNV8sZ7krj09FSnsiJi3WVsHLM4k6Dq/yaPyCXA==",
+      "dependencies": [
+        "@types/hast",
+        "@types/mdast",
+        "@ungap/structured-clone",
+        "devlop",
+        "micromark-util-sanitize-uri",
+        "trim-lines",
+        "unist-util-position",
+        "unist-util-visit",
+        "vfile"
+      ]
+    },
+    "micromark-util-character@2.1.1": {
+      "integrity": "sha512-wv8tdUTJ3thSFFFJKtpYKOYiGP2+v96Hvk4Tu8KpCAsTMs6yi+nVmGh1syvSCsaxz45J6Jbw+9DD6g97+NV67Q==",
+      "dependencies": [
+        "micromark-util-symbol",
+        "micromark-util-types"
+      ]
+    },
+    "micromark-util-encode@2.0.1": {
+      "integrity": "sha512-c3cVx2y4KqUnwopcO9b/SCdo2O67LwJJ/UyqGfbigahfegL9myoEFoDYZgkT7f36T0bLrM9hZTAaAyH+PCAXjw=="
+    },
+    "micromark-util-sanitize-uri@2.0.1": {
+      "integrity": "sha512-9N9IomZ/YuGGZZmQec1MbgxtlgougxTodVwDzzEouPKo3qFWvymFHWcnDi2vzV1ff6kas9ucW+o3yzJK9YB1AQ==",
+      "dependencies": [
+        "micromark-util-character",
+        "micromark-util-encode",
+        "micromark-util-symbol"
+      ]
+    },
+    "micromark-util-symbol@2.0.1": {
+      "integrity": "sha512-vs5t8Apaud9N28kgCrRUdEed4UJ+wWNvicHLPxCa9ENlYuAY31M0ETy5y1vA33YoNPDFTghEbnh6efaE8h4x0Q=="
+    },
+    "micromark-util-types@2.0.2": {
+      "integrity": "sha512-Yw0ECSpJoViF1qTU4DC6NwtC4aWGt1EkzaQB8KPPyCRR8z9TWeV0HbEFGTO+ZY1wB22zmxnJqhPyTpOVCpeHTA=="
+    },
+    "nanoid@3.3.11": {
+      "integrity": "sha512-N8SpfPUnUp1bK+PMYW8qSWdl9U+wwNWI4QKxOYDy9JAro3WMX7p2OeVRF9v+347pnakNevPmiHhNmZ2HbFA76w==",
+      "bin": true
+    },
+    "oniguruma-parser@0.12.1": {
+      "integrity": "sha512-8Unqkvk1RYc6yq2WBYRj4hdnsAxVze8i7iPfQr8e4uSP3tRv0rpZcbGUDvxfQQcdwHt/e9PrMvGCsa8OqG9X3w=="
+    },
+    "oniguruma-to-es@4.3.4": {
+      "integrity": "sha512-3VhUGN3w2eYxnTzHn+ikMI+fp/96KoRSVK9/kMTcFqj1NRDh2IhQCKvYxDnWePKRXY/AqH+Fuiyb7VHSzBjHfA==",
+      "dependencies": [
+        "oniguruma-parser",
+        "regex",
+        "regex-recursion"
+      ]
+    },
+    "picocolors@1.1.1": {
+      "integrity": "sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA=="
+    },
+    "picomatch@4.0.3": {
+      "integrity": "sha512-5gTmgEY/sqK6gFXLIsQNH19lWb4ebPDLA4SdLP7dsWkIXHWlG66oPuVvXSGFPppYZz8ZDZq0dYYrbHfBCVUb1Q=="
+    },
+    "postcss@8.5.6": {
+      "integrity": "sha512-3Ybi1tAuwAP9s0r1UQ2J4n5Y0G05bJkpUIO0/bI9MhwmD70S5aTWbXGBwxHrelT+XM1k6dM0pk+SwNkpTRN7Pg==",
+      "dependencies": [
+        "nanoid",
+        "picocolors",
+        "source-map-js"
+      ]
+    },
+    "property-information@7.1.0": {
+      "integrity": "sha512-TwEZ+X+yCJmYfL7TPUOcvBZ4QfoT5YenQiJuX//0th53DE6w0xxLEtfK3iyryQFddXuvkIk51EEgrJQ0WJkOmQ=="
+    },
+    "regex-recursion@6.0.2": {
+      "integrity": "sha512-0YCaSCq2VRIebiaUviZNs0cBz1kg5kVS2UKUfNIx8YVs1cN3AV7NTctO5FOKBA+UT2BPJIWZauYHPqJODG50cg==",
+      "dependencies": [
+        "regex-utilities"
+      ]
+    },
+    "regex-utilities@2.3.0": {
+      "integrity": "sha512-8VhliFJAWRaUiVvREIiW2NXXTmHs4vMNnSzuJVhscgmGav3g9VDxLrQndI3dZZVVdp0ZO/5v0xmX516/7M9cng=="
+    },
+    "regex@6.0.1": {
+      "integrity": "sha512-uorlqlzAKjKQZ5P+kTJr3eeJGSVroLKoHmquUj4zHWuR+hEyNqlXsSKlYYF5F4NI6nl7tWCs0apKJ0lmfsXAPA==",
+      "dependencies": [
+        "regex-utilities"
+      ]
+    },
+    "rollup@4.52.4": {
+      "integrity": "sha512-CLEVl+MnPAiKh5pl4dEWSyMTpuflgNQiLGhMv8ezD5W/qP8AKvmYpCOKRRNOh7oRKnauBZ4SyeYkMS+1VSyKwQ==",
+      "dependencies": [
+        "@types/estree"
+      ],
+      "optionalDependencies": [
+        "@rollup/rollup-android-arm-eabi",
+        "@rollup/rollup-android-arm64",
+        "@rollup/rollup-darwin-arm64",
+        "@rollup/rollup-darwin-x64",
+        "@rollup/rollup-freebsd-arm64",
+        "@rollup/rollup-freebsd-x64",
+        "@rollup/rollup-linux-arm-gnueabihf",
+        "@rollup/rollup-linux-arm-musleabihf",
+        "@rollup/rollup-linux-arm64-gnu",
+        "@rollup/rollup-linux-arm64-musl",
+        "@rollup/rollup-linux-loong64-gnu",
+        "@rollup/rollup-linux-ppc64-gnu",
+        "@rollup/rollup-linux-riscv64-gnu",
+        "@rollup/rollup-linux-riscv64-musl",
+        "@rollup/rollup-linux-s390x-gnu",
+        "@rollup/rollup-linux-x64-gnu",
+        "@rollup/rollup-linux-x64-musl",
+        "@rollup/rollup-openharmony-arm64",
+        "@rollup/rollup-win32-arm64-msvc",
+        "@rollup/rollup-win32-ia32-msvc",
+        "@rollup/rollup-win32-x64-gnu",
+        "@rollup/rollup-win32-x64-msvc",
+        "fsevents"
+      ],
+      "bin": true
+    },
+    "shiki@3.15.0": {
+      "integrity": "sha512-kLdkY6iV3dYbtPwS9KXU7mjfmDm25f5m0IPNFnaXO7TBPcvbUOY72PYXSuSqDzwp+vlH/d7MXpHlKO/x+QoLXw==",
+      "dependencies": [
+        "@shikijs/core",
+        "@shikijs/engine-javascript",
+        "@shikijs/engine-oniguruma",
+        "@shikijs/langs",
+        "@shikijs/themes",
+        "@shikijs/types",
+        "@shikijs/vscode-textmate",
+        "@types/hast"
+      ]
+    },
+    "source-map-js@1.2.1": {
+      "integrity": "sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA=="
+    },
+    "source-map-resolve@0.6.0": {
+      "integrity": "sha512-KXBr9d/fO/bWo97NXsPIAW1bFSBOuCnjbNTBMO7N59hsv5i9yzRDfcYwwt0l04+VqnKC+EwzvJZIP/qkuMgR/w==",
+      "dependencies": [
+        "atob",
+        "decode-uri-component"
+      ],
+      "deprecated": true
+    },
+    "source-map@0.6.1": {
+      "integrity": "sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g=="
+    },
+    "space-separated-tokens@2.0.2": {
+      "integrity": "sha512-PEGlAwrG8yXGXRjW32fGbg66JAlOAwbObuqVoJpv/mRgoWDQfgH1wDPvtzWyUSNAXBGSk8h755YDbbcEy3SH2Q=="
+    },
+    "stringify-entities@4.0.4": {
+      "integrity": "sha512-IwfBptatlO+QCJUo19AqvrPNqlVMpW9YEL2LIVY+Rpv2qsjCGxaDLNRgeGsQWJhfItebuJhsGSLjaBbNSQ+ieg==",
+      "dependencies": [
+        "character-entities-html4",
+        "character-entities-legacy"
+      ]
+    },
+    "tinyglobby@0.2.15_picomatch@4.0.3": {
+      "integrity": "sha512-j2Zq4NyQYG5XMST4cbs02Ak8iJUdxRM0XI5QyxXuZOzKOINmWurp3smXu3y5wDcJrptwpSjgXHzIQxR0omXljQ==",
+      "dependencies": [
+        "fdir",
+        "picomatch"
+      ]
+    },
+    "trim-lines@3.0.1": {
+      "integrity": "sha512-kRj8B+YHZCc9kQYdWfJB2/oUl9rA99qbowYYBtr4ui4mZyAQ2JpvVBd/6U2YloATfqBhBTSMhTpgBHtU0Mf3Rg=="
+    },
     "undici-types@6.20.0": {
       "integrity": "sha512-Ny6QZ2Nju20vw1SRHe3d9jVu6gJ+4e3+MMpqu7pqE5HT6WsTSlce++GQmK5UXS8mzV8DSYHrQH+Xrf2jVcuKNg=="
+    },
+    "unist-util-is@6.0.1": {
+      "integrity": "sha512-LsiILbtBETkDz8I9p1dQ0uyRUWuaQzd/cuEeS1hoRSyW5E5XGmTzlwY1OrNzzakGowI9Dr/I8HVaw4hTtnxy8g==",
+      "dependencies": [
+        "@types/unist"
+      ]
+    },
+    "unist-util-position@5.0.0": {
+      "integrity": "sha512-fucsC7HjXvkB5R3kTCO7kUjRdrS0BJt3M/FPxmHMBOm8JQi2BsHAHFsy27E0EolP8rp0NzXsJ+jNPyDWvOJZPA==",
+      "dependencies": [
+        "@types/unist"
+      ]
+    },
+    "unist-util-stringify-position@4.0.0": {
+      "integrity": "sha512-0ASV06AAoKCDkS2+xw5RXJywruurpbC4JZSm7nr7MOt1ojAzvyyaO+UxZf18j8FCF6kmzCZKcAgN/yu2gm2XgQ==",
+      "dependencies": [
+        "@types/unist"
+      ]
+    },
+    "unist-util-visit-parents@6.0.2": {
+      "integrity": "sha512-goh1s1TBrqSqukSc8wrjwWhL0hiJxgA8m4kFxGlQ+8FYQ3C/m11FcTs4YYem7V664AhHVvgoQLk890Ssdsr2IQ==",
+      "dependencies": [
+        "@types/unist",
+        "unist-util-is"
+      ]
+    },
+    "unist-util-visit@5.0.0": {
+      "integrity": "sha512-MR04uvD+07cwl/yhVuVWAtw+3GOR/knlL55Nd/wAdblk27GCVt3lqpTivy/tkJcZoNPzTwS1Y+KMojlLDhoTzg==",
+      "dependencies": [
+        "@types/unist",
+        "unist-util-is",
+        "unist-util-visit-parents"
+      ]
+    },
+    "vfile-message@4.0.3": {
+      "integrity": "sha512-QTHzsGd1EhbZs4AsQ20JX1rC3cOlt/IWJruk893DfLRr57lcnOeMaWG4K0JrRta4mIJZKth2Au3mM3u03/JWKw==",
+      "dependencies": [
+        "@types/unist",
+        "unist-util-stringify-position"
+      ]
+    },
+    "vfile@6.0.3": {
+      "integrity": "sha512-KzIbH/9tXat2u30jf+smMwFCsno4wHVdNmzFyL+T/L3UGqqk6JKfVqOFOZEpZSHADH1k40ab6NUIXZq422ov3Q==",
+      "dependencies": [
+        "@types/unist",
+        "vfile-message"
+      ]
+    },
+    "vite@7.1.9_@types+node@22.12.0_picomatch@4.0.3": {
+      "integrity": "sha512-4nVGliEpxmhCL8DslSAUdxlB6+SMrhB0a1v5ijlh1xB1nEPuy1mxaHxysVucLHuWryAxLWg6a5ei+U4TLn/rFg==",
+      "dependencies": [
+        "@types/node",
+        "esbuild",
+        "fdir",
+        "picomatch",
+        "postcss",
+        "rollup",
+        "tinyglobby"
+      ],
+      "optionalDependencies": [
+        "fsevents"
+      ],
+      "optionalPeers": [
+        "@types/node"
+      ],
+      "bin": true
+    },
+    "zwitch@2.0.4": {
+      "integrity": "sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A=="
     }
   },
   "redirects": {
@@ -101,12 +834,346 @@
     "https://deno.land/std@0.102.0/testing/_diff.ts": "5d3693155f561d1a5443ac751ac70aab9f5d67b4819a621d4b96b8a1a1c89620",
     "https://deno.land/std@0.102.0/testing/asserts.ts": "40740a6a16efd07e052cac8280a8c7c445a81131f00a2bd5d8c3e851dfa2ef90",
     "https://deno.land/x/comrak@0.1.1/mod.ts": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979131995": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979132435": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979132501": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979132560": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979132621": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979132687": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979132750": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979132818": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979132887": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979132948": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979133010": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979133068": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979133125": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979133184": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979133244": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979133308": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979133370": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979133431": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979133493": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979137267": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979137376": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979137434": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979137493": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979137551": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979137612": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979137671": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979137733": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979137794": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979137865": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979137924": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979137984": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979138044": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979138105": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979138164": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979138228": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979138295": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979138356": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979138416": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979138475": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979141910": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979142022": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979142085": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979142163": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979142229": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979142286": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979142346": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979142437": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979142498": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979142570": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979142627": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979142693": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979142753": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979142819": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979142888": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979142948": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979143009": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979143077": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979143136": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979146648": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979146756": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979146817": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979146880": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979146953": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979147013": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979147072": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979147335": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979147512": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979148163": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979148225": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979148286": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979148345": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979148406": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979148471": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979148538": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979148600": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979152029": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979152143": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979152208": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979152277": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979152343": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979152505": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979152567": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979152632": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979152695": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979152759": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979152823": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979152885": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979152966": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979153040": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979153104": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979153173": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979153241": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979153304": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979156791": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979156902": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979156965": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979157040": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979157102": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979157166": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979157240": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979157316": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979157378": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979157439": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979157502": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979157569": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979157644": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979157705": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979157768": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979157855": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979157929": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979157993": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979158062": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979161527": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979161594": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979161736": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979161810": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979161883": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979161952": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979162029": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979162099": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979162166": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
+    "https://deno.land/x/comrak@0.1.1/mod.ts?1763979162233": "da459d87c9ae5a2e6b10ee9068d8361cdf376e4342733e8c7009409062f37a89",
     "https://deno.land/x/comrak@0.1.1/pkg/comrak_wasm.js": "41a1c08c28a0cb44698ee3877f24f347f914d3e476b390639c3c188fcef0ed2d",
     "https://deno.land/x/comrak@0.1.1/wasm.js": "8adc9bd849ed47cec36e3584f6bb0396cb44dbc73a912b9fdc5867344fcb8d1d",
     "https://deno.land/x/lz4@v0.1.2/mod.ts": "4decfc1a3569d03fd1813bd39128b71c8f082850fe98ecfdde20025772916582",
     "https://deno.land/x/lz4@v0.1.2/wasm.js": "b9c65605327ba273f0c76a6dc596ec534d4cda0f0225d7a94ebc606782319e46",
+    "https://deno.land/x/semver@v1.4.1/mod.ts": "0b79c87562eb8a1f008ab0d98f8bb60076dd65bc06f1f8fdfac2d2dab162c27b",
+    "https://esm.sh/@jsr/nick__comrak@0.4.4/denonext/lib/brotli.mjs": "905475a2e17930c2f339ea55790d60973463c1547c12640e6ecc5db72ccdc72e",
+    "https://esm.sh/@jsr/nick__comrak@0.4.4/denonext/nick__comrak.mjs": "77209bcb5441e88e8d708d331855c9f58825e514204e707311215550937ae2e3",
     "https://esm.sh/acorn@8.14.1/denonext/acorn.mjs": "9c16f03d31870aa8fc710ddafef98fc8c437be374e692988c921046611e3fcb8",
     "https://esm.sh/acorn@8.14.1?target=denonext": "92e7456dd85c473d02a7fa0de30e40eec13d5f94c7bbd816e847d78ad0411d2c",
+    "https://esm.sh/comrak@0.4.2": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2/denonext/comrak.mjs": "4ea88cb3997696937b35989fb6976ef75448379a2db4b19500d0b7b3a9a686d7",
+    "https://esm.sh/comrak@0.4.2/denonext/lib/brotli.mjs": "684cff1d20f68044dfcc4beb3f738e50e5c5fefd958eb8117e42f40b3984d533",
+    "https://esm.sh/comrak@0.4.2?1763979133559": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979133890": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979133975": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979134070": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979134153": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979134236": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979134318": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979134400": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979134484": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979134568": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979134651": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979134733": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979134815": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979134897": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979134979": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979135060": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979135144": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979138545": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979138628": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979138710": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979138796": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979138882": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979138974": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979139057": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979139141": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979139224": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979139306": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979139390": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979139474": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979139557": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979139641": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979139727": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979139809": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979139893": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979143196": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979143279": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979143362": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979143444": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979143526": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979143609": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979143691": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979143773": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979143856": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979143941": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979144022": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979144105": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979144186": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979144268": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979144352": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979144433": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979144516": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979144598": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979148673": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979148757": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979148840": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979148925": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979149009": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979149092": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979149174": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979149258": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979149341": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979149424": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979149507": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979149593": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979149676": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979149759": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979149842": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979149925": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979150007": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979153367": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979153455": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979153540": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979153632": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979153719": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979153806": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979153893": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979153978": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979154062": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979154144": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979154228": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979154314": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979154398": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979154482": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979154566": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979154649": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979154733": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979158127": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979158211": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979158296": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979158380": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979158464": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979158547": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979158631": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979158714": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979158798": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979158883": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979158967": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979159050": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979159135": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979159218": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979159302": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979159397": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/comrak@0.4.2?1763979159481": "840561d57c28d2b417017843560c03b18dd93fd7a08b49add5f60b921c4a34d0",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979135228": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979135360": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979135456": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979135539": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979135622": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979135704": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979135788": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979135869": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979135952": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979136033": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979136117": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979136199": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979136284": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979136366": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979136450": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979136531": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979136614": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979139975": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979140058": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979140141": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979140222": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979140315": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979140399": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979140481": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979140562": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979140645": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979140728": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979140811": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979140892": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979140977": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979141060": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979141142": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979141225": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979141308": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979144680": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979144764": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979144853": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979144936": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979145018": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979145102": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979145188": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979145272": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979145361": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979145446": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979145531": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979145613": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979145696": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979145779": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979145861": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979145943": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979146030": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979150089": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979150173": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979150258": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979150341": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979150426": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979150511": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979150595": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979150677": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979150759": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979150843": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979150926": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979151008": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979151094": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979151179": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979151263": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979151345": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979151428": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979154816": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979154902": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979154988": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979155071": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979155154": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979155238": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979155322": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979155407": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979155491": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979155577": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979155663": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979155753": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979155843": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979155932": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979156016": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979156103": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979156188": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979159567": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979159652": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979159736": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979159821": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979159909": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979159993": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979160077": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979160161": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979160246": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979160335": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979160419": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979160502": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979160589": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979160671": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979160754": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979160838": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
+    "https://esm.sh/jsr/@nick/comrak@0.4.4?1763979160922": "df3dd8e51bde1b02c23ad6f6bb551d509c9335d43b9fcb7370c5e0914faceb46",
     "https://esm.sh/source-map@0.7.4/denonext/source-map.mjs": "c2d2773e10e0c836c79c64241141e08033c4dfb95e124b8bdcf70b6628a2e708",
     "https://esm.sh/source-map@0.7.4?target=denonext": "6aaf38da33545b05170ab2286f1208e851e5eb9bb8334d09fa72791ca9634713",
     "https://esm.sh/terser@5.7.1": "310958fe1bf9b456d26f9db73e9a868f281e6388898b3aa31b45737eee6af8a8",
@@ -115,10 +1182,5 @@
     "https://esm.sh/terser@5.7.1/denonext/lib/utils/first_in_statement.mjs": "a6ffdaaa5abe6d343777bd34b225367041cfc37809176e6b6e05a8ed25b828b5",
     "https://esm.sh/terser@5.7.1/denonext/lib/utils/index.mjs": "d6aa92449431aa2b619fd29a6853da536391e8c1ce04b17f504e7ab18227969c",
     "https://esm.sh/terser@5.7.1/denonext/terser.mjs": "31258cad60ad51e7b4e595b5166dce3074cefc689405d82c0b766d5ae74ee8e5"
-  },
-  "workspace": {
-    "dependencies": [
-      "jsr:@std/assert@^1.0.11"
-    ]
   }
 }

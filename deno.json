@@ -1,6 +1,6 @@
 {
   "name": "@nick/comrak",
-  "version": "0.4.4",
+  "version": "0.48.0",
   "license": "MIT",
   "author": {
     "name": "Nicholas Berlette",
@@ -8,7 +8,16 @@
     "url": "https://github.com/nberlette/comrak-wasm"
   },
   "exports": {
-    ".": "./mod.ts"
+    ".": "./mod.ts",
+    "./adapters": "./src/adapters.ts",
+    "./cm": "./src/cm.ts",
+    "./commonmark": "./src/cm.ts",
+    "./html": "./src/html.ts",
+    "./nodes": "./src/nodes.ts",
+    "./options": "./src/options.ts",
+    "./parse": "./src/parse.ts",
+    "./wasm": "./src/_wasm.ts",
+    "./xml": "./src/xml.ts"
   },
   "lock": true,
   "nodeModulesDir": "auto",
@@ -56,7 +65,7 @@
       "dependencies": ["build:ensure"]
     },
     "lint:docs": {
-      "command": "deno doc --lint mod.ts",
+      "command": "deno doc --lint mod.ts src/[a-z]*.ts",
       "description": "Lint the documentation comments for potential issues.",
       "dependencies": ["build:ensure"]
     },
@@ -70,7 +79,7 @@
     },
     "check": {
       "description": "Run all checks (formatting, linting, testing).",
-      "dependencies": ["fmt:check", "lint:all", "test", "bench"]
+      "dependencies": ["fmt:check", "lint", "test"]
     },
     "publish:dry": {
       "command": "deno publish --dry-run --allow-dirty",

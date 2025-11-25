@@ -1,48 +1,48 @@
 [workspace]
-  members  = ["crates/comrak-wasm", "crates/comrak"]
-  resolver = "2"
+members = ["crates/comrak-wasm", "crates/comrak-labs"]
+resolver = "2"
 
 [workspace.package]
-  version     = "0.4.4"
-  authors     = ["Nicholas Berlette <nick@berlette.com>"]
-  edition     = "2024"
-  license     = "MIT OR Apache-2.0"
-  description = "WebAssembly bindings for Comrak, the CommonMark + GFM compatible Markdown parser and renderer"
-  repository  = "https://github.com/nberlette/comrak-wasm"
-  homepage    = "https://jsr.io/@nick/comrak"
-  readme      = "README.md"
-  keywords    = ["markdown", "commonmark", "parser", "renderer", "wasm"]
-  categories  = ["parsing", "text-processing", "wasm"]
-  publish     = false
+version = "0.48.0"
+authors = ["Nicholas Berlette <nick@berlette.com>"]
+edition = "2024"
+license = "MIT OR Apache-2.0"
+description = "WebAssembly bindings for Comrak, the CommonMark + GFM compatible Markdown parser and renderer"
+repository = "https://github.com/nberlette/comrak-wasm"
+homepage = "https://jsr.io/@nick/comrak"
+readme = "README.md"
+keywords = ["markdown", "commonmark", "parser", "renderer", "wasm"]
+categories = ["parsing", "text-processing", "wasm"]
+publish = false
 
 [workspace.dependencies]
-  comrak = { path = "crates/comrak", version = "=0.47.0", features = [
-    "shortcodes",
-    "serialization",
-  ], default-features = false }
-  js-sys = { version = "=0.3.77" }
-  serde = { version = "=1.0.228", default-features = false, features = [
-    "derive",
-    "rc",
-    "alloc",
-  ] }
-  serde_json = { version = "=1.0.145", default-features = false, features = [
-    "alloc",
-    "preserve_order",
-    "raw_value",
-  ] }
-  wasm-bindgen = { version = "=0.2.100", default-features = false, features = [
-    "strict-macro",
-    "enable-interning",
-  ] }
-  serde-wasm-bindgen = "=0.6.5"
-  lol_alloc = { version = "=0.4.1" }
-  bumpalo = { version = "=3.19.0" }
+comrak = { path = "crates/comrak-labs", version = "=0.48.0", features = [
+  "shortcodes",
+  "serialization",
+], default-features = false }
+js-sys = { version = "=0.3.77" }
+serde = { version = "=1.0.228", default-features = false, features = [
+  "derive",
+  "rc",
+  "alloc",
+] }
+serde_json = { version = "=1.0.145", default-features = false, features = [
+  "alloc",
+  "preserve_order",
+  "raw_value",
+] }
+wasm-bindgen = { version = "=0.2.100", default-features = false, features = [
+  "strict-macro",
+  "enable-interning",
+] }
+serde-wasm-bindgen = "=0.6.5"
+lol_alloc = { version = "=0.4.1" }
+bumpalo = { version = "=3.19.0" }
 
 [profile.release]
-  lto           = true
-  opt-level     = "s"
-  panic         = "abort"
-  codegen-units = 1
-  strip         = true
-  incremental   = true
+lto = true
+opt-level = "s"
+panic = "abort"
+codegen-units = 1
+strip = true
+incremental = true
