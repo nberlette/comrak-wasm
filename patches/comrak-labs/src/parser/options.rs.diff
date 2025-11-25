@@ -1,0 +1,124 @@
+diff --git a/src/parser/options.rs b/src/parser/options.rs
+index 9a93bc1..d83ea10 100644
+--- a/src/parser/options.rs
++++ b/src/parser/options.rs
+@@ -12,6 +12,12 @@ use crate::parser::ResolvedReference;
+ 
+ #[derive(Default, Debug, Clone)]
+ #[cfg_attr(feature = "arbitrary", derive(arbitrary::Arbitrary))]
++#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
++#[cfg_attr(feature = "serde", serde(default))]
++#[cfg_attr(
++    all(target_arch = "wasm32", feature = "serde"),
++    serde(rename_all = "camelCase")
++)]
+ /// Umbrella options struct.
+ pub struct Options<'c> {
+     /// Enable CommonMark extensions.
+@@ -27,6 +33,12 @@ pub struct Options<'c> {
+ #[derive(Default, Debug, Clone)]
+ #[cfg_attr(feature = "bon", derive(Builder))]
+ #[cfg_attr(feature = "arbitrary", derive(arbitrary::Arbitrary))]
++#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
++#[cfg_attr(feature = "serde", serde(default))]
++#[cfg_attr(
++    all(target_arch = "wasm32", feature = "serde"),
++    serde(rename_all = "camelCase")
++)]
+ /// Options to select extensions.
+ pub struct Extension<'c> {
+     /// Enables the
+@@ -125,6 +137,10 @@ pub struct Extension<'c> {
+     /// assert_eq!(markdown_to_html("# README\n", &options),
+     ///            "<h1><a href=\"#readme\" aria-hidden=\"true\" class=\"anchor\" id=\"user-content-readme\"></a>README</h1>\n");
+     /// ```
++    #[cfg_attr(
++        all(target_arch = "wasm32", feature = "serde"),
++        serde(rename = "headerIDs")
++    )]
+     pub header_ids: Option<String>,
+ 
+     /// Enables the footnotes extension per `cmark-gfm`.
+@@ -474,6 +490,7 @@ pub struct Extension<'c> {
+     ///            "<p><img src=\"https://safe.example.com?url=http://unsafe.example.com/bad.png\" alt=\"\" /></p>\n");
+     /// ```
+     #[cfg_attr(feature = "arbitrary", arbitrary(value = None))]
++    #[cfg_attr(feature = "serde", serde(skip))]
+     pub image_url_rewriter: Option<Arc<dyn URLRewriter + 'c>>,
+ 
+     /// Wraps link URLs using a function or custom trait object.
+@@ -491,6 +508,7 @@ pub struct Extension<'c> {
+     ///            "<p><a href=\"https://safe.example.com/norefer?url=http://unsafe.example.com/bad\">my link</a></p>\n");
+     /// ```
+     #[cfg_attr(feature = "arbitrary", arbitrary(value = None))]
++    #[cfg_attr(feature = "serde", serde(skip))]
+     pub link_url_rewriter: Option<Arc<dyn URLRewriter + 'c>>,
+ 
+     /// Recognizes many emphasis that appear in CJK contexts but are not recognized by plain CommonMark.
+@@ -575,6 +593,11 @@ impl<'c> Extension<'c> {
+ #[non_exhaustive]
+ #[derive(Debug, Clone, PartialEq, Eq, Copy)]
+ #[cfg_attr(feature = "arbitrary", derive(arbitrary::Arbitrary))]
++#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
++#[cfg_attr(
++    all(target_arch = "wasm32", feature = "serde"),
++    serde(rename_all = "camelCase")
++)]
+ /// Selects between wikilinks with the title first or the URL first.
+ pub enum WikiLinksMode {
+     /// Indicates that the URL precedes the title. For example: `[[http://example.com|link
+@@ -610,6 +633,12 @@ where
+ #[derive(Default, Clone, Debug)]
+ #[cfg_attr(feature = "bon", derive(Builder))]
+ #[cfg_attr(feature = "arbitrary", derive(arbitrary::Arbitrary))]
++#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
++#[cfg_attr(feature = "serde", serde(default))]
++#[cfg_attr(
++    all(target_arch = "wasm32", feature = "serde"),
++    serde(rename_all = "camelCase")
++)]
+ /// Options for parser functions.
+ pub struct Parse<'c> {
+     /// Punctuation (quotes, full-stops and hyphens) are converted into 'smart' punctuation.
+@@ -730,6 +759,7 @@ pub struct Parse<'c> {
+     ///            A [broken link] renders as text.</p>\n");
+     /// ```
+     #[cfg_attr(feature = "arbitrary", arbitrary(default))]
++    #[cfg_attr(feature = "serde", serde(skip))]
+     pub broken_link_callback: Option<Arc<dyn BrokenLinkCallback + 'c>>,
+ 
+     /// Leave footnote definitions in place in the document tree, rather than
+@@ -840,6 +870,7 @@ where
+ /// Struct to the broken link callback, containing details on the link reference
+ /// which failed to find a match.
+ #[derive(Debug)]
++#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+ pub struct BrokenLinkReference<'l> {
+     /// The normalized reference link label. Unicode case folding is applied;
+     /// see <https://github.com/commonmark/commonmark-spec/issues/695> for a
+@@ -853,6 +884,8 @@ pub struct BrokenLinkReference<'l> {
+ #[derive(Default, Debug, Clone, Copy)]
+ #[cfg_attr(feature = "bon", derive(Builder))]
+ #[cfg_attr(feature = "arbitrary", derive(arbitrary::Arbitrary))]
++#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
++#[cfg_attr(feature = "serde", serde(default))]
+ /// Options for formatter functions.
+ pub struct Render {
+     /// [Soft line breaks](http://spec.commonmark.org/0.27/#soft-line-breaks) in the input
+@@ -884,6 +917,7 @@ pub struct Render {
+     ///            "<pre lang=\"rust\"><code>fn hello();\n</code></pre>\n");
+     /// ```
+     #[cfg_attr(feature = "bon", builder(default))]
++    #[cfg_attr(all(target_arch = "wasm32", feature = "serde"), serde(rename = "githubPreLang"))]
+     pub github_pre_lang: bool,
+ 
+     /// Enable full info strings for code blocks
+@@ -1161,6 +1195,8 @@ pub struct Render {
+ 
+ #[derive(Debug, Clone, Copy, Default)]
+ #[cfg_attr(feature = "arbitrary", derive(arbitrary::Arbitrary))]
++#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
++#[cfg_attr(all(target_arch = "wasm32", feature = "serde"), serde(rename_all = "camelCase"))]
+ /// Options for bulleted list rendering in markdown. See `link_style` in [`Render`] for more details.
+ pub enum ListStyleType {
+     /// The `-` character
