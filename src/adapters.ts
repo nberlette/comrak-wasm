@@ -62,10 +62,16 @@ export interface HeadingMeta {
  * import assert from "node:assert";
  *
  * const options = Options.default();
+ *
+ * options.render.sourcepos = true;
+ *
  * options.plugins.render.headingAdapter = {
  *   enter: ({ level, content }, sourcepos) => {
  *     // rudimentary slugification example. don't actually use this!
- *     const id = content.replace(/[^a-z0-9-]+/gi, '-').toLowerCase();
+ *     const id = content.trim()
+ *       .replace(/[^a-z0-9-]+|-+/gi, "-")
+ *       .replace(/^-+|-+$/g, "")
+ *       .toLowerCase();
  *     let attrs = ` id="${id}"`;
  *     if (sourcepos) {
  *       const { start, end } = sourcepos;
@@ -83,8 +89,8 @@ export interface HeadingMeta {
  * const html = markdownToHTML(md, options);
  * assert.strictEqual(html,
  *   '<h1 id="hello" data-sourcepos="1:1-1:8">Hello!</h1>\n' +
- *   '<h2 id="subheading" data-sourcepos="3:1-3:12">Subheading</h2>\n' +
- *   '<p data-sourcepos="5:1-5:5">Bye!</p>\n'
+ *   '<h2 id="subheading" data-sourcepos="3:1-3:13">Subheading</h2>\n' +
+ *   '<p data-sourcepos="5:1-5:4">Bye!</p>\n'
  * );
  * ```
  * @category Adapters
