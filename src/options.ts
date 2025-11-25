@@ -641,7 +641,29 @@ export interface ExtensionOptions {
    */
   cjkFriendlyEmphasis?: boolean;
 
-  // TODO: add missing extensions from comrak::options::ExtensionOptions here
+  /**
+   * Enables block scoped subscript that acts similar to a header.
+   *
+   * ```md
+   * -# subtext
+   * ```
+   *
+   * @example
+   * ```ts
+   * import { markdownToHTML, Options } from "@nick/comrak";
+   * import assert from "node:assert";
+   *
+   * const options = Options.default();
+   * options.extension.subtext = true;
+   *
+   * assert.equal(markdownToHTML("-# subtext", options),
+   *           "<p><sub>subtext</sub></p>\n");
+   * ```
+   * @default {false}
+   */
+  subtext?: boolean;
+
+
 }
 
 /**
@@ -1150,9 +1172,10 @@ export const defaultOptions: DefaultOptions = {
     spoiler: false,
     shortcodes: false,
     greentext: false,
-    cjkFriendlyEmphasis: false,
     linkURLRewriter: null,
     imageURLRewriter: null,
+    cjkFriendlyEmphasis: false,
+    subtext: false,
   },
   parse: {
     defaultInfoString: null,
