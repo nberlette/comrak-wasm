@@ -1,5 +1,5 @@
 // deno-lint-ignore-file no-import-prefix
-import type { ComrakOptions } from "@nick/comrak";
+import type { Options } from "@nick/comrak";
 import pkg from "./deno.json" with { type: "json" };
 
 // the old version from deno.land uses an asynchronous instantiation
@@ -35,7 +35,7 @@ interface ComrakBenchmark {
   name?: string;
   n?: number;
   warmup?: number;
-  options?: ComrakOptions;
+  options?: Options;
 }
 
 interface ComrakTargetPackage {
@@ -72,7 +72,7 @@ const options = {
     width: 80,
     unsafe: false,
   },
-} as const satisfies ComrakOptions;
+} as const satisfies Options;
 
 const basic_md =
   "# comrak\n\nThis is the best Markdown renderer. Ever.\n\n## Features\n\n- [x] Render Markdown to HTML at the speed of light.\n- [x] Supports the full CommonMark specification.\n- [x] Highly configurable and extensible.\n- [x] Written in Rust and compiled to WebAssembly.\n- [x] Super fucking fast!!!\n\n---\n\nLet's try out some **bold** and _italic_ text, shall we?.\n\n> This is a blockquote.  \n> Would you fancy some `inline code`?\n\n```js\n// or maybe a fenced code block?\nconsole.log('Hello, world!');\n```\n\n---\n\n<small data-inline-html>That's all folks!</small>\n";
