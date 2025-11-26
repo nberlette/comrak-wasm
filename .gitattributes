@@ -7,3 +7,4 @@ tests/fixtures/** linguist-vendored
 .vscode/** linguist-vendored
 .github/** linguist-vendored
 lib/** linguist-vendored
+src/lib/** linguist-vendored
