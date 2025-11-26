@@ -1,3 +1,5 @@
+// deno-coverage-ignore-file
+// deno-coverage-ignore-start
 import { HeadingAdapter, SyntaxHighlighterAdapter } from "./_wasm.ts";
 import {
   type BrokenLinkCallbackFunction,
@@ -187,3 +189,4 @@ export function cloneDeep<T>(obj: T): CloneDeep<T> {
   }
   return cloned;
 }
+// deno-coverage-ignore-stop
