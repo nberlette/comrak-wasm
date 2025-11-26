@@ -356,7 +356,7 @@ impl<'p> From<HeadingAdapter> for &'p dyn ComrakHeadingAdapter {
 /// The `BrokenLinkCallback` API allows you to handle broken links found by
 /// Comrak while parsing a Markdown document. You can leverage this API via the
 /// {@linkcode Options.parse.brokenLinkCallback} option.
-////
+///
 /// It exposes its inner `resolve` function as well as a `call` method to
 /// invoke it directly, which is rarely used outside of testing and other
 /// advanced use cases. The `call` signature mirrors that of the native
@@ -375,7 +375,7 @@ unsafe impl Sync for BrokenLinkCallback {}
 impl BrokenLinkCallback {
   #[wasm_bindgen(constructor)]
   pub fn new(
-    #[wasm_bindgen(unchecked_param_type = r"BrokenLinkCallbackFunction")]
+    #[wasm_bindgen(unchecked_param_type = "BrokenLinkCallbackFunction")]
     resolve: Function,
   ) -> Self {
     Self { resolve }
@@ -648,6 +648,30 @@ fn unwrap_option_object<T: for<'de> Deserialize<'de> + Default>(
 #[wasm_bindgen]
 pub fn version() -> String {
   comrak::version().to_string()
+}
+
+#[wasm_bindgen]
+pub fn default_options() -> Result<Object, JsValue> {
+  let options = ComrakOptions::default();
+  Ok(to_value(&options).map_err(map_err)?.into())
+}
+
+#[wasm_bindgen]
+pub fn default_extension_options() -> Result<Object, JsValue> {
+  let options = comrak::options::Extension::default();
+  Ok(to_value(&options).map_err(map_err)?.into())
+}
+
+#[wasm_bindgen]
+pub fn default_parse_options() -> Result<Object, JsValue> {
+  let options = comrak::options::Parse::default();
+  Ok(to_value(&options).map_err(map_err)?.into())
+}
+
+#[wasm_bindgen]
+pub fn default_render_options() -> Result<Object, JsValue> {
+  let options = comrak::options::Render::default();
+  Ok(to_value(&options).map_err(map_err)?.into())
 }
 
 /// Parses the given markdown text and returns the AST as a structured object.
