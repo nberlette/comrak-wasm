@@ -1,6 +1,6 @@
 {
   "name": "@nick/comrak",
-  "version": "0.4.4",
+  "version": "0.48.0-rc.0",
   "license": "MIT",
   "author": {
     "name": "Nicholas Berlette",
@@ -8,7 +8,16 @@
     "url": "https://github.com/nberlette/comrak-wasm"
   },
   "exports": {
-    ".": "./mod.ts"
+    ".": "./mod.ts",
+    "./adapters": "./src/adapters.ts",
+    "./cm": "./src/cm.ts",
+    "./commonmark": "./src/cm.ts",
+    "./html": "./src/html.ts",
+    "./nodes": "./src/nodes.ts",
+    "./options": "./src/options.ts",
+    "./parse": "./src/parse.ts",
+    "./wasm": "./src/_wasm.ts",
+    "./xml": "./src/xml.ts"
   },
   "lock": true,
   "nodeModulesDir": "auto",
@@ -17,7 +26,7 @@
       "command": "deno run -Aq --env-file=.env scripts/build.ts",
       "description": "Build, optimize, and compress the WASM binary."
     },
-    "build:exists": "deno eval \"var{exit:x,stat:s}=Deno;await s('lib/comrak_wasm.js').then(()=>x(0),()=>x(1))\"",
+    "build:exists": "deno eval \"var{exit:x,stat:s}=Deno,m=await s('./src/lib/comrak_wasm.js').then(r=>r.mtime,_=>0),l=await s('./crates/comrak-wasm/src/lib.rs').then(r=>r.mtime,_=>0);x(m&&l&&m>l?0:1)\"",
     "build:ensure": {
       "description": "Ensures the WASM binary is built and up-to-date.",
       "command": "deno task build:exists || deno task build"
@@ -56,7 +65,7 @@
       "dependencies": ["build:ensure"]
     },
     "lint:docs": {
-      "command": "deno doc --lint mod.ts",
+      "command": "deno doc --lint mod.ts src/[a-z]*.ts",
       "description": "Lint the documentation comments for potential issues.",
       "dependencies": ["build:ensure"]
     },
@@ -65,12 +74,14 @@
       "dependencies": ["lint", "lint:docs"]
     },
     "fix": {
+      "command": "deno task lint:fix",
       "description": "Run all auto-fix tasks (formatting and linting).",
-      "dependencies": ["fmt", "lint:fix"]
+      "dependencies": ["fmt"]
     },
     "check": {
+      "command": "deno task test",
       "description": "Run all checks (formatting, linting, testing).",
-      "dependencies": ["fmt:check", "lint:all", "test", "bench"]
+      "dependencies": ["fmt:check", "lint"]
     },
     "publish:dry": {
       "command": "deno publish --dry-run --allow-dirty",
@@ -83,11 +94,14 @@
       "dependencies": ["publish:dry"]
     }
   },
+  "fmt": {
+    "include": ["examples", "src", "scripts", "mod.ts", "*.{ts,md,json}"],
+    "exclude": ["lib", "target", "node_modules", "crates"]
+  },
   "publish": {
     "include": [
-      "**/*.ts",
-      "**/*.js",
-      "**/*.wasm",
+      "mod.ts",
+      "src/**/*",
       "README.md",
       "LICENSE"
     ],
@@ -97,9 +111,7 @@
       "**/*.bench.*",
       "target",
       "scripts",
-      "build.ts",
-      "test.*",
-      "!lib"
+      "examples"
     ]
   },
   "exclude": ["**/.*"]

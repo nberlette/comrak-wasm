@@ -1,6 +1,6 @@
 // deno-lint-ignore-file no-import-prefix
-import type { ComrakOptions } from "@nick/comrak";
-import pkg from "./deno.json" with { type: "json" };
+import type { Options } from "../mod.ts";
+import pkg from "../deno.json" with { type: "json" };
 
 // the old version from deno.land uses an asynchronous instantiation
 // function, so we must await it before running benchmarks.
@@ -25,7 +25,7 @@ const targets = [
   {
     name: "jsr:@nick/comrak [local]",
     version: pkg.version,
-    package: () => import("./mod.ts"),
+    package: () => import("../mod.ts"),
     baseline: true,
   },
 ] as const satisfies readonly ComrakTarget[];
@@ -35,7 +35,7 @@ interface ComrakBenchmark {
   name?: string;
   n?: number;
   warmup?: number;
-  options?: ComrakOptions;
+  options?: Options;
 }
 
 interface ComrakTargetPackage {
@@ -72,10 +72,10 @@ const options = {
     width: 80,
     unsafe: false,
   },
-} as const satisfies ComrakOptions;
+} as const satisfies Options;
 
 const basic_md =
-  "# comrak\n\nThis is the best Markdown renderer. Ever.\n\n## Features\n\n- [x] Render Markdown to HTML at the speed of light.\n- [x] Supports the full CommonMark specification.\n- [x] Highly configurable and extensible.\n- [x] Written in Rust and compiled to WebAssembly.\n- [x] Super fucking fast!!!\n\n---\n\nLet's try out some **bold** and _italic_ text, shall we?.\n\n> This is a blockquote.  \n> Would you fancy some `inline code`?\n\n```js\n// or maybe a fenced code block?\nconsole.log('Hello, world!');\n```\n\n---\n\n<small data-inline-html>That's all folks!</small>\n";
+  "# comrak\n\nThis is the best Markdown renderer. Ever.\n\n## Features\n\n- [x] Render Markdown to HTML at the speed of light.\n- [x] Supports the full CommonMark specification.\n- [x] Highly configurable and extensible.\n- [x] Written in Rust and compiled to WebAssembly.\n- [x] Super freakin' fast!!!\n\n---\n\nLet's try out some **bold** and _italic_ text, shall we?.\n\n> This is a blockquote.  \n> Would you fancy some `inline code`?\n\n```js\n// or maybe a fenced code block?\nconsole.log('Hello, world!');\n```\n\n---\n\n<small data-inline-html>That's all folks!</small>\n";
 
 const benchmarks = [
   {

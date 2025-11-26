@@ -1,0 +1,15 @@
+diff --git a/src/parser/shortcodes.rs b/src/parser/shortcodes.rs
+index 234b32a..df8e3b0 100644
+--- a/src/parser/shortcodes.rs
++++ b/src/parser/shortcodes.rs
+@@ -2,6 +2,10 @@
+ ///
+ /// ("gemoji" name context: https://github.com/github/gemoji)
+ #[derive(Debug, Clone, PartialEq, Eq)]
++#[cfg_attr(
++    feature = "serde",
++    derive(serde::Serialize, serde::Deserialize)
++)]
+ pub struct NodeShortCode {
+     /// The shortcode that was resolved, e.g. "rabbit".
+     pub code: String,

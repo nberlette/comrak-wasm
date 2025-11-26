@@ -1,0 +1,20 @@
+diff --git a/src/parser/mod.rs b/src/parser/mod.rs
+index 3432071..dfb994c 100644
+--- a/src/parser/mod.rs
++++ b/src/parser/mod.rs
+@@ -90,6 +90,7 @@ pub struct Parser<'a, 'o, 'c> {
+ 
+ /// A reference link's resolved details.
+ #[derive(Clone, Debug)]
++#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+ pub struct ResolvedReference {
+     /// The destination URL of the reference link.
+     pub url: String,
+@@ -98,6 +99,7 @@ pub struct ResolvedReference {
+     pub title: String,
+ }
+ 
++#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+ struct FootnoteDefinition<'a> {
+     ix: Option<u32>,
+     node: Node<'a>,

@@ -1,7 +1,7 @@
 import { describe, it, type TestContext } from "node:test";
 
-import { legacy } from "./scripts/parse_comrak_version.ts";
-import { markdownToHTML } from "./mod.ts";
+import { legacy } from "../scripts/parse_comrak_version.ts";
+import { markdownToHTML } from "./html.ts";
 
 describe("markdownToHTML", () => {
   describe("basic functionality and sanity checks", () => {

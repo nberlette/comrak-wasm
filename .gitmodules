@@ -1,0 +1,4 @@
+[submodule "crates/comrak-labs"]
+	path = crates/comrak-labs
+	url = https://github.com/nberlette/comrak-labs.git
+	branch = feat/serde
