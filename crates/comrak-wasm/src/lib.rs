@@ -58,7 +58,6 @@ static ALLOCATOR: Allocator<Lol> = unsafe { Allocator::new(Lol::new()) };
 /// Thank you :)
 pub const COMRAK_TYPES: &'static str = r###"
 import type {
-  Maybe,
   Options,
   ExtensionOptions,
   ParseOptions,
@@ -67,9 +66,20 @@ import type {
   BrokenLinkReference,
   ResolvedReference,
   URLRewriterFunction,
-} from "../src/options.ts";
-import type { AST, Sourcepos } from "../src/nodes.ts";
-import type { HeadingMeta } from "../src/adapters.ts";
+} from "../options.ts";
+import type { AST, Sourcepos } from "../nodes.ts";
+import type { HeadingMeta } from "../adapters.ts";
+
+/**
+ * An optional type that can either be of type `T`, or `null` or `undefined`.
+ *
+ * This is primarily used to represent optional parameters in functions
+ * exposed to JavaScript via WebAssembly bindings. It is intended to mirror the
+ * `Option<T>` type in Rust, while being idiomatic to TypeScript/JavaScript.
+ *
+ * @internal
+ */
+export type Option<T> = T | null | undefined;
 "###;
 
 #[cfg(feature = "syntect")]
@@ -271,40 +281,6 @@ pub use syntax_adapter::SyntaxHighlighterAdapter;
 ///
 /// The `exit` method - also called **once** - is invoked immediately _after_
 /// the heading content has been rendered, and should render the closing tag.
-///
-/// # Example
-///
-/// Here's a brief demo of a `HeadingAdapter` that adds `id` attributes to
-/// headings based on their content, as well as `data-sourcepos` attributes
-/// if source position tracking is enabled:
-///
-/// ```ts
-/// import { markdownToHTML, HeadingAdapter } from "@nick/comrak";
-///
-/// const md = '# Hello!\n\n## Subheading\n\nBye!\n';
-/// const headingAdapter = new HeadingAdapter(
-///   ({ level, content }, sourcepos) => {
-///     // rudimentary slugification example. don't actually use this!
-///     const id = content.replace(/[^a-z0-9-]+/gi, '-').toLowerCase();
-///     let attrs = ` id="${id}"`;
-///     if (sourcepos) {
-///       const { start, end } = sourcepos;
-///       const { line: l1, column: c1 } = start;
-///       const { line: l2, column: c2 } = end;
-///       attrs += ` data-sourcepos="${l1}:${c1}-${l2}:${c2}"`;
-///     }
-///     return `<h${level}${attrs}>`
-///   },
-///   ({ level }) => `</h${level}>`,
-/// );
-///
-/// const html = markdownToHTML(md, { plugins: { render: { headingAdapter } } });
-/// console.log(html);
-/// // Output:
-/// // <h1 id="hello" data-sourcepos="1:1-1:7">Hello!</h1>
-/// // <h2 id="subheading" data-sourcepos="3:1-3:12">Subheading</h2>
-/// // <p>Bye!</p>
-/// ```
 #[wasm_bindgen]
 #[derive(Default, Debug, Clone)]
 pub struct HeadingAdapter {
@@ -377,6 +353,15 @@ impl<'p> From<HeadingAdapter> for &'p dyn ComrakHeadingAdapter {
   }
 }
 
+/// The `BrokenLinkCallback` API allows you to handle broken links found by
+/// Comrak while parsing a Markdown document. You can leverage this API via the
+/// {@linkcode Options.parse.brokenLinkCallback} option.
+////
+/// It exposes its inner `resolve` function as well as a `call` method to
+/// invoke it directly, which is rarely used outside of testing and other
+/// advanced use cases. The `call` signature mirrors that of the native
+/// `Function.prototype.call` method in JavaScript, accepting a custom `this`
+/// binding for its first argument, followed by the broken link reference.
 #[wasm_bindgen]
 #[derive(Default, Debug, Clone)]
 pub struct BrokenLinkCallback {
@@ -390,9 +375,7 @@ unsafe impl Sync for BrokenLinkCallback {}
 impl BrokenLinkCallback {
   #[wasm_bindgen(constructor)]
   pub fn new(
-    #[wasm_bindgen(
-      unchecked_param_type = r#"BrokenLinkCallbackFunction"#
-    )]
+    #[wasm_bindgen(unchecked_param_type = r"BrokenLinkCallbackFunction")]
     resolve: Function,
   ) -> Self {
     Self { resolve }
@@ -408,7 +391,7 @@ impl BrokenLinkCallback {
     self.resolve = resolve;
   }
 
-  #[wasm_bindgen(unchecked_return_type = "Maybe<ResolvedReference>")]
+  #[wasm_bindgen(unchecked_return_type = "Option<ResolvedReference>")]
   pub fn call(
     &self,
     #[wasm_bindgen(js_name = "thisArg")]
@@ -448,6 +431,14 @@ impl ComrakBrokenLinkCallback for BrokenLinkCallback {
   }
 }
 
+/// The `URLRewriter` API allows you to rewrite the URLs of links and images
+/// being converted from Markdown to HTML by Comrak. You can leverage this API
+/// via the option {@linkcode ExtensionOptions.linkURLRewriter} (for links) or
+/// {@linkcode ExtensionOptions.imageURLRewriter} (for images).
+///
+/// The `call` signature mirrors that of the native `Function.prototype.call`
+/// method in JavaScript, accepting a custom `this` binding for its first
+/// argument, followed by the URL string to rewrite.
 #[wasm_bindgen]
 #[derive(Default, Debug, Clone)]
 pub struct URLRewriter {
@@ -549,17 +540,17 @@ macro_rules! markdown_to_fn {
     #[wasm_bindgen]
     pub fn $id(
       md: &str,
-      #[wasm_bindgen(unchecked_param_type = "Maybe<Options>")]
+      #[wasm_bindgen(unchecked_param_type = "Option<Options>")]
       options: Option<Object>,
-      #[wasm_bindgen(unchecked_param_type = "Maybe<SyntaxHighlighterAdapter>")]
+      #[wasm_bindgen(unchecked_param_type = "Option<SyntaxHighlighterAdapter>")]
       codefence_syntax_highlighter: Option<SyntaxHighlighterAdapter>,
-      #[wasm_bindgen(unchecked_param_type = "Maybe<HeadingAdapter>")]
+      #[wasm_bindgen(unchecked_param_type = "Option<HeadingAdapter>")]
       heading_adapter: Option<HeadingAdapter>,
-      #[wasm_bindgen(unchecked_param_type = "Maybe<BrokenLinkCallbackFunction>")]
+      #[wasm_bindgen(unchecked_param_type = "Option<BrokenLinkCallbackFunction>")]
       broken_link_callback: Option<Function>,
-      #[wasm_bindgen(unchecked_param_type = "Maybe<URLRewriterFunction>")]
+      #[wasm_bindgen(unchecked_param_type = "Option<URLRewriterFunction>")]
       image_url_rewriter: Option<Function>,
-      #[wasm_bindgen(unchecked_param_type = "Maybe<URLRewriterFunction>")]
+      #[wasm_bindgen(unchecked_param_type = "Option<URLRewriterFunction>")]
       link_url_rewriter: Option<Function>,
     ) -> Result<String, JsValue> {
       let mut options: ComrakOptions = unwrap_option_object(options)?;
@@ -598,17 +589,17 @@ macro_rules! format_fn {
     pub fn $id(
       #[wasm_bindgen(unchecked_param_type = "AST")]
       ast: Object,
-      #[wasm_bindgen(unchecked_param_type = "Maybe<Options>")]
+      #[wasm_bindgen(unchecked_param_type = "Option<Options>")]
       options: Option<Object>,
-      #[wasm_bindgen(unchecked_param_type = "Maybe<SyntaxHighlighterAdapter>")]
+      #[wasm_bindgen(unchecked_param_type = "Option<SyntaxHighlighterAdapter>")]
       codefence_syntax_highlighter: Option<SyntaxHighlighterAdapter>,
-      #[wasm_bindgen(unchecked_param_type = "Maybe<HeadingAdapter>")]
+      #[wasm_bindgen(unchecked_param_type = "Option<HeadingAdapter>")]
       heading_adapter: Option<HeadingAdapter>,
-      #[wasm_bindgen(unchecked_param_type = "Maybe<BrokenLinkCallbackFunction>")]
+      #[wasm_bindgen(unchecked_param_type = "Option<BrokenLinkCallbackFunction>")]
       broken_link_callback: Option<Function>,
-      #[wasm_bindgen(unchecked_param_type = "Maybe<URLRewriterFunction>")]
+      #[wasm_bindgen(unchecked_param_type = "Option<URLRewriterFunction>")]
       image_url_rewriter: Option<Function>,
-      #[wasm_bindgen(unchecked_param_type = "Maybe<URLRewriterFunction>")]
+      #[wasm_bindgen(unchecked_param_type = "Option<URLRewriterFunction>")]
       link_url_rewriter: Option<Function>,
     ) -> Result<String, JsValue> {
       let mut options: ComrakOptions = unwrap_option_object(options)?;
@@ -663,14 +654,14 @@ pub fn version() -> String {
 #[wasm_bindgen(unchecked_return_type = "AST")]
 pub fn parse_document(
   md: &str,
-  #[wasm_bindgen(unchecked_param_type = "Maybe<Options>")] options: Option<
+  #[wasm_bindgen(unchecked_param_type = "Option<Options>")] options: Option<
     Object,
   >,
-  #[wasm_bindgen(unchecked_param_type = "Maybe<BrokenLinkCallbackFunction>")]
+  #[wasm_bindgen(unchecked_param_type = "Option<BrokenLinkCallbackFunction>")]
   broken_link_callback: Option<Function>,
-  #[wasm_bindgen(unchecked_param_type = "Maybe<URLRewriterFunction>")]
+  #[wasm_bindgen(unchecked_param_type = "Option<URLRewriterFunction>")]
   image_url_rewriter: Option<Function>,
-  #[wasm_bindgen(unchecked_param_type = "Maybe<URLRewriterFunction>")]
+  #[wasm_bindgen(unchecked_param_type = "Option<URLRewriterFunction>")]
   link_url_rewriter: Option<Function>,
 ) -> Result<JsValue, JsValue> {
   let mut options: ComrakOptions = unwrap_option_object(options)?;
